@@ -32,5 +32,5 @@
    (gdom/createDom "li" #js {} (display-item item))))
 
 ;; Clear the entire document and append the list
-(gdom/removeChildren js/document.body)
-(gdom/appendChild js/document.body item-list)
+(gdom/removeChildren (.-body js/document))
+(gdom/appendChild (.-body js/document) item-list)
