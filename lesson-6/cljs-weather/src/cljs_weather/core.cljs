@@ -11,13 +11,15 @@
                                                  :value nil}
                                          :tomorrow {:label "Tomorrow"
                                                     :value nil}}}))
-(def api-key "848a2b6baab0b48df060709c4142c09e")
+(def api-key "API_KEY")
 
 (defn handle-response [resp]
   (let [today (get-in resp ["list" 0 "main" "temp"])
-        tomorrow (get-in resp ["list" 23 "main" "temp"])]
-    (swap! app-state update-in [:temperatures :today :value] (constantly today))
-    (swap! app-state update-in [:temperatures :tomorrow :value] (constantly tomorrow))))
+        tomorrow (get-in resp ["list" 24 "main" "temp"])]
+    (swap! app-state
+      update-in [:temperatures :today :value] (constantly today))
+    (swap! app-state
+      update-in [:temperatures :tomorrow :value] (constantly tomorrow))))
 
 (defn get-forecast! []
   (let [postal-code (:postal-code @app-state)]

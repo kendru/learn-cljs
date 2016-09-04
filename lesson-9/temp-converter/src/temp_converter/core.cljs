@@ -11,7 +11,7 @@
   (+ (* deg-c 1.8) 32))
 
 (def celcius-radio (gdom/getElement "uom-c"))
-(def farenheit-radio (gdom/getElement "uom-f"))
+(def fahrenheit-radio (gdom/getElement "uom-f"))
 (def temp-input (gdom/getElement "temp"))
 (def output-target (gdom/getElement "temp-out"))
 (def output-unit-target (gdom/getElement "unit-out"))
@@ -19,7 +19,7 @@
 (defn get-input-uom []
   (if (aget celcius-radio "checked")
     :celcius
-    :farenheit))
+    :fahrenheit))
 
 (defn get-input-temp []
   (js/parseInt (aget temp-input "value")))
@@ -37,4 +37,4 @@
 
 (gevents/listen temp-input "keyup" update-output)
 (gevents/listen celcius-radio "click" update-output)
-(gevents/listen farenheit-radio "click" update-output)
+(gevents/listen fahrenheit-radio "click" update-output)
