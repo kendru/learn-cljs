@@ -1,4 +1,11 @@
-baseURL = "http://example.org/"
+baseURL = "https://www.learn-cljs.com/"
 languageCode = "en-us"
-title = "My New Hugo Site"
+title = "Learn ClojureScript"
 theme = "book"
+
+disableKinds = ['taxonomy', 'taxonomyTerm']
+pygmentsCodeFences = true
+
+[params]
+BookMenuBundle = "/menu"
+BookSearch = false
