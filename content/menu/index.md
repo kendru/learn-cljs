@@ -17,4 +17,4 @@ headless = true
   - [Using Variables and Values](/section-2/lesson-9-variables-and-values)
   - [Making Choices](/section-2/lesson-10-making-choices)
   - [Looping](/section-2/lesson-11-looping)
-  - [Reusing Code with Functions](/section-2/lesson-12-reusing-code-with-functions)
+  <!-- - [Reusing Code with Functions](/section-2/lesson-12-reusing-code-with-functions) -->
