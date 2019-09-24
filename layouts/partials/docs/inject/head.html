@@ -1,0 +1,10 @@
+{{- with .Site.Params.QuantumMetricScript -}}
+    <script type="text/javascript">
+    (function() {
+        var qtm = document.createElement('script'); qtm.type = 'text/javascript'; qtm.defer = 1;
+        qtm.src = '{{ . }}';
+        var d = document.getElementsByTagName('script')[0];
+        !window.QuantumMetricAPI && d.parentNode.insertBefore(qtm, d);
+    })();
+    </script>
+{{- end -}}
