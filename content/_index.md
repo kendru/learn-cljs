@@ -3,8 +3,11 @@ title: Learn ClojureScript
 type: docs
 ---
 
-# Learn ClojureScript
+<div style="text-align:center;">
+    <img src="/img/learn-clojurescript-cover.jpg" alt="Learn ClojureScript Cover Image" title="Learn ClojureScript Cover Image" />
+</div>
 
+# Learn ClojureScript
 
 ## Getting started with functional programming for the web
 
@@ -22,7 +25,9 @@ By the end of the book, you will have created:
 - A personal contact manager
 - A text-based adventure game
 
-![Learn ClojureScript Cover Image](/img/learn-clojurescript-cover.jpg)
+<script src="https://gumroad.com/js/gumroad.js"></script>
+<a class="gumroad-button" href="https://gum.co/learn-cljs" target="_blank">Pre-order Today</a>
+
 
 {{< columns >}}
 ## About the author
