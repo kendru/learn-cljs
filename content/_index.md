@@ -39,6 +39,30 @@ UI, he always uses ClojureScript (naturally).
     <img src="/img/profile.jpg" class="profile" alt="Profile of Andrew Meredith" title="Author Profile" />
     <h3>Andrew Meredith</h3>
 </div>
+
+<div class="social-links">
+    <div>
+        <a href="http://www.linkedin.com/in/andrewsmeredith" title="Follow on LinkedIn">
+            <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+        </a>
+    </div>
+    <div>
+        <a href="https://dev.to/kendru" title="DEV Profile">
+            <i class="fab fa-dev" aria-hidden="true"></i>
+        </a>
+    </div>
+    <div>
+        <a href="https://github.com/kendru" title="Follow on GitHub">
+            <i class="fab fa-github" aria-hidden="true"></i>
+        </a>
+    </div>
+    <div>
+        <a href="https://twitter.com/asmeredith" title="Follow on Twitter">
+            <i class="fab fa-twitter" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>
+
 {{< /columns >}}
 
 ---
