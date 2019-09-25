@@ -1,4 +1,4 @@
-baseURL = "https://www.learn-cljs.com/"
+baseURL = "https://www.learn-clojurescript.com/"
 languageCode = "en-us"
 title = "Learn ClojureScript"
 theme = "book"
