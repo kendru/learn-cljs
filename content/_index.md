@@ -5,6 +5,7 @@ type: docs
 
 # Learn ClojureScript
 
+
 ## Getting started with functional programming for the web
 
 ClojureScript is a pragmatic functional programming language for building web applications. Whether
@@ -13,12 +14,15 @@ creating impressive web apps in the simple and elegant ClojureScript language. T
 are easy to follow at your own pace, and the practical capstone projects will reinforce what you have
 learned.
 
+
 By the end of the book, you will have created:
 
 - A weather forecast widget
 - A temperature converter
 - A personal contact manager
 - A text-based adventure game
+
+![Learn ClojureScript Cover Image](/img/learn-clojurescript-cover.jpg)
 
 {{< columns >}}
 ## About the author
@@ -36,3 +40,17 @@ UI, he always uses ClojureScript (naturally).
     <h3>Andrew Meredith</h3>
 </div>
 {{< /columns >}}
+
+---
+
+<footer class="attribution">
+{{< columns >}}
+
+Copyright 2019 Andrew Meredith
+
+<--->
+
+Cover image based on https://pixabay.com/images/id-3045402/ by [monicore](https://pixabay.com/users/monicore-1499084/)
+
+{{< /columns >}}
+</footer>

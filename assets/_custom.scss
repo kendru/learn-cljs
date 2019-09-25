@@ -7,3 +7,19 @@
         max-height: 150px;
     }
 }
+
+.attribution {
+    font-size: 85%;
+}
+
+h1 {
+    color: #017890;
+}
+
+a {
+    color: #04b9b3;
+
+    &:visited {
+        color: #3f5c6e;
+    }
+}
