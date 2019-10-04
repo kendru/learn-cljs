@@ -16,7 +16,7 @@
   ```
 
   ### Result:"
-  
+
   (for [n (range 10)]
     (* n n)))
 
@@ -71,10 +71,10 @@
    ```
    ### Result:"
   (for [n (range 100)
-      :let [square (* n n)]
-      :when (even? n)
-      :while (< n 20)]
-  (str "n is " n " and its square is " square)))
+        :let [square (* n n)]
+        :when (even? n)
+        :while (< n 20)]
+   (str "n is " n " and its square is " square)))
 
 (defcard-doc
   "## `loop`/`recur` Example: GCD
@@ -135,8 +135,8 @@
    ### Result:
    ```
    Can't recur here at line 5
-   ```"
-)
+   ```")
+
 
 (defcard-doc
   "## `doseq` Example: Side Effects
@@ -159,8 +159,8 @@
                {:name "Carlos"}]]
     (doseq [user users]
       (send-to-api user))
-    "See devtools console")
-)
+    "See devtools console"))
+
 
 (first
  (for [i (range 10)]

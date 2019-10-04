@@ -65,12 +65,12 @@ date: 2019-09-19T21:43:56-06:00
     - [Performing Explicit Recursion with loop and recur](/section-2/lesson-11-looping/#performing-explicit-recursion-with-loop-and-recur)
     - [Looping for Side Effects](/section-2/lesson-11-looping/#looping-for-side-effects)
     - [Summary](/section-2/lesson-11-looping/#summary)
-- Lesson 12: Reusing Code with Functions
-    - Understanding Functions
-    - Defining and Calling Functions
-    - Extracting Expressions
-    - Recursion 101
-    - Summary
+- [Lesson 12: Reusing Code with Functions](/section-2/lesson-12-reusing-code-with-functions)
+    - [Understanding Functions](/section-2/lesson-12-reusing-code-with-functions/#understanding-functions)
+    - [Defining and Calling Functions](/section-2/lesson-12-reusing-code-with-functions/#defining-and-calling-functions)
+    - [Functions as Expressions](/section-2/lesson-12-reusing-code-with-functions/#functions-as-expressions)
+    - [Recursion 101](/section-2/lesson-12-reusing-code-with-functions/#recursion-101)
+    - [Summary](/section-2/lesson-12-reusing-code-with-functions/#summary)
 - Lesson 13: Interacting With JavaScript Data
     - Using Conversion Functions
     - Working with JavaScript Data Directly
@@ -203,7 +203,7 @@ date: 2019-09-19T21:43:56-06:00
     - Introducing test.check
     - Use cases
 
-Section 8: Advanced ClojureScript
+## Section 8: Advanced ClojureScript
 
 - Lesson 40: Survey of Advanced Language Features
     - Programmable Programming Language
