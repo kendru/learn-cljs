@@ -71,9 +71,10 @@ date: 2019-09-19T21:43:56-06:00
     - [Functions as Expressions](/section-2/lesson-12-reusing-code-with-functions/#functions-as-expressions)
     - [Recursion 101](/section-2/lesson-12-reusing-code-with-functions/#recursion-101)
     - [Summary](/section-2/lesson-12-reusing-code-with-functions/#summary)
-- Lesson 13: Interacting With JavaScript Data
-    - Using Conversion Functions
-    - Working with JavaScript Data Directly
+- [Lesson 13: Interacting With JavaScript Data](/section-2/lesson-13-interacting-with-javascript-data)
+    - [Using Conversion Functions](/section-2/lesson-13-interacting-with-javascript-data/#using-conversion-functions)
+    - [Working with JavaScript Data Directly](/section-2/lesson-13-interacting-with-javascript-data/#working-with-javascript-data-directly)
+    - [Summary](/section-2/lesson-13-interacting-with-javascript-data/#summary)
 - Lesson 14: Performing I/O
     - Manipulating The DOM
     - Getting User Input
