@@ -79,9 +79,11 @@ date: 2019-09-19T21:43:56-06:00
     - Manipulating The DOM
     - Getting User Input
     - Handling Events
+    - Summary
 - Lesson 15: Capstone 2 - Temperature Converter
     - Creating Markup
     - Code Walkthrough
+    - Summary
 
 ## Section 3: Working With Data
 
@@ -91,43 +93,53 @@ date: 2019-09-19T21:43:56-06:00
     - Using Vectors for Indexed Data
     - Using Maps for Associative Data
     - Using Sets for Unique Data
+    - Summary
 - Lesson 17: Discovering Sequence Operations
     - The Sequence Abstraction
     - Transforming With Map
     - Coercing Results With Into
     - Refining With Filter
+    - Summary
 - Lesson 18: Summarizing Data
     - Priming Exercise: Getting cart value
     - Understanding Reduce
     - Reduce Use Cases
     - Being More Concise
+    - Summary
 - Lesson 19: Master Data With Maps and Vectors
     - Domain Modeling With Maps and Vectors
     - Working With Associative Data
     - Nested Data
+    - Summary
+- Lesson 20: Capstone 3 - Contact Book
+    - Data Modeling
+    - Creating the UI
+    - Implementing Undo/Redo
+    - Summary
 
 ## Section 4: Functions
 
-- Lesson 20: Digging Deeper With Functions
-    - Anonymous Functions With fn
-    - Named Functions With defn
-    - Arguments and Arities
-- Lesson 21: Using Anonymous Functions
-    - Use Cases
-    - Shorthand Notation
-    - Passing Functions Around
-- Lesson 22: Functional Programming Concepts
+- Lesson 21: Functional Programming Concepts
     - Minimizing Side Effects
     - Immutable Data
     - Data Pipelines
-- Lesson 23: Higher Order Functions
+    - Summary
+- Lesson 22: Higher Order Functions
+    - Anonymous Functions
     - Building Specialized Functions
     - Instrumenting Function Calls
     - Composing Behaviour from Small Pieces
-- Lesson 24: Intro to Recursion
-    - Thinking About the Base Case
-    - When to Use Sequence Operations
-    - Walking a Tree
+    - Summary
+- Lesson 23: Multimethods
+    - OOP and the Expression Problem
+    - Flexible Dispatch
+    - Use Case: Rendering an Activity Feed
+    - Summary
+- Lesson 24: Capstone 4 - Adventure Game Redux
+    - Adding NPCs
+    - Adding an Inventory
+    - Introducing Randomness
+    - Summary
 
 ## Section 5: Idiomatic ClojureScript
 
@@ -135,29 +147,35 @@ date: 2019-09-19T21:43:56-06:00
     - Grouping Related Functions
     - Avoiding “Hidden” OOP
     - Taking Advantage of Polymorphism
+    - Summary
 - Lesson 26: Google Closure Library
     - ClojureScript’s other “stdlib”
     - Solving Browser Quirks
     - Simplifying Ajax
     - Better DOM
     - Standard Events
+    - Summary
 - Lesson 27: Managing State
     - Atoms
     - Transients
     - Anti-Patterns
     - Using State Wisely
+    - Summary
 - Lesson 28: Handling Exceptions and Errors
     - Handling Exceptions with try/catch
     - Functional Alternatives to Exceptions
-- Lesson 29: Protocols and Records
-    - Enforcing Stricter Contracts
-    - Extending Existing Types
-    - Anonymous Instances With reify
-    - Comparing Records to JavaScript Objects
-- Lesson 30: Multimethods
-    - OOP and the Expression Problem
-    - Flexible Dispatch
-    - Use Case: Rendering an Activity Feed
+    - Summary
+- Lesson 29: Intro to core.async
+    - Overview of CSP
+    - Coroutines as Lightweight Processes
+    - Communicating Over Channels
+    - Channels as Values
+    - Summary
+- Lesson 30: Capstone 5 - Group Chat
+    - Thinking About Interactions
+    - Realtime Communication
+    - Rooms and Conversations
+    - Summary
 
 ## Section 6: ClojureScript Applications
 
@@ -165,75 +183,80 @@ date: 2019-09-19T21:43:56-06:00
     - Functional Programming Model
     - DOM Diffing
     - Creating Fast Apps
+    - Summary
 - Lesson 32: Using React via Reagent
     - Defining a Data Model
     - Writing Queries for Views
     - Writing Transition Functions
     - Building Components
-- Lesson 33: Intro to core.async
-    - Motivation: JavaScript Async Options
-    - Use Case: Search
-- Lesson 34: Thinking in Channels
-    - Overview of CSP
-    - Coroutines as Lightweight Processes
-    - Communicating Over Channels
-    - Channels as Values
-- Lesson 35: Separate Concerns
+    - Summary
+- Lesson 33: Separate Concerns
     - Connecting Components With Channels
     - Message Patterns
     - Client/Server Architecture
-- Lesson 36: Consuming Remote APIs
+    - Summary
+- Lesson 34: Consuming Remote APIs
     - Flattening Callbacks
     - Writing Views as Pure Functions
     - Centralizing Coordination Logic
+    - Summary
+- Lesson 35: Capstone 6 - Deal of the Day
+    - Building a Reagent UI
+    - Handling User Interactions
+    - Handling API Interactions
+    - Summary
 
 ## Section 7: Testing
 
-- Lesson 37: REPL-Driven Development
+- Lesson 36: REPL-Driven Development
     - The Advantages of Testing Functional Code
     - Validating Code With the REPL
     - REPL Sessions as Tests
     - Live Coding With Figwheel
-- Lesson 38: Intro To Unit Testing
+    - Summary
+- Lesson 37: Intro To Unit Testing
     - Understanding the Need for Unit Tests
     - Testing Pure Functions
     - Testing Impure Functions
     - Test Set-Up and Context
-- Lesson 39: Don’t Write Tests - Let The Computer Write Them
+    - Summary
+- Lesson 38: Don’t Write Tests - Let The Computer Write Them
     - What Is Property-Based Testing?
     - Introducing test.check
-    - Use cases
+    - Use Cases
+    - Summary
 
 ## Section 8: Advanced ClojureScript
 
+- Lesson 39: Protocols and Records
+    - Enforcing Stricter Contracts
+    - Extending Existing Types
+    - Anonymous Instances With reify
+    - Comparing Records to JavaScript Objects
+    - Summary
 - Lesson 40: Survey of Advanced Language Features
     - Programmable Programming Language
     - Macros
     - Extending Core Protocols
-- Lesson 41: Data Tools
-    - Persistent Data Structures
-    - Transducers
-    - Serialization
+    - Summary
+- Lesson 41: Transducers
+    - Transwhatsers?
+    - Dataflow with core transducers
+    - Writing our own transducers
+    - Summary
 - Lesson 42: Compiler Deep Dive
     - Compilation pipeline
     - Advanced options
     - Bootstrapped ClojureScript
+    - Summary
 
 ## End Matter
 
 - Appendix A: Installing ClojureScript
-    - Installing Java 8
+    - Installing Java
     - Downloading Leiningen
     - Requiring ClojureScript in a Project
 - Appendix B: Wrapping a JavaScript library
     - Compiler basics
     - Wrapping example
     - cljsjs libraries
-
-<!--
-- [Lesson 12: Reusing Code with Functions](/section-2/lesson-12-reusing-code-with-functions)
-    - [Understanding Functions](/section-2/lesson-12-reusing-code-with-functions/#understanding-functions)
-    - [Defining and Calling Functions](/section-2/lesson-12-reusing-code-with-functions/#defining-and-calling-functions)
-    - [Extracting Expressions](/section-2/lesson-12-reusing-code-with-functions/#extracting-expressions)
-    - [Recursion 101](/section-2/lesson-12-reusing-code-with-functions/#recursion-101)
-    - [Summary](/section-2/lesson-12-reusing-code-with-functions/#summary) -->
