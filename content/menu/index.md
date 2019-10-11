@@ -19,3 +19,4 @@ headless = true
   - [Looping](/section-2/lesson-11-looping)
   - [Reusing Code with Functions](/section-2/lesson-12-reusing-code-with-functions)
   - [Interacting With JavaScript Data](/section-2/lesson-13-interacting-with-javascript-data)
+  - [Performing I/O](/section-2/lesson-14-performing-io)

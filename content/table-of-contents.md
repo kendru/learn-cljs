@@ -75,11 +75,11 @@ date: 2019-09-19T21:43:56-06:00
     - [Using Conversion Functions](/section-2/lesson-13-interacting-with-javascript-data/#using-conversion-functions)
     - [Working with JavaScript Data Directly](/section-2/lesson-13-interacting-with-javascript-data/#working-with-javascript-data-directly)
     - [Summary](/section-2/lesson-13-interacting-with-javascript-data/#summary)
-- Lesson 14: Performing I/O
-    - Manipulating The DOM
-    - Getting User Input
-    - Handling Events
-    - Summary
+- [Lesson 14: Performing I/O](/section-2/lesson-14-performing-io/)
+    - [Manipulating The DOM](/section-2/lesson-14-performing-io/#manipulating-the-dom)
+    - [Getting User Input](/section-2/lesson-14-performing-io/#getting-user-input)
+    - [Handling Events](/section-2/lesson-14-performing-io/#handling-events)
+    - [Summary](/section-2/lesson-14-performing-io/#summary)
 - Lesson 15: Capstone 2 - Temperature Converter
     - Creating Markup
     - Code Walkthrough
