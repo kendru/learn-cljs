@@ -20,5 +20,5 @@ app.
 - [Lesson 11: Looping](/section-2/lesson-11-looping)
 - [Lesson 12: Reusing Code with Functions](/section-2/lesson-12-reusing-code-with-functions)
 - [Lesson 13: Interacting With JavaScript Data](/section-2/lesson-13-interacting-with-javascript-data)
-- Lesson 14: Performing I/O
-- Lesson 15: Capstone 2 - Temperature Converter
+- [Lesson 14: Performing I/O](/section-2/lesson-14-performing-io)
+- [Lesson 15: Capstone 2 - Temperature Converter](/section-2/lesson-15-capstone-temperature-converter)
