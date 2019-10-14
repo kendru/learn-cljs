@@ -1,5 +1,5 @@
 ---
-title: "Capstone 2 -Temperature Converter | Lesson 15"
+title: "Capstone 2 - Temperature Converter | Lesson 15"
 date: 2019-10-13T15:01:59+03:00
 type: "docs"
 ---
