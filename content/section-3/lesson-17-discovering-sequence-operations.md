@@ -4,7 +4,7 @@ date: 2019-10-18T14:35:26+03:00
 type: "docs"
 ---
 
-# Lesson 11: Discovering Sequence Operations
+# Lesson 17: Discovering Sequence Operations
 
 ---
 
