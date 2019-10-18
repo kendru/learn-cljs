@@ -87,26 +87,26 @@ date: 2019-09-19T21:43:56-06:00
 
 ## Section 3: Working With Data
 
-- Lesson 16: Grokking Collections
-    - Defining Collections and Sequences
-    - Using Lists for Sequential Data
-    - Using Vectors for Indexed Data
-    - Using Maps for Associative Data
-    - Using Sets for Unique Data
-    - Summary
-- Lesson 17: Discovering Sequence Operations
-    - The Sequence Abstraction
-    - Transforming With Map
-    - Coercing Results With Into
-    - Refining With Filter
-    - Summary
+- [Lesson 16: Grokking Collections](/section-3/lesson-16-grokking-collections/)
+    - [Defining Collections and Sequences](/section-3/lesson-16-grokking-collections/#)
+    - [Using Lists for Sequential Data](/section-3/lesson-16-grokking-collections/#)
+    - [Using Vectors for Indexed Data](/section-3/lesson-16-grokking-collections/#)
+    - [Using Maps for Associative Data](/section-3/lesson-16-grokking-collections/#)
+    - [Using Sets for Unique Data](/section-3/lesson-16-grokking-collections/#)
+    - [Summary](/section-3/lesson-16-grokking-collections/#summary)
+- [Lesson 17: Discovering Sequence Operations](/section-3/lesson-17-discovering-sequence-operations/)
+    - [The Sequence Abstraction](/section-3/lesson-17-discovering-sequence-operations/#)
+    - [Transforming With Map](/section-3/lesson-17-discovering-sequence-operations/#)
+    - [Coercing Results With Into](/section-3/lesson-17-discovering-sequence-operations/#)
+    - [Refining With Filter](/section-3/lesson-17-discovering-sequence-operations/#)
+    - [Summary](/section-3/lesson-17-discovering-sequence-operations/#)
 - Lesson 18: Summarizing Data
     - Priming Exercise: Getting cart value
     - Understanding Reduce
     - Reduce Use Cases
     - Being More Concise
     - Summary
-- Lesson 19: Master Data With Maps and Vectors
+- Lesson 19: Mastering Data With Maps and Vectors
     - Domain Modeling With Maps and Vectors
     - Working With Associative Data
     - Nested Data
@@ -122,7 +122,7 @@ date: 2019-09-19T21:43:56-06:00
 - Lesson 21: Functional Programming Concepts
     - Minimizing Side Effects
     - Immutable Data
-    - Data Pipelines
+    - Referential Transparency
     - Summary
 - Lesson 22: Higher Order Functions
     - Anonymous Functions

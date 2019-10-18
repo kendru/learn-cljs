@@ -100,38 +100,132 @@ to replace the `update-output` function, not any of the conversion logic.
 
 We have just walked through the process of refactoring code that mutates the DOM into
 an impure wrapper around a functional core. However, there is another type of side effect
-that we must avoid if we want to write functional code: data mutation. When a function
-mutates the data that it receives (or even worse - global data),
+that we must avoid if we want to write functional code: data mutation. In JavaScript, the two
+built-in collection data structures - objects and arrays - are mutable, meaning they can
+be modified in-place. All of the object-oriented features in JavaScript rely on mutability.
+For example, it is very common to see code that makes directly manipulates an object, such
+as the following:
+
+```javascript
+var blog = {
+  title: 'Object-Oriented JavaScript',
+  tags: ['JavaScript', 'OOP'],
+  rating: 4
+};
+
+blog.tags.push('mutability');
+blog.rating++;
+blog.title += ' considered harmful';
+blog.isChanged = true;
+```
+
+In ClojureScript, instead of modifying an object, we create copies of the
+original object with modifications. While this sounds inefficient, ClojureScript
+uses data structures that are constructed in such a way that similar objects can
+often share much of their structure in the same memory locations. As we will
+see, these immutable data structures actually enable highly-optimized user
+interfaces and can even speed up an application. Working with immutable data
+structures takes a mind shift but is every bit as easy as working with mutable
+data, as we can see below.
+
+```clojure
+(def blog {:title "Functional ClojureScript"
+           :tags ["ClojureScript" "FP"]
+           :rating 4})
+
+(def new-blog
+  (-> blog                                                 ;; <1>
+      (update-in [:tags] conj "immutability")
+      (update-in [:rating] inc)
+      (update-in [:title] #(str % " for fun and profit"))
+      (assoc :new? true)))
+
+new-blog                                                   ;; <2>
+; {:title "Functional ClojureScript for fun and profit",
+; :tags ["ClojureScript" "FP" "immutability"], :rating 5, :new? true}
+blog
+; {:title "Functional ClojureScript", :tags ["ClojureScript" "FP"], :rating 4}
+```
+
+1. Build up a series of transformations using the `->` macro
+2. Inspect both the original `blog` and transformed `new-blog` maps
+
+In this example, we see that the original `blog` variable is untouched. We stack
+a series of modifications on top of the `blog` map and save the modified map as
+`new-blog`. The key takeaway here is that none of the `update-in` or `assoc`
+functions touched `blog` - they returned a new object that was similar to the
+one passed in but with some modification. Immutable data is key to functional
+programming because it gives us the assurance that our programs are repeatable
+and deterministic (at least the parts that need to be). When we allow data to
+be mutated as it is passed around, complexity skyrockets. When we allow mutable
+data, we need to keep track of a potentially enormous number of variables in
+our heads to debug a single computation.
+
+> *Note:*
+>
+> The author once worked on a team responsible for a very large JavaScript
+> application. That team discovered that unexpected mutation was the cause of so
+> many defects that they started keeping a tally of every hour spent finding and
+> fixing bugs that were due to mutable data. The team switched to the Immutable.js
+> library when their tallies no longer fit on the whiteboard.
 
 ### Referential Transparency
 
-A function that does not rely on any potentially mutable external state is said to be
-_referentially transparent_. When a function is referentially transparent, we can be sure
-that it will always produce the same output when given the same input. A common use case
-is to take the current time into consideration for some computation. For instance, this
-code will generate a greeting appropriate to the time of day:
+A function is said to be _referentially transparent_ if it fits in the pure substitution model
+of evaluation that we have discussed. That is, a call to a function can always be replaced with
+the value to which it evaluates without having any other effect. This implies that the function
+does not rely on any state other than its parameters, and it does not mutate any external state.
+It also implies that whenever a function is called with the same input values, it always produces
+the same return value. However, since not every function can be referentially transparent in a real
+application, we apply the same strategy of keeping our business logic pure and referentially
+transparent while moving referentially opaque code to the "edges" of the application. A common need
+in many web apps is to take the current time into consideration for some computation. For instance,
+this code will generate a greeting appropriate to the time of day:
 
 ```clojure
 (defn get-time-of-day-greeting []
-  (cond <= (.getHour (js/Date.now))
-    ))
+  (condp >= (.getHours (js/Date.))
+    11 "Good morning"
+    15 "Good day"
+    "Good evening"))
 ```
 
-## Data Pipelines
+The problem with this code is that its output will change when given the same input (in
+this case, no input) depending on what time of day it is called. Getting the current time
+of day is intrinsically not referentially transparent, but we can use the technique that we
+applied earlier to separate effectful functions from a functionally pure core of business
+logic:
+
+```clojure
+(defn get-current-hour []                                  ;; <1>
+  (.getHours (js/Date.)))
+
+(defn get-time-of-day-greeting [hour]                      ;; <2>
+  (condp >= hour
+    11 "Good morning"
+    15 "Good day"
+    "Good evening"))
+
+(get-time-of-day-greeting (get-current-hour))
+;; "Good day"
+```
+
+1. Factor out the function that is not referentially transparent
+2. Ensure that the output of our business logic is solely dependent on its formal parameters
+
+This is a fairly trivial example, but any code that relies on external state - whether it is
+the time of day, the result of an API call, the `(js/Math.random)` random number generator,
+or anything other than its explicit parameters - breaks the functional paradigm and is more
+difficult to test and evolve as requirements change.
 
 ## Summary
 
-In
-
-<!--
-## Closures and Environments
-
-### Emulating objects
-We can extend our mental model to accommodate the concept of a closure by
-thinking of a function as the combination of the function's body and an `environment`,
-which is a table of all of the symbols that were visible when it was defined, including its
-formal parameters. When evaluating the function,
-
-// TODO: Diagram illustrating environment lookup
--->
-<!-- Note: we should discuss functional purity and why effectful functions are allowed in ClojureScript -->
+In this lesson, we looked briefly at three cornerstones of functional programming: minimizing
+and segregating the side effects, using immutable data, and keeping our business logic
+referentially transparent. When we these ideas, we naturally write programs that take a piece
+of data, pass it through a number of transformations, abd the result is the output of the program.
+In reality, most programs are made up of many pure data pipelines that are glued together with impure
+code that interacts with the DOM, but if we follow the functional programming concepts that we have
+learned in this lesson, we will end up with a clean functional core of business logic that is primarily
+concerned with data transformation. Over the next few lessons, we will learn more language features
+and techniques that will enable us to be effective practitioners of functional programming.

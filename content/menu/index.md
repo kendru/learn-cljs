@@ -21,3 +21,6 @@ headless = true
   - [Interacting With JavaScript Data](/section-2/lesson-13-interacting-with-javascript-data/)
   - [Performing I/O](/section-2/lesson-14-performing-io/)
   - [Capstone 2 - Temperature Converter](/section-2/lesson-15-capstone-temperature-converter/)
+- [Section 3: Working with Data](/section-3/)
+  - [Grokking Collections](/section-3/lesson-16-grokking-collections/)
+  - [Discovering Sequence Operations](/section-3/lesson-17-discovering-sequence-operations/)
