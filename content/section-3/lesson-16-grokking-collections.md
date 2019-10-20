@@ -6,16 +6,6 @@ type: "docs"
 
 # Lesson 16: Grokking Collections
 
----
-
-*In this lesson:*
-
-- Using lists for managing ordered data
-- Using maps for looking up values by a key
-- Using sets for keeping data unique
-
----
-
 So far, we have been working with simple data types - strings, numbers,
 keywords, and the like. We saw a few collections when we took our survey of
 ClojureScript's syntax, but we glossed over exactly what they are and how to use
@@ -26,6 +16,16 @@ _associative_ data - that is, data in which values are referred to by a specific
 string key, such as the `title` and `content` of a blog post. We are probably
 already familiar how these types of collections work from JavaScript or another
 language.
+
+---
+
+*In this lesson:*
+
+- Using lists for managing ordered data
+- Using maps for looking up values by a key
+- Using sets for keeping data unique
+
+---
 
 ### Example: Contact Book
 

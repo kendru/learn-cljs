@@ -6,16 +6,6 @@ type: "docs"
 
 # Lesson 17: Discovering Sequence Operations
 
----
-
-*In this lesson:*
-
-- Apply a transformation to every element in a sequence
-- Efficiently convert between sequence types
-- Filter sequences to only specific elements
-
----
-
 Programming is all about abstractions. The entire field of software
 engineering is devoted to making programs and systems that are better
 for human beings to reason about and maintain. The key to making clear
@@ -34,6 +24,16 @@ is very similar: we see a number of different constructs that appear
 similar in many ways, yet each of which are distinct from the rest,
 and we must determine how to appropriately generalize the properties
 that each construct shares in common.
+
+---
+
+*In this lesson:*
+
+- Apply a transformation to every element in a sequence
+- Efficiently convert between sequence types
+- Filter sequences to only specific elements
+
+---
 
 ### Example: Calculating Sales Tax
 
