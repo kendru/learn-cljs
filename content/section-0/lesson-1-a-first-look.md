@@ -277,7 +277,7 @@ In 2008, if we were to do any client-side web programming, the only viable
 option was JavaScript. Over the next few years, languages that compiled to
 JavaScript started to appear. These languages either cleaned up JavaScript's
 cruft or added some features that were not present in JavaScript itself.
-Some of these languages were modest in their approach, retaining a much of the
+Some of these languages were modest in their approach, retaining much of the
 feel of JavaScript. Others were radical departures from JavaScript that fell
 into the category of research languages. ClojureScript made significant
 improvements to JavaScript while sustaining the community support required of a
@@ -301,7 +301,7 @@ As with any compile-to-js language, the fact that ClojureScript exists is a
 statement that JavaScript is not sufficient. CoffeeScript addressed JavaScript's
 verbose and inconsistent syntax (it was written in just over a week, after all).
 TypeScript, Dart, and PureScript address it's lack of a type system, enabling
-developers to better reason about their code. JavaScript itseld address the age of
+developers to better reason about their code. JavaScript itself addresses the age of
 the language, bringing more modern features while maintaining some semblance to
 previous versions and providing an easy path to migrate old JavaScript
 applications. ClojureScript brings a simpler syntax, an arsenal of data
@@ -418,7 +418,7 @@ ClojureScript provides more powerful tools for constructing applications.
 _Spectrum of programming languages_
 
 The abstractions provided by ClojureScript are higher-level than those provided
-by JavaScript, enabling most code to be written more concisely descriptively.
+by JavaScript, enabling most code to be written more concisely and descriptively.
 While JavaScript provides numbers, strings, arrays, objects, and simple control
 structures, ClojureScript provides similar primitives as well as keywords,
 lists, vectors, sets, maps, protocols, records, and multimethods. Don't worry if
