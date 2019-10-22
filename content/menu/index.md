@@ -24,3 +24,4 @@ headless = true
 - [Section 3: Working with Data](/section-3/)
   - [Grokking Collections](/section-3/lesson-16-grokking-collections/)
   - [Discovering Sequence Operations](/section-3/lesson-17-discovering-sequence-operations/)
+  - [Summarizing Data](/section-3/lesson-18-summarizing-data/)

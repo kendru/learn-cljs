@@ -100,12 +100,11 @@ date: 2019-09-19T21:43:56-06:00
     - [Coercing Results With Into](/section-3/lesson-17-discovering-sequence-operations/#)
     - [Refining With Filter](/section-3/lesson-17-discovering-sequence-operations/#)
     - [Summary](/section-3/lesson-17-discovering-sequence-operations/#)
-- Lesson 18: Summarizing Data
-    - Priming Exercise: Getting cart value
-    - Understanding Reduce
-    - Reduce Use Cases
-    - Being More Concise
-    - Summary
+- [Lesson 18: Summarizing Data](/section-3/lesson-18-summarizing-data/)
+    - [Understanding Reduce](/section-3/lesson-18-summarizing-data/#understanding-reduce)
+    - [Reduce Use Cases](/section-3/lesson-18-summarizing-data/#reduce-use-cases)
+    - [Being More Concise](/section-3/lesson-18-summarizing-data/#being-more-concise)
+    - [Summary](/section-3/lesson-18-summarizing-data/#summary)
 - Lesson 19: Mastering Data With Maps and Vectors
     - Domain Modeling With Maps and Vectors
     - Working With Associative Data
