@@ -2,7 +2,6 @@
 title: "Mastering Data With Maps and Vectors | Lesson 19"
 date: 2019-10-22T15:00:46+03:00
 type: "docs"
-draft: true
 ---
 
 # Lesson 19: Mastering Data With Maps and Vectors
