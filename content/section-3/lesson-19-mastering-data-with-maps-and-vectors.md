@@ -6,16 +6,6 @@ type: "docs"
 
 # Lesson 19: Mastering Data With Maps and Vectors
 
----
-
-In this lesson:
-
-- Master the most common map functions: `assoc`, `dissoc`, `merge`, and `select-keys`
-- Get and set deeply-nested values
-- Use the constructor pattern for creating common objects
-
----
-
 In this lesson, we will explore some of the features of ClojureScript that make
 it simple to work with data. ClojureScript places a string emphasis on relying
 generic collection types and the standard functions that operate on them rather
@@ -25,6 +15,16 @@ is to create objects that encapsulate both the data and behaviour of a specific
 type of "thing". The practice that ClojureScript encourages, however, is to
 separate functions and data. Data is pure information, and functions are pure
 transformations of data.
+
+---
+
+In this lesson:
+
+- Master the most common map functions: `assoc`, `dissoc`, `merge`, and `select-keys`
+- Get and set deeply-nested values
+- Use the constructor pattern for creating common objects
+
+---
 
 ![Functions and Data](/img/lesson19/functions-and-data.png)
 
