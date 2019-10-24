@@ -219,7 +219,7 @@ has some value. Now that we have a good understanding of what expressions are
 and how they differ from statements, we can dig into how ClojureScript
 _evaluates_ (derives values) from expressions.
 
-#### Quick Review
+### Quick Review
 
 For each of the following JavaScript code snippets, identify if it is
 an expression or a statement:

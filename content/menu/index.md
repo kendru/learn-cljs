@@ -25,3 +25,6 @@ headless = true
   - [Grokking Collections](/section-3/lesson-16-grokking-collections/)
   - [Discovering Sequence Operations](/section-3/lesson-17-discovering-sequence-operations/)
   - [Summarizing Data](/section-3/lesson-18-summarizing-data/)
+  - [Mastering Data With Maps and Vectors](/section-3/lesson-19-mastering-data-with-maps-and-vectors/)
+
+<!-- - [Capstone 3 - Contact Book](/section-3/lesson-20-capstone-3-contact-book/) -->

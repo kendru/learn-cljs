@@ -296,7 +296,7 @@ setting a value in `localStorage` and displaying an alert) before finally
 yielding some value. Combining `do` with `defonce` is a common pattern for
 ensuring that certain code will run only one time.
 
-#### Quick Review
+### Quick Review
 
 - While Figwheel is running, find the line in `core.cljs` that contains, `(defonce app-state ...)`, change the text, and save the file. Does the page update? Why or why not?
 - Find the line in `core.cljs` that contains `[:h1 (:text @app-state)]` and change the `h1` to `p`. Does the page update? Why is this behavior different from changing the definition of `app-state`?
@@ -360,7 +360,7 @@ called, the display for all messages would be updated.
 is re-rendered every time we call `render-all-messages!`. In later lessons, we
 will use the Reagent framework to achieve similar results much more efficiently.
 
-#### Quick Review
+### Quick Review
 
 - What are the pillars of reloadable code? Why is each one of these important?
 - What is the difference between `def` and `defonce`?

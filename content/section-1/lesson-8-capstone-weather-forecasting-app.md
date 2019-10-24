@@ -97,7 +97,7 @@ function helloWorld() {
 }
 ```
 
-### Quick Check
+### Quick Review
 
 - The `hello-world` component now has a class of `app-title`. Add an id attribute to the component as well and use your browser's development tools to verify that the change worked.
 

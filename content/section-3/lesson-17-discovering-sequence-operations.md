@@ -317,7 +317,7 @@ resulting list is reversed. This pattern of coercing sequences with
 `into` is extremely common in ClojureScript, and we will use it
 extensively in later lessons.
 
-#### Quick Review
+### Quick Review
 
 As we have just learned, `into` repeatedly applies `conj` to add each
 element from some sequence into a collection. We need to be familiar

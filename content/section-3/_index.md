@@ -16,5 +16,7 @@ domain modeling. For the capstone, we will create a simple but functional contac
 - [Lesson 16: Grokking Collections](/section-3/lesson-16-grokking-collections/)
 - [Lesson 17: Discovering Sequence Operations](/section-3/lesson-17-discovering-sequence-operations/)
 - [Lesson 18: Summarizing Data](/section-3/lesson-18-summarizing-data/)
-- Lesson 19: Mastering Data With Maps and Vectors
+- [Lesson 19: Mastering Data With Maps and Vectors](/section-3/lesson-19-mastering-data-with-maps-and-vectors/)
 - Lesson 20: Capstone 3 - Contact Book
+
+<!-- - [Lesson 20: Capstone 3 - Contact Book](/section-3/lesson-20-capstone-3-contact-book/) -->

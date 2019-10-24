@@ -105,145 +105,133 @@ date: 2019-09-19T21:43:56-06:00
     - [Reduce Use Cases](/section-3/lesson-18-summarizing-data/#reduce-use-cases)
     - [Being More Concise](/section-3/lesson-18-summarizing-data/#being-more-concise)
     - [Summary](/section-3/lesson-18-summarizing-data/#summary)
-- Lesson 19: Mastering Data With Maps and Vectors
-    - Domain Modeling With Maps and Vectors
-    - Working With Associative Data
-    - Nested Data
-    - Summary
+- [Lesson 19: Mastering Data With Maps and Vectors](/section-3/lesson-19-mastering-data-with-maps-and-vectors/)
+    - [Domain Modeling With Maps and Vectors](/section-3/lesson-19-mastering-data-with-maps-and-vectors/#domain-modeling-with-maps-and-vectors)
+    - [Working With Associative Data](/section-3/lesson-19-mastering-data-with-maps-and-vectors/#working-with-associative-data)
+    - [Working With Nested Data](/section-3/lesson-19-mastering-data-with-maps-and-vectors/#working-with-nested-data)
+    - [Summary](/section-3/lesson-19-mastering-data-with-maps-and-vectors/#summary)
 - Lesson 20: Capstone 3 - Contact Book
     - Data Modeling
     - Creating the UI
     - Implementing Undo/Redo
     - Summary
 
-## Section 4: Functions
+<!-- - [Lesson 20: Capstone 3 - Contact Book](/section-3/lesson-20-capstone-3-contact-book/)
+    - [Data Modeling](/section-3/lesson-20-capstone-3-contact-book/#data-modeling)
+    - [Creating the UI](/section-3/lesson-20-capstone-3-contact-book/#creating-the-ui)
+    - [Implementing Undo/Redo](/section-3/lesson-20-capstone-3-contact-book/#implementing-undo-redo)
+    - [Summary](/section-3/lesson-20-capstone-3-contact-book/#summary) -->
+
+## Section 4: Idiomatic ClojureScript
 
 - Lesson 21: Functional Programming Concepts
-    - Minimizing Side Effects
-    - Immutable Data
-    - Referential Transparency
-    - Summary
-- Lesson 22: Higher Order Functions
-    - Anonymous Functions
-    - Building Specialized Functions
-    - Instrumenting Function Calls
     - Composing Behaviour from Small Pieces
+    - Anonymous Functions
+    - Flexible Dispatch with Multimethods
+    - Functional Design Patterns
     - Summary
-- Lesson 23: Multimethods
-    - OOP and the Expression Problem
-    - Flexible Dispatch
-    - Use Case: Rendering an Activity Feed
-    - Summary
-- Lesson 24: Capstone 4 - Adventure Game Redux
-    - Adding NPCs
-    - Adding an Inventory
-    - Introducing Randomness
-    - Summary
-
-## Section 5: Idiomatic ClojureScript
-
-- Lesson 25: Namespaces and program structure
+- Lesson 22: Namespaces and program structure
     - Grouping Related Functions
     - Avoiding “Hidden” OOP
     - Taking Advantage of Polymorphism
     - Summary
-- Lesson 26: Google Closure Library
+- Lesson 23: Google Closure Library
     - ClojureScript’s other “stdlib”
     - Solving Browser Quirks
     - Simplifying Ajax
     - Better DOM
     - Standard Events
     - Summary
-- Lesson 27: Managing State
+- Lesson 24: Managing State
     - Atoms
     - Transients
     - Anti-Patterns
     - Using State Wisely
     - Summary
-- Lesson 28: Handling Exceptions and Errors
+- Lesson 25: Handling Exceptions and Errors
     - Handling Exceptions with try/catch
     - Functional Alternatives to Exceptions
     - Summary
-- Lesson 29: Intro to core.async
+- Lesson 26: Intro to core.async
     - Overview of CSP
     - Coroutines as Lightweight Processes
     - Communicating Over Channels
     - Channels as Values
     - Summary
-- Lesson 30: Capstone 5 - Group Chat
+- Lesson 27: Capstone 5 - Group Chat
     - Thinking About Interactions
     - Realtime Communication
     - Rooms and Conversations
     - Summary
 
-## Section 6: ClojureScript Applications
+## Section 5: ClojureScript Applications
 
-- Lesson 31: React.js as a Platform
+- Lesson 28: React.js as a Platform
     - Functional Programming Model
     - DOM Diffing
     - Creating Fast Apps
     - Summary
-- Lesson 32: Using React via Reagent
+- Lesson 29: Using React via Reagent
     - Defining a Data Model
     - Writing Queries for Views
     - Writing Transition Functions
     - Building Components
     - Summary
-- Lesson 33: Separate Concerns
+- Lesson 30: Separate Concerns
     - Connecting Components With Channels
     - Message Patterns
     - Client/Server Architecture
     - Summary
-- Lesson 34: Consuming Remote APIs
+- Lesson 31: Consuming Remote APIs
     - Flattening Callbacks
     - Writing Views as Pure Functions
     - Centralizing Coordination Logic
     - Summary
-- Lesson 35: Capstone 6 - Deal of the Day
+- Lesson 32: Capstone 6 - Deal of the Day
     - Building a Reagent UI
     - Handling User Interactions
     - Handling API Interactions
     - Summary
 
-## Section 7: Testing
+## Section 6: Testing
 
-- Lesson 36: REPL-Driven Development
+- Lesson 33: REPL-Driven Development
     - The Advantages of Testing Functional Code
     - Validating Code With the REPL
     - REPL Sessions as Tests
     - Live Coding With Figwheel
     - Summary
-- Lesson 37: Intro To Unit Testing
+- Lesson 34: Intro To Unit Testing
     - Understanding the Need for Unit Tests
     - Testing Pure Functions
     - Testing Impure Functions
     - Test Set-Up and Context
     - Summary
-- Lesson 38: Don’t Write Tests - Let The Computer Write Them
+- Lesson 35: Don’t Write Tests - Let The Computer Write Them
     - What Is Property-Based Testing?
     - Introducing test.check
     - Use Cases
     - Summary
 
-## Section 8: Advanced ClojureScript
+## Section 7: Advanced ClojureScript
 
-- Lesson 39: Protocols and Records
+- Lesson 36: Protocols and Records
     - Enforcing Stricter Contracts
     - Extending Existing Types
     - Anonymous Instances With reify
     - Comparing Records to JavaScript Objects
     - Summary
-- Lesson 40: Survey of Advanced Language Features
+- Lesson 37: Survey of Advanced Language Features
     - Programmable Programming Language
     - Macros
     - Extending Core Protocols
     - Summary
-- Lesson 41: Transducers
+- Lesson 38: Transducers
     - Transwhatsers?
     - Dataflow with core transducers
     - Writing our own transducers
     - Summary
-- Lesson 42: Compiler Deep Dive
+- Lesson 39: Compiler Deep Dive
     - Compilation pipeline
     - Advanced options
     - Bootstrapped ClojureScript
