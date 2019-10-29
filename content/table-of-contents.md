@@ -110,17 +110,11 @@ date: 2019-09-19T21:43:56-06:00
     - [Working With Associative Data](/section-3/lesson-19-mastering-data-with-maps-and-vectors/#working-with-associative-data)
     - [Working With Nested Data](/section-3/lesson-19-mastering-data-with-maps-and-vectors/#working-with-nested-data)
     - [Summary](/section-3/lesson-19-mastering-data-with-maps-and-vectors/#summary)
-- Lesson 20: Capstone 3 - Contact Book
-    - Data Modeling
-    - Creating the UI
-    - Implementing Undo/Redo
-    - Summary
-
-<!-- - [Lesson 20: Capstone 3 - Contact Book](/section-3/lesson-20-capstone-3-contact-book/)
+- [Lesson 20: Capstone 3 - Contact Book](/section-3/lesson-20-capstone-3-contact-book/)
     - [Data Modeling](/section-3/lesson-20-capstone-3-contact-book/#data-modeling)
     - [Creating the UI](/section-3/lesson-20-capstone-3-contact-book/#creating-the-ui)
     - [Implementing Undo/Redo](/section-3/lesson-20-capstone-3-contact-book/#implementing-undo-redo)
-    - [Summary](/section-3/lesson-20-capstone-3-contact-book/#summary) -->
+    - [Summary](/section-3/lesson-20-capstone-3-contact-book/#summary)
 
 ## Section 4: Idiomatic ClojureScript
 

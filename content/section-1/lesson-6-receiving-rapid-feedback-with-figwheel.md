@@ -30,8 +30,8 @@ for Leiningen, it included the `lein-figwheel` plugin, which lets us start Figwh
 with a single command.
 
 ```
-$ cd cljs-weather             <1>
-$ lein figwheel               <2>
+$ cd cljs-weather                                          # <1>
+$ lein figwheel                                            # <2>
 Retrieving lein-figwheel/lein-figwheel/0.5.0-6/lein-figwheel-0.5.0-6.pom from clojars
 # ... More output ...
 Figwheel: Starting server at http://localhost:3449
@@ -76,25 +76,25 @@ this lesson to this single file. Before we make any changes, let's walk through
 the contents of this file at a high level.
 
 ```clojure
-(ns cljs-weather.core                                                    <1>
+(ns cljs-weather.core                                      ;; <1>
   (:require [reagent.core :as reagent :refer [atom]]))
 
-(enable-console-print!)                                                  <2>
+(enable-console-print!)                                    ;; <2>
 
 (println "Edits to this text should show up in your developer console.")
 
 ;; define your app data so that it doesn't get over-written on reload
 
-(defonce app-state (atom {:text "Hello world!"}))                        <3>
+(defonce app-state (atom {:text "Hello world!"}))          ;; <3>
 
-(defn hello-world []                                                     <4>
+(defn hello-world []                                       ;; <4>
   [:h1 (:text @app-state)])
 
 (reagent/render-component [hello-world]
                           (. js/document (getElementById "app")))
 
 
-(defn on-js-reload []                                                    <5>
+(defn on-js-reload []                                      ;; <5>
   ;; optionally touch your app-state to force rerendering depending on
   ;; your application
   ;; (swap! app-state update-in [:__figwheel_counter] inc)
@@ -220,10 +220,10 @@ to some other element is not:
 #### Idempotent and Non-Idempotent Functions
 
 ```clojure
-(defn append-element [parent child]  <1>
+(defn append-element [parent child]                        ;; <1>
   (.appendChild parent child))
 
-(defn set-content [elem content]     <2>
+(defn set-content [elem content]                           ;; <2>
   (aset elem "innerHTML" content))
 ```
 
@@ -276,10 +276,10 @@ is reloaded:
 
 ```clojure
 (defonce is-initialized?
-  (do                                                   <1>
+  (do                                                      ;; <1>
     (.setItem js/localStorage "init-at" (.now js/Date))
     (js/alert "Welcome!")
-    true))                                              <2>
+    true))                                                 ;; <2>
 ```
 
 _Wrapping Initialization Code_

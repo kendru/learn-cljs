@@ -45,7 +45,7 @@ individual contact as an object with the properties, `name`, `address`, etc. It
 would probably look something like the following:
 
 ```javascript
-var contactBook = [                                        // <1>
+const contactBook = [                                      // <1>
     {
         name: "Phillip Jordan",
         address: "523 Sunny Hills Cir.",
