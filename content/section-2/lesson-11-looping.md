@@ -137,10 +137,10 @@ It is easy to see that this problem is just transforming one sequence into
 another, so we can easily use `for`:
 
 ```clojure
-(let [sides-list (list [4.2 6] [4 4] [3 4] [5.5 3])]    ;; <1>
-  (for [sides sides-list]                               ;; <2>
-    (js/Math.sqrt (+ (js/Math.pow (first sides) 2)      ;; <3>
-                     (js/Math.pow (second sides) 2)))))
+(let [sides-list (list [4.2 6] [4 4] [3 4] [5.5 3])]       ;; <1>
+  (for [sides sides-list]                                  ;; <2>
+    (Math.sqrt (+ (Math.pow (first sides) 2)               ;; <3>
+                  (Math.pow (second sides) 2)))))
 ;; (7.323933369440222 5.656854249492381 5 6.264982043070834) ;; <4>
 ```
 

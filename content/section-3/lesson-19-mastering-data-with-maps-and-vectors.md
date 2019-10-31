@@ -99,7 +99,7 @@ the new data types that we create. Here is an example for how we might do this w
 ```clojure
 cljs.user=> (defn event [type]
               {:type type
-               :timestamp (.now js/Date)})
+               :timestamp (.now Date)})
 #'cljs.user/event
 
 cljs.user=> (event :click)
@@ -173,7 +173,7 @@ a constructor for pageviews:
 
 ```clojure
 cljs.user=> (defn pageview
-              ([url] (pageview url (.now js/Date) []))     ;; <1>
+              ([url] (pageview url (.now Date) []))     ;; <1>
               ([url loaded] (pageview url loaded []))
               ([url loaded events]
                 {:url url
@@ -356,15 +356,15 @@ With that, we can write a function that, given an end timestamp, will add a
 ```clojure
 cljs.user=> (defn with-duration [session end-time]
               (let [duration-in-ms (- end-time (:start session))
-                    duration-in-s (.floor js/Math (/ duration-in-ms 1000))]
+                    duration-in-s (.floor Math (/ duration-in-ms 1000))]
                 (assoc session :duration duration-in-s)))
 
-cljs.user=> (def my-session (session (.now js/Date) true "127.0.0.1" "Some UA"))
+cljs.user=> (def my-session (session (.now Date) true "127.0.0.1" "Some UA"))
 #'cljs.user/my-session
 
 ;; Wait a few seconds
 
-cljs.user=> (with-duration my-session (.now js/Date))
+cljs.user=> (with-duration my-session (.now Date))
 {:start 1464641029299,
  :is-active? true,
  :ip "127.0.0.1",

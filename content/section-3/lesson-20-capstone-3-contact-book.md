@@ -2,31 +2,34 @@
 title: "Capstone 3 - Contact Book | Lesson 20"
 date: 2019-10-06T17:19:19-06:00
 type: "docs"
-draft: true
 ---
 
 # Lesson 20: Capstone 3 - Contact Book
 
 Over the past few lessons, we have learned the core tools for working with data in
 ClojureScript. First, we learned about the basic collection types - lists, vectors,
-maps, and sets - as well as the most common functions for working with these collection
-types. Then we took a closer look at the important _sequence abstraction_ that allows
-us to operate with all sorts of sequential data with a uniform interface. Next, we
-discovered the `reduce` function and the many cases in which it can be applied to
+maps, and sets - as well as the most common functions for working with these collections.
+Then we took a closer look at the important _sequence abstraction_ that allows
+us to operate on all sorts of sequential data using a uniform interface. Next, we
+discovered the `reduce` function and the many cases in which it can be used to
 summarize a sequence of data. Last, we walked through the process of modeling a real-
-world domain. With this knowledge in our possession, we are ready to build another
+world analytics domain. With this knowledge in our possession, we are ready to build another
 capstone project. This time, we will take the example of a contact book that we
-mentioned back in Lesson 16, and we will build a complete contact book implementation,
-similar to what is found in most email clients.
+mentioned back in Lesson 16, and we will build a complete implementation, _ClojureScript
+Contacts_.
 
 ---
 
 *In This Lesson:*
 
 - Create a complete ClojureScript application without any frameworks
-- ...
+- Build HTML out of plain ClojureScript data structures
 
 ---
+
+![ClojureScript Contacts Screenshot](/img/lesson20/contacts-screenshot.png)
+
+_Screenshot of ClojureScript Contacts_
 
 ## Data Modeling
 
@@ -154,7 +157,9 @@ even clearer:
 1. Refactor the code that conditionally constructs an address
 2. Rewrite `make-contact` using the `->` macro
 
-<!-- TODO: Insert diagram of threading macros -->
+![Thread First Macro](/img/lesson20/thread-first.png)
+
+_Thread First Macro_
 
 ### Quick Review
 
@@ -277,8 +282,6 @@ re-rendering the entire application whenever anything changes. Our application w
 main views - a list of contacts that displays summary details about each contact and a larger
 pane for viewing/editing contact details.
 
-<!-- TODO: Insert screenshot -->
-
 We will use the [hiccups](https://github.com/teropa/hiccups)
 library to transform plain ClojureScript data structures into an HTML string. This allows us to
 represent the interface of our application as a ClojureScript data structure and have a very simple
@@ -331,9 +334,55 @@ With this knowledge, we can start defining components for our various UI element
 that produce a hiccups-compatible data structure. We can compose these functions
 together to create a data structure that represents the entire UI, and we'll
 pass this to another function that renders the whole structure to the page.
-Let's start with the component that displays the contact summary in the list. For
-this app, we will be using the Bulma CSS framework to help with styling, so most
-of the markup that we are generating is for the purpose of styling the page.
+
+### UI State
+
+Let's take a quick step back and think about the additional state that we need for the
+UI. First, we need to have a flag indicating whether we are in editing mode. In editing
+mode, a form with contact details will be displayed in the right-hand pane. Also, we
+need to keep track of which contact has been selected for editing - in the case of a new
+contact that has not been saved yet, this will be empty. Naturally, we also need the
+contacts on the application state. This leaves us with a pretty simple state model to
+support everything that we want in our UI:
+
+```clojure
+(def initial-state
+  {:contacts contact-list
+   :selected nil
+   :editing? false})
+```
+
+We will also create a `refresh!` function that is responsible for rendering the entire application and
+attaching event handlers every time our state changes:
+
+```clojure
+(defn attach-event-handlers! [state])                      ;; <1>
+
+(defn set-app-html! [html-str]
+  (set! (.-innerHTML app-container) html-str))
+
+(defn render-app! [state]
+  (set-app-html!
+    (hiccups/html
+      [:div])))                                            ;; <2>
+
+(defn refresh! [state]                                     ;; <3>
+  (render-app! state)
+  (attach-event-handlers! state))
+
+(refresh! initial-state)                                   ;; <4>
+```
+
+1. All event handlers that we need to attach will be attached in this function
+2. We will replace the empty div with our actual application HTML
+3. `refresh!` will be called every time that we update the application state
+4. We kick off the application with an initial `refresh!` to render the page from `initial-state`
+
+### Rendering Contacts
+
+Let's start with the component that displays the contact summary in the list. We
+will be using the Bulma CSS framework to help with styling, so most of the markup
+that we are generating is for the purpose of styling the page.
 
 ```clojure
 (defn format-name [contact]                                ;; <1>
@@ -369,32 +418,251 @@ _Rendering a Contact Summary_
 Both of the things that we should note about this code occur in the `format-name` function.
 First, we use the `->>` macro to thread a value through several function calls. This works
 almost exactly like the `->` macro that we used earlier in this lesson with the exception that
-it feeds threads the value as the _last_ argument to each subsequent function. Second, the
-`juxt` function is a very interesting function that deserves a bit of an explanation.
+it feeds threads the value as the _last_ argument to each subsequent function.
+
+Second, the `juxt` function is a very interesting function that deserves a bit of an explanation.
+`juxt` takes a variable number of functions and returns a new function. This resulting function
+will call each of the original functions passed to `juxt` in turn using the arguments provided
+to it. The results are finally placed into a vector in the same order as the functions that were
+passed to `juxt`. For example, this code snippet will create a function that will get 2-element
+vector containing the minimum and maximum values from a collection:
+
+```clojure
+(def minmax
+  (juxt #(reduce Math/min %)
+        #(reduce Math/max %)))
+
+(minmax [48 393 12 14 -2 207])
+;; [-2 393]
+```
+
+The reason for the extra set of parentheses in the call to `juxt` (`((juxt :first-name :last-name))`)
+is that we need to call the function returned by `juxt` rather than threading the contact into
+the call to `juxt` itself. Since keywords are functions that can look themselves up in maps,
+this expression will effectively create a vector with the first name and last name of the contact
+respectively.
+
+### Adding Interactions
+
+Let's now think about the interactions that we want to enable on the contact summary. When the row
+is clicked, we want to open up this contact's details for view/editing. We will attach an event handler
+to each list item that will set an `:editing?` flag on the app state and will set `:selected` to the
+index of the contact that was clicked (this is why we needed to pass `idx` into the rendering function
+and set the `data-idx` attribute on the row).
+
+```clojure
+(defn on-open-contact [e state]                            ;; <1>
+  (refresh!
+    (let [idx (int (aget e "currentTarget" "dataset" "idx"))]
+      (assoc state :selected idx
+                   :editing? true))))
+
+(defn attach-event-handlers! [state]
+  ;; ...
+  (doseq [el (array-seq (gdom/getElementsByClass "contact-summary"))]
+    (gevents/listen el "click"
+      (fn [e] (on-open-contact e state)))))
+```
 
 Now that we can render a single contact list item, let's create the list that will display
 each list item:
 
-<!-- Create functions for rendering each component:
-Contact details
-Contact list item -->
+```clojure
+(defn render-contact-list [state]
+  (let [contacts (:contacts state)
+        selected (:selected state)]
+    [:div {:class "contact-list column is-4 hero is-fullheight"}
+      (map-indexed (fn [idx contact]
+                     (render-contact-list-item idx contact (= idx selected)))
+                   contacts)]))
+```
 
-<!-- Describe composition via functions. -->
+This function is pretty straightforward: it renders a wrapper `div` to contain each contact
+list item, then it delegates to the `render-contact-list-item` function to render the
+summary for each contact in turn. There is a new function that we have not yet met, however:
+`map-indexed`. This function works just like `map` except that it calls the mapping function
+with the index of the element in the sequence as well as the element itself.
 
-<!-- Create Contact List view render. -->
+This pattern of building a UI by composing components is common in the JavaScript world as
+well, but in most ClojureScript applications, the method of composing UIs is normal function
+composition with pure functions that produce normal data structures.
 
-<!-- Explain ease of introducing new UI components, and change phone # to phone #s (type/num) list -->
+Finally, we will briefly cover rendering the contact details form and adding/updating contacts
+without too much additional explanation. First, let's look at the complete function that renders
+the entire app HTML:
 
-## Implementing Undo/Redo
+```clojure
+(defn render-app! [state]
+  (set-app-html!
+    (hiccups/html
+      [:div {:class "app-main"}
+        [:div {:class "navbar has-shadow"}
+          [:div {:class "container"}
+            [:div {:class "navbar-brand"}
+              [:span {:class "navbar-item"}
+                "ClojureScript Contacts"]]]]
+        [:div {:class "columns"}
+          (render-contact-list state)
+          [:div {:class "contact-details column is-8"}
+            (page-header (:editing? state))
+            [:div {:class "hero is-fullheight"}
+              (if (:editing? state)
+                (render-contact-details (get-in state [:contacts (:selected state)] {}))
+                [:p {:class "notice"} "No contact selected"])]]]])))
+```
 
-<!-- Explain that immutable data = ability to keep state at any point in time - no
-per-operation logic for determining how to undo. -->
+We have already seen the `render-contact-list` function, but we still need to define
+`page-header`, which will display the buttons for adding or saving a contact, and
+`render-contact-details`, which will render the edit form. Let's start with `render-contact-details`:
+
+```clojure
+(defn form-field                                           ;; <1>
+  ([id value label] (form-field id value label "text"))
+  ([id value label type]
+   [:div {:class "field"}
+     [:label {:class "label"} label]
+     [:div {:class "control"}
+       [:input {:id id
+                :value value
+                :type type
+                :class "input"}]]]))
+
+(defn render-contact-details [contact]
+  (let [address (get contact :address {})]                 ;; <2>
+    [:div {:id "contact-form" :class "contact-form"}
+      (form-field "input-first-name" (:first-name contact) "First Name")
+      (form-field "input-last-name" (:last-name contact) "Last Name")
+      (form-field "input-email" (:email contact) "Email" "email")
+      [:fieldset
+        [:legend "Address"]
+        (form-field "input-street" (:street address) "Street")
+        (form-field "input-city" (:city address) "City")
+        (form-field "input-state" (:state address) "State")
+        (form-field "input-postal" (:postal address) "Postal Code")
+        (form-field "input-country" (:country address) "Country")]]))
+```
+
+_Rendering Contact Details_
+
+1. Since we will be rendering multiple form fields, we will extract the code for a field into its own function
+2. The address may or may not be present, so we provide an empty map as a default
+
+Now let's look at the code for processing the form and either adding or updating a contact:
+
+```clojure
+(defn get-field-value [id]
+  (let [value (.-value (gdom/getElement id))]
+    (when (not (empty? value)) value)))
+
+(defn get-contact-form-data []
+  {:first-name (get-field-value "input-first-name")
+   :last-name (get-field-value "input-last-name")
+   :email (get-field-value "input-email")
+   :address {:street (get-field-value "input-street")
+             :city (get-field-value "input-city")
+             :state (get-field-value "input-state")
+             :postal (get-field-value "input-postal")
+             :country (get-field-value "input-country")}})
+
+(defn on-save-contact [state]
+  (refresh!
+    (let [contact (get-contact-form-data)
+          idx (:selected state)
+          state (dissoc state :selected :editing?)]        ;; <1>
+      (if idx
+        (update state :contacts                            ;; <2>
+                replace-contact idx contact)
+        (update state :contacts
+                add-contact contact)))))
+```
+
+1. `state` within the `let` will refer to this updated state
+2. Use our domain functions to update the contact list within our app state
+
+Before moving on, let's take a look at the use of `update` to transform our
+application state. As mentioned earlier in this lesson, `update` takes an
+indexed collection (a map or vector), a key to update, and an update function.
+Here, we are using the variable-arity version of `update`, which can take any
+number of additional arguments that will be passed to the transformation function.
+For instance, the call, `(update state :contacts replace-contact idx contact)`,
+will call `replace-contact` with the contacts list followed by `idx` and `contact`.
+
+Now, we will finally implement the page header with its actions to create and save
+contacts:
+
+```clojure
+(defn action-button [id text icon-class]
+  [:button {:id id
+            :class "button is-primary is-light"}
+    [:span {:class (str "mu " icon-class)}]
+    (str " " text)])
+
+(def save-button (action-button "save-contact" "Save" "mu-file"))
+(def cancel-button (action-button "cancel-edit" "Cancel" "mu-cancel"))
+(def add-button (action-button "add-contact" "Add" "mu-plus"))
+
+(defn page-header [editing?]
+  [:div {:class "page-header"}
+    [:div {:class "level"}
+      [:div {:class "level-left"}
+        [:div {:class "level-item"}
+          [:h1 {:class "subtitle"}
+            [:span {:class "mu mu-user"}]
+            "Edit Contact"]]]
+      [:div {:class "level-right"}
+        (if editing?
+          [:div {:class "buttons"} cancel-button save-button]
+          add-button)]]])
+
+(defn on-add-contact [state]
+  (refresh! (-> state
+                (assoc :editing? true)
+                (dissoc :selected))))
+
+(defn on-save-contact [state]
+  (refresh!
+    (let [contact (get-contact-form-data)
+          idx (:selected state)
+          state (dissoc state :selected :editing?)]
+      (if idx
+        (update state :contacts replace-contact idx contact)
+        (update state :contacts add-contact contact)))))
+
+(defn on-cancel-edit [state]
+  (refresh! (dissoc state :selected :editing?)))
+
+(defn attach-event-handlers! [state]
+  ;; ...
+  (when-let [add-button (gdom/getElement "add-contact")]
+    (gevents/listen add-button "click"
+      (fn [_] (on-add-contact state))))
+
+  (when-let [save-button (gdom/getElement "save-contact")]
+    (gevents/listen save-button "click"
+      (fn [_] (on-save-contact state))))
+
+  (when-let [cancel-button (gdom/getElement "cancel-edit")]
+    (gevents/listen cancel-button "click"
+      (fn [_] (on-cancel-edit state))))))
+```
+
+By now, this sort of code should be no problem to read and understand. In the interest
+of space, we will not reprint the entire application code, but it can be found at
+[the book's GitHub project](https://github.com/kendru/learn-cljs/tree/master/code/lesson-20/contacts).
+
+### You Try It
+
+- Allow contacts to have phone numbers. Each phone number will need a `:type` and `:number`. This will require updates to the models, components, and event handlers.
 
 ## Summary
 
 While this application is not a shining example of modern web development (don't worry -
 we will get to that in Section 5), it showed us how to build a data-driven application
-using the techniques that we have been learning in this section.
+using the techniques that we have been learning in this section. While this is not a large
+application, is is a non-trivial project that should have helped us get more familiar with
+transforming data using ClojureScript. Still, much of our ClojureScript code still looks a
+lot like vanilla JavaScript with a funky syntax. In the next section, we will start to dig
+in to writing more natural, idiomatic ClojureScript.
 
 [^1]: The actual implementation of the `if-let` macro is slightly more complex, but the effect is the same.
 [^2]: Lazy evaluation was covered in Lesson 11.

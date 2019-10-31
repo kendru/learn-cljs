@@ -2,6 +2,7 @@
   (:require-macros [hiccups.core :as hiccups])
   (:require [hiccups.runtime]
             [goog.dom :as gdom]
+            [goog.events :as gevents]
             [clojure.string :as str]))
 
 (enable-console-print!)
@@ -46,23 +47,15 @@
         [:span {:class "navbar-item"}
           "ClojureScript Contacts"]]]])
 
-(def save-button
-  [:button {:id "save-contact"
+(defn action-button [id text icon-class]
+  [:button {:id id
             :class "button is-primary is-light"}
-    [:span {:class "mu mu-file"}]
-    " Save"])
+    [:span {:class (str "mu " icon-class)}]
+    (str " " text)])
 
-(def cancel-button
-  [:button {:id "cancel-edit"
-            :class "button is-primary is-light"}
-    [:span {:class "mu mu-cancel"}]
-    " Cancel"])
-
-(def add-button
-  [:button {:id "add-contact"
-            :class "button is-primary is-light"}
-    [:span {:class "mu mu-plus"}]
-    " Add"])
+(def save-button (action-button "save-contact" "Save" "mu-file"))
+(def cancel-button (action-button "cancel-edit" "Cancel" "mu-cancel"))
+(def add-button (action-button "add-contact" "Add" "mu-plus"))
 
 (defn page-header [editing?]
   [:div {:class "page-header"}
@@ -148,11 +141,10 @@
              :city (get-field-value "input-city")
              :state (get-field-value "input-state")
              :postal (get-field-value "input-postal")
-             :contry (get-field-value "input-country")}})
+             :country (get-field-value "input-country")}})
 
 (defn set-app-html! [html-str]
   (set! (.-innerHTML app-container) html-str))
-
 
 (defn on-add-contact [state]
   (refresh! (-> state
@@ -187,23 +179,23 @@
 
 (defn attach-event-handlers! [state]
   (when-let [add-button (gdom/getElement "add-contact")]
-    (.addEventListener add-button "click"
+    (gevents/listen add-button "click"
       (fn [_] (on-add-contact state))))
 
   (when-let [save-button (gdom/getElement "save-contact")]
-    (.addEventListener save-button "click"
+    (gevents/listen save-button "click"
       (fn [_] (on-save-contact state))))
 
   (when-let [cancel-button (gdom/getElement "cancel-edit")]
-    (.addEventListener cancel-button "click"
+    (gevents/listen cancel-button "click"
       (fn [_] (on-cancel-edit state))))
 
   (doseq [el (array-seq (gdom/getElementsByClass "contact-summary"))]
-    (.addEventListener el "click"
+    (gevents/listen el "click"
       (fn [e] (on-open-contact e state))))
 
   (doseq [el (array-seq (gdom/getElementsByClass "delete-icon"))]
-    (.addEventListener el "click"
+    (gevents/listen el "click"
       (fn [e] (on-delete-contact e state)))))
 
 (defn render-app! [state]
@@ -221,7 +213,6 @@
                 no-contact-details)]]]])))
 
 (defn refresh! [state]
-  (println "State" state)
   (render-app! state)
   (attach-event-handlers! state))
 

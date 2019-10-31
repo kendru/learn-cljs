@@ -113,7 +113,6 @@ date: 2019-09-19T21:43:56-06:00
 - [Lesson 20: Capstone 3 - Contact Book](/section-3/lesson-20-capstone-3-contact-book/)
     - [Data Modeling](/section-3/lesson-20-capstone-3-contact-book/#data-modeling)
     - [Creating the UI](/section-3/lesson-20-capstone-3-contact-book/#creating-the-ui)
-    - [Implementing Undo/Redo](/section-3/lesson-20-capstone-3-contact-book/#implementing-undo-redo)
     - [Summary](/section-3/lesson-20-capstone-3-contact-book/#summary)
 
 ## Section 4: Idiomatic ClojureScript

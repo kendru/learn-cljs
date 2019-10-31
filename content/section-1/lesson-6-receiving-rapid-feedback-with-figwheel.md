@@ -277,7 +277,7 @@ is reloaded:
 ```clojure
 (defonce is-initialized?
   (do                                                      ;; <1>
-    (.setItem js/localStorage "init-at" (.now js/Date))
+    (.setItem js/localStorage "init-at" (.now Date))
     (js/alert "Welcome!")
     true))                                                 ;; <2>
 ```

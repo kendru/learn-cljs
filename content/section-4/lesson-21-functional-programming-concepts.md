@@ -184,7 +184,7 @@ this code will generate a greeting appropriate to the time of day:
 
 ```clojure
 (defn get-time-of-day-greeting []
-  (condp >= (.getHours (js/Date.))
+  (condp >= (.getHours (Date.))
     11 "Good morning"
     15 "Good day"
     "Good evening"))
@@ -198,7 +198,7 @@ logic:
 
 ```clojure
 (defn get-current-hour []                                  ;; <1>
-  (.getHours (js/Date.)))
+  (.getHours (Date.)))
 
 (defn get-time-of-day-greeting [hour]                      ;; <2>
   (condp >= hour
@@ -214,7 +214,7 @@ logic:
 2. Ensure that the output of our business logic is solely dependent on its formal parameters
 
 This is a fairly trivial example, but any code that relies on external state - whether it is
-the time of day, the result of an API call, the `(js/Math.random)` random number generator,
+the time of day, the result of an API call, the `(Math.random)` random number generator,
 or anything other than its explicit parameters - breaks the functional paradigm and is more
 difficult to test and evolve as requirements change.
 
