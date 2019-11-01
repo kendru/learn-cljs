@@ -35,36 +35,36 @@ _Screenshot of ClojureScript Contacts_
 
 In this lesson, we will use the techniques and patterns from the previous chapter to
 model the data for our contact book. The goal will be to practice what we have learned
-rather than to introduce any new material. We will primarily model our data using maps
+rather than to introduce much new material. We will primarily model our data using maps
 and vectors, and we will implement the constructor function pattern for creating new
 contacts. We will also implement the operations that the UI will need to update the
 contact list using simple functions to transform our data. With that, let's dig in to
-the data model.
+the data model!
 
 ### Constructing Entities
 
-Since a contact book at its core represents an ordered list of contacts, we will need
+Since a contact book represents an ordered list of contacts, we will need
 a data structure to represent that ordered list, and as we have already seen, a vector
-fits the bill nicely. We can define an empty contact list simply as an empty vector -
+fits the bill nicely. We can define an empty contact list as an empty vector -
 no constructor function necessary:
 
 ```clojure
 (def contact-list [])
 ```
 
-Since an empty list is not all that interesting, let's think about the contacts that
-this will hold. Each contact will need a first name, last name, email address, phone
-number, and a physical address, including city, state, and country. This can easily
-be accommodated with a nested map, such as the following:
+Since an empty vector is not terribly interesting, let's turn our attention to the contacts
+that it will hold. Each contact will need a first name, last name, email address, and a
+physical address, including city, state, and country. This can easily be accommodated with
+a nested map, such as the following:
 
 ```clojure
 {:first-name "Phillip"
  :last-name "Jordan"
  :email "phil.j@hotmail.com"
- :phone "111-222-3456"
  :address {:street "523 Sunny Hills Cir."
            :city "Springfield"
            :state "MI"
+           :postal "11111"
            :country "USA"}}
 ```
 
@@ -73,30 +73,29 @@ introduced in the last lesson. Instead of passing in each field individually, we
 pass in a map that we expect to contain zero or more of the fields that make up a
 contact. You will recall from the last lesson that the `select-keys` function takes
 a map and a collection of keys that should be selected, and it returns a new map with
-only the selected keys copied from the original map. We can use this function to
-sanitize the input and ensure that our contact contains only valid keys.
+only the selected keys copied. We can use this function to
+sanitize the input, ensuring that our contact contains only valid keys.
 
 ```clojure
 (defn make-contact [contact]
-  (select-keys contact [:first-name :last-name :email :phone :address]))
+  (select-keys contact [:first-name :last-name :email :postal :address]))
 ```
 
-Since address itself is a map, let's factor out creation of an address to another
-function that also selects the valid address keys. We can then update the
-`make-contact` function to use this address constructor:
+Since the address itself is a map, let's factor out creation of an address to another
+function. We can then update the `make-contact` function to use this address constructor:
 
 ```clojure
 (defn make-address [address]
   (select-keys address [:street :city :state :country]))
 
 (defn make-contact [contact]
-  (let [clean-contact (select-keys contact [:first-name :last-name :email :phone])]
+  (let [clean-contact (select-keys contact [:first-name :last-name :email])]
     (if-let [address (:address contact)]
       (assoc clean-contact :address (make-address address))
       clean-contact)))
 ```
 
-This new version of `make-contact introduces` one expression that we have not seen before:
+This new version of `make-contact` introduces one expression that we have not seen before:
 `if-let`. This macro works just like `if` except that it binds a name to the value being
 tested (just like `let` does). Unlike `let`, only a single binding may be provides. At compile
 time, this code will expand to something like the following[^1]:
@@ -139,8 +138,13 @@ _Thread-First Transformation_
 This macro is extremely common in ClojureScript code because of how it enhances the readability
 of our code. We can write code that looks sequential but is evaluated "inside-out". There are
 several additional threading macros in ClojureScript that we will not go into now, but we will
-explain their usage as we run into them. With this macro, we can make our `make-contact` function
-even clearer:
+explain their usage as we run into them.
+
+![Thread First Macro](/img/lesson20/thread-first.png)
+
+_Thread First Macro_
+
+With this macro, we can make our `make-contact` function even clearer:
 
 ```clojure
 (defn maybe-set-address [contact]                          ;; <1>
@@ -150,16 +154,12 @@ even clearer:
 
 (defn make-contact [contact]
   (-> contact                                              ;; <2>
-      (select-keys [:first-name :last-name :email :phone])
+      (select-keys [:first-name :last-name :email])
       (maybe-set-address)))
 ```
 
 1. Refactor the code that conditionally constructs an address
 2. Rewrite `make-contact` using the `->` macro
-
-![Thread First Macro](/img/lesson20/thread-first.png)
-
-_Thread First Macro_
 
 ### Quick Review
 
@@ -183,15 +183,14 @@ _Thread First Macro_
 ### Defining State Transitions
 
 In order for our UI to do anything other than display a static list of contacts
-that we define in code, we need to create function for the interactions that we want
-the UI to be able to perform. Again, we are building our low-level domain logic
-before any UI code so that we can take advantage of the bottom-up programming style
-that ClojureScript encourages - composing small, granular functions into larger and
-more useful structures.
+that we define in code, we need to enable some interactions in the UI. Again, we
+are building our low-level domain logic before any UI code so that we can take
+advantage of the bottom-up programming style that ClojureScript encourages - composing
+small, granular functions into larger and more useful structures.
 
-First, we will want the user to be able to add a new contact to the contact list. We
-can assume that we will receive some sort of form data as input, which we will pass
-to our `make-contact` constructor, adding the resulting contact to our contact list.
+First, we want the user to be able to add a new contact to the contact list. We
+can assume that we will receive some sort of form data as input, which we can pass
+to our `make-contact` constructor, adding the resulting contact to our list.
 We will need to pass in the contact list and input data as arguments and produce a new
 contact list.
 
@@ -251,35 +250,17 @@ is a `seq`, we use the `vec` function to coerce the result back into a vector. S
 ClojureScript's standard library operates on the sequence abstraction, we will find that we
 often need to convert the result back into a more specific type of collection.
 
-Now that we can add and remove contacts from the contact list, we should have a way to update
-a specific contact. We want to be able to provide the index of a contact to update and a
-transformation function to be applied to that contact. Fortunately, this is exactly
-what the built-in `update` function does:
-
-```clojure
-(update
-  contact-list                                             ;; <1>
-  7                                                        ;; <2>
-  (fn [contact] (assoc contact :name "Ted")))              ;; <3>
-```
-
-_Updating a Contact_
-
-1. Collection to update
-2. Key of element in collection to update
-3. Transformation function to be applied to element
-
 ### Quick Review
 
 - We mentioned that `vec` converts a sequence into a vector. Given what we learned about the sequence abstraction, what will happen if you pass `vec` a map? What about a set?
 
 ## Creating the UI
 
-Now that we have defined all of the functions that we need to work with our application state,
+Now that we have defined all of the functions that we need to work with our data model,
 let's turn our attention to creating the application UI. In Section 5, we will learn how to
-create performant UIs using the Reagent framework, but for now, we will take naive approach of
+create high-performance UIs using the Reagent framework, but for now, we will take naive approach of
 re-rendering the entire application whenever anything changes. Our application will have two
-main views - a list of contacts that displays summary details about each contact and a larger
+main sections - a list of contacts that displays summary details about each contact and a larger
 pane for viewing/editing contact details.
 
 We will use the [hiccups](https://github.com/teropa/hiccups)
@@ -298,7 +279,7 @@ _`project.clj`_
 Then, we need to import this library into our `core` namespace. Note that since we are using
 a macro from this library, the syntax is a little different:
 
-```cloure
+```clojure
 (ns contacts.core
   (:require-macros [hiccups.core :as hiccups])
   (:require [hiccups.runtime]))
@@ -341,7 +322,7 @@ Let's take a quick step back and think about the additional state that we need f
 UI. First, we need to have a flag indicating whether we are in editing mode. In editing
 mode, a form with contact details will be displayed in the right-hand pane. Also, we
 need to keep track of which contact has been selected for editing - in the case of a new
-contact that has not been saved yet, this will be empty. Naturally, we also need the
+contact that has not been saved yet, this property will be `nil` or omitted. Naturally, we also need the
 contacts on the application state. This leaves us with a pretty simple state model to
 support everything that we want in our UI:
 
@@ -352,7 +333,7 @@ support everything that we want in our UI:
    :editing? false})
 ```
 
-We will also create a `refresh!` function that is responsible for rendering the entire application and
+We will also define a `refresh!` function that is responsible for rendering the entire application and
 attaching event handlers every time our state changes:
 
 ```clojure
@@ -436,11 +417,16 @@ vector containing the minimum and maximum values from a collection:
 ;; [-2 393]
 ```
 
-The reason for the extra set of parentheses in the call to `juxt` (`((juxt :first-name :last-name))`)
-is that we need to call the function returned by `juxt` rather than threading the contact into
+The reason for the extra set of parentheses in the call to `juxt` - `((juxt :first-name :last-name))` -
+is that we need to call the function _returned by_ `juxt` rather than threading the contact into
 the call to `juxt` itself. Since keywords are functions that can look themselves up in maps,
 this expression will effectively create a vector with the first name and last name of the contact
 respectively.
+
+```clojure
+((juxt :first-name :last-name) {:first-name "Bob" :last-name "Jones"})
+;; ["Bob" "Jones"]
+```
 
 ### Adding Interactions
 
@@ -451,7 +437,7 @@ index of the contact that was clicked (this is why we needed to pass `idx` into 
 and set the `data-idx` attribute on the row).
 
 ```clojure
-(defn on-open-contact [e state]                            ;; <1>
+(defn on-open-contact [e state]
   (refresh!
     (let [idx (int (aget e "currentTarget" "dataset" "idx"))]
       (assoc state :selected idx
@@ -477,18 +463,18 @@ each list item:
                    contacts)]))
 ```
 
-This function is pretty straightforward: it renders a wrapper `div` to contain each contact
+This function is pretty straightforward: it renders a wrapper `div` with each contact
 list item, then it delegates to the `render-contact-list-item` function to render the
 summary for each contact in turn. There is a new function that we have not yet met, however:
 `map-indexed`. This function works just like `map` except that it calls the mapping function
 with the index of the element in the sequence as well as the element itself.
 
 This pattern of building a UI by composing components is common in the JavaScript world as
-well, but in most ClojureScript applications, the method of composing UIs is normal function
-composition with pure functions that produce normal data structures.
+well, but in most ClojureScript applications, the method of composing UIs is function
+composition with pure functions that produce plain data structures.
 
 Finally, we will briefly cover rendering the contact details form and adding/updating contacts
-without too much additional explanation. First, let's look at the complete function that renders
+without too much additional explanation. First, let's look at the function that renders
 the entire app HTML:
 
 ```clojure
@@ -580,10 +566,10 @@ Now let's look at the code for processing the form and either adding or updating
 2. Use our domain functions to update the contact list within our app state
 
 Before moving on, let's take a look at the use of `update` to transform our
-application state. As mentioned earlier in this lesson, `update` takes an
-indexed collection (a map or vector), a key to update, and an update function.
-Here, we are using the variable-arity version of `update`, which can take any
-number of additional arguments that will be passed to the transformation function.
+application state. `update` takes an indexed collection (a map or vector), a key
+to update, and a transformation function. This function is variadic, and any additional
+arguments after the transformation function that will be passed to the transformation
+function following the value to transform.
 For instance, the call, `(update state :contacts replace-contact idx contact)`,
 will call `replace-contact` with the contacts list followed by `idx` and `contact`.
 

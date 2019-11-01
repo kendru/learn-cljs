@@ -21,7 +21,7 @@
 
 (defn make-contact [contact]
   (-> contact
-      (select-keys [:first-name :last-name :email :phone :address])
+      (select-keys [:first-name :last-name :email :address])
       (maybe-set-address)))
 
 (defn add-contact [contact-list input]
