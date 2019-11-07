@@ -6,7 +6,7 @@ date: 2019-09-19T20:50:14-06:00
 
 # Lesson 10: Making Choices
 
-Up to this point, we have mostly been writing code that is has some starting
+Up to this point, we have mostly been writing code that has some starting
 point and progresses until it is complete.[^1] It has a well-defined task and must
 follow a well-defined series of instructions to accomplish this task. What we
 have been missing is the concept of a _choice_ - being able to take a different
