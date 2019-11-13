@@ -204,7 +204,7 @@ might use let in a real application:
 ```
 
 There are a couple of important things to notice here. First, the names that we
-created with the `let`, `msg-types`, `msg`, `type`, and `data`, are only defined
+created with the `let` - `msg-types`, `msg`, `type`, and `data` - are only defined
 for code inside the `let` and will be garbage collected when the `let` completes
 evaluation. Second, the names that we declare first are available in later
 bindings. For example, we defined `msg` as the result of evaluating the
@@ -232,17 +232,103 @@ clearer and concise code.
   (println "All desserts are great, but I like" favorite-dessert "the best"))
 ```
 
+### Destructuring Bindings
+
+The `let` form allows us to do more than bind a single name at a time. We can use it to
+assign names to elements in a list or vector as well as entries in a map. In the simplest
+case, we can declare a vector of names on the left-hand side of the binding and a sequence
+on the right-hand side. The nth name in the vector will be bound to the nth element in the
+sequence on the right (or `nil` if no such element exists):
+
+```clojure
+(let [[id name rank extra] [420 "Pepper" "Sgt."]]
+  (println "Hello," rank name "- you have ID =" id "and extra =" extra))
+
+;; Hello, Sgt. Pepper - you have ID = 420 and extra = nil
+```
+
+If we are not interested in assigning a name of a particular element, we can use an `_`
+as its name, as in the following example:
+
+```clojure
+(let [[_ name rank] [420 "Pepper" "Sgt."]]
+  (println "Hello," rank name))
+
+;; Hello, Sgt. Pepper
+```
+
+Another common case is assigning some trailing portion of a sequence to a name. This
+can be done by inserting a `& other` at then end of the binding:
+
+```clojure
+(let [[eat-now & eat-later] ["nachos" "salad" "apples" "yogurt"]]
+  (println "Please pass the" eat-now)
+  (println "I'm saving these for later:" eat-later))
+
+;; Please pass the nachos
+;; I'm saving these for later: (salad apples yogurt)
+```
+
+In addition to destructuring lists and maps, we can also destructure maps by providing
+a map on the left-hand side of the binding whose keys are the names to which the properties
+should be bound and whose values are the keys in the map on the righthand side to bind:
+
+```clojure
+(let [{x :x
+       y :y} {:x 534 :y 497 :z -73}]
+  (println "Inspecting coordinates:" x "," y))
+
+;; Inspecting coordinates: 534 , 497
+```
+
+However, since we often work with maps of keywords, there is a more succinct way to
+bind specific values from a map to names that are similar to their key:
+
+```clojure
+(let [{:keys [x y z]} {:x 534 :y 497 :z -73}]
+  (println "x = " x "| y = " y "| z = " z))
+
+;; x =  534 | y =  497 | z =  -73
+```
+
+For maps with string keys there is a similar syntax that uses `:strs` instead
+of `:keys` in the binding.
+
+Finally, when destructuring maps, we may provide default values using `:or` inside
+the binding form followed by a map of name to default value:
+
+```clojure
+(let [{:keys [fname lname profession]
+       :or {profession "professional"}} {:fname "Sasha" :lname "Simonova"}]
+  (println fname lname "is a" profession))
+
+;; Sasha Simonova is a professional
+```
+
+There are more variations to ClojureScript's destructuring forms[^1], but we have covered
+the most common ones that we will use for the rest of this book.
+
+### You Try It
+
+- What happens when you use the `& other` form when there are no more elements in a list/vector?
+
+```clojure
+ (let [[one two & the-rest] [1 2]]
+  the-rest)
+```
+
 ## Summary
 
 We have now gone over the two primary means of naming things in ClojureScript -
 `def` for namespace-level bindings and `let` for local bindings - so we are ready
-to tackle one of "the only two hard problems in computer science".
-footnote:[This is a tongue in cheek reference to Phil Karlton's famous quote,
-"There are only two hard things in Computer Science: cache invalidation and
-naming things."] Combining this knowledge with what we will learn in the next
-few lessons, we will be able to start writing some interesting applications. We
-can now:
+to tackle one of "the only two hard problems in computer science"[^2]. Combining
+this knowledge with what we will learn in the next few lessons, we will be able to
+start writing some interesting applications. We can now:
 
 - Explain what a var is and how it is referred to by a symbol
 - Define global bindings using `def`
 - Define local bindings using `let`
+- Destructure sequences and maps
+
+[^1]: The official [Destructuring in Clojure guide](https://clojure.org/guides/destructuring) is an excellent reference
+[^2]: This is a tongue in cheek reference to Phil Karlton's famous quote, "There are only two hard things in Computer Science: cache invalidation and naming things."

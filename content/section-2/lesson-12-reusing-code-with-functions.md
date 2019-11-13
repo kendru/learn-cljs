@@ -152,6 +152,35 @@ with the actual values that the function is called with:
   (every? xs-set test-elems))
 ```
 
+#### Anonymous Function Shorthand
+
+There is another even terser syntax for anonymous functions that saves a few keystrokes
+by omitting the `fn` and the named argument list. In the next example, we use this
+abbreviated syntax for
+
+```clojure
+#(let [xs-set (into #{} %1)]
+   (every? xs-set %2)))
+```
+
+As we can see, the function itself is defined with `#(...)`, and each argument is referred
+to by its position - `%1`, `%2`, etc. If the function takes only 1 argument, then the argument
+may be referred to simply as `%`:
+
+```clojure
+(#(str "Hello " %) "world")
+;; => "Hello world"
+```
+
+While this syntax is handy, we should only use it for extremely small functions whose
+intent is readily apparent. In the normal case, we should prefer to use the slightly
+longer syntax for the clarity that comes with named arguments. Also, for a function
+that takes more than 1 argument, this syntax usually introduces more confusion than
+necessary. It is still fairly common in ClojureScript code and is often used for
+event callbacks.
+
+#### Defining Named Functions
+
 You may have noticed that while we have declared a useful function, we do not have any
 way to call it because it lacks a name. This is where `defn` comes in - it is a shorthand
 for declaring a function and binding it to a var at the same time:

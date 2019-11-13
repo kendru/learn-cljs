@@ -117,13 +117,13 @@ date: 2019-09-19T21:43:56-06:00
 
 ## Section 4: Idiomatic ClojureScript
 
-- Lesson 21: Functional Programming Concepts
-    - Composing Behaviour from Small Pieces
-    - Anonymous Functions
-    - Flexible Dispatch with Multimethods
-    - Functional Design Patterns
-    - Summary
-- Lesson 22: Namespaces and program structure
+- [Lesson 21: Functional Programming Concepts](/section-4/lesson-21-functional-programming-concepts/)
+    - [Composing Behaviour from Small Pieces](/section-4/lesson-21-functional-programming-concepts/#composing-behaviour-from-small-pieces)
+    - [Writing Pure Functions](/section-4/lesson-21-functional-programming-concepts/#writing-pure-functions)
+    - [Immutable Data](/section-4/lesson-21-functional-programming-concepts/#immutable-data)
+    - [Functional Design Patterns](/section-4/lesson-21-functional-programming-concepts/#functional-design-patterns)
+    - [Summary](/section-4/lesson-21-functional-programming-concepts/#summary)
+- Lesson 22: Namespaces and Program Structure
     - Grouping Related Functions
     - Avoiding “Hidden” OOP
     - Taking Advantage of Polymorphism
@@ -151,7 +151,7 @@ date: 2019-09-19T21:43:56-06:00
     - Communicating Over Channels
     - Channels as Values
     - Summary
-- Lesson 27: Capstone 5 - Group Chat
+- Lesson 27: Capstone 4 - Group Chat
     - Thinking About Interactions
     - Realtime Communication
     - Rooms and Conversations
@@ -180,7 +180,7 @@ date: 2019-09-19T21:43:56-06:00
     - Writing Views as Pure Functions
     - Centralizing Coordination Logic
     - Summary
-- Lesson 32: Capstone 6 - Deal of the Day
+- Lesson 32: Capstone 5 - Deal of the Day
     - Building a Reagent UI
     - Handling User Interactions
     - Handling API Interactions
@@ -212,7 +212,7 @@ date: 2019-09-19T21:43:56-06:00
     - Enforcing Stricter Contracts
     - Extending Existing Types
     - Anonymous Instances With reify
-    - Comparing Records to JavaScript Objects
+    - Flexible Dispatch with Multimethods
     - Summary
 - Lesson 37: Survey of Advanced Language Features
     - Programmable Programming Language

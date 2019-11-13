@@ -147,9 +147,7 @@ Hint: this function takes the node to remove as its only parameter.
 Now that we have created an element, let's take the next step and manipulate
 something that is already onscreen. Since we already have a var containing the
 `HTMLElement` of the `<h1>` tag that we created, let's change the style on it
-and add a class. According to the documentation for `goog.dom`
-footnote:[Documentation for this Google Closure library can be found at
-https://google.github.io/closure-library/api/], the `setProperties` function
+and add a class. According to [the documentation for `goog.dom`](https://google.github.io/closure-library/api/), the `setProperties` function
 takes an element and a JavaScript object mapping properties to values
 and applies the properties to the DOM element.
 

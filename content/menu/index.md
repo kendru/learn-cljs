@@ -27,3 +27,5 @@ headless = true
   - [Summarizing Data](/section-3/lesson-18-summarizing-data/)
   - [Mastering Data With Maps and Vectors](/section-3/lesson-19-mastering-data-with-maps-and-vectors/)
   - [Capstone 3 - Contact Book](/section-3/lesson-20-capstone-3-contact-book/)
+- [Section 4: Idiomatic ClojureScript](/section-4/)
+  - [Functional Programming Concepts](/section-4/lesson-21-functional-programming-concepts/)

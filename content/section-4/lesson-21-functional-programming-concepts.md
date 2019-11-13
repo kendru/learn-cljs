@@ -10,11 +10,11 @@ draft: true
 ClojureScript sits at the intersection of functional programming and pragmatism. In this
 lesson, we will take a deeper look at what it means to be a functional language. As we
 shall see, functional programming is about much more than simply being able to use functions
-as values. At its core, the more important concepts are functional purity, immutability,
-and composability. The concept of functional purity means that our functions do not have
+as values. At its core, the more important concepts are composability, functional purity,
+and immutability. Composability means that we build larger modules and systems out of small,
+reusable pieces. The concept of functional purity means that our functions do not have
 side effects like mutating global state, modifying the web page, etc. Immutability means
-that instead of modifying variables in-place, we produce new, transformed values. Composability
-means that we build larger modules and systems out of small, reusable pieces. These three
+that instead of modifying variables in-place, we produce new, transformed values. These three
 concepts together make for effective functional programming, and by the end of this lesson,
 we will have a better understanding of what it means to write functional code in ClojureScript.
 
@@ -22,13 +22,100 @@ we will have a better understanding of what it means to write functional code in
 
 *In this lesson:*
 
+- Apply bottom-up design by composing small functions into larger ones
 - Make programs easier to reason about with functional purity
 - Learn the key role that immutability plays in functional programming
-- Start thinking of programs as modular data pipelines
 
 ---
 
-## Minimizing Side Effects
+## Composing Behaviour from Small Pieces
+
+In imperative programming, we often keep some sort of mutable state and write functions that
+operate on this state. The key insights introduced by object-oriented programing is that
+programs are easier to reason about when we encapsulate our mutable state with the methods
+that are allowed to operate on that state into an object. Clean object-oriented code is factored
+into methods that have only a single responsibility. While this may sound good on the surface,
+it often ends up being both more and less restrictive than we desire. It is more restrictive
+than we would like because it is difficult to share similar logic between multiple objects without
+introducing significant complexity. It is less restrictive than we would like because any of these
+methods may change the state of the object to which they belong such that the future behaviour of
+any method on the object may be altered in a way that the caller does not anticipate.
+
+Like object-oriented programming, functional programming encourages writing functions that do one
+thing, but it does not suffer from the two deficiencies stated above. Instead, functions may operate
+on any data without having to be encapsulated into an object, which leads to simpler code with less
+duplication. Additionally, pure functions by definition do not modify any state, and their behaviour
+cannot be affected by any mutable state, so their behaviour is well-defined in all cases.
+
+When our data is modeled using common data structures (primarily maps and lists), and we do not
+rely on shared mutable state, something very interesting occurs: we can compose a handful of
+functions in many, many ways. In fact, we can often create our programs without doing much outside
+of composing functions from the standard library. At this point, we must include the quote that must
+make an appearance in every good text on functional programming to further this point:
+
+> <q>It is better to have 100 functions operate on one data structure than to have 10 functions operate on 10 data structures.</q>
+>
+> <cite>- Alan Perlis</cite>
+
+What Perlis means is that when we have 100 functions that operate on the same common data type
+or abstraction, we can compose them to do many more than 100 things. However, if we go the object-oriented
+route and tie methods to specific classes of objects, then the ways in which we compose behaviour is
+much more limited.
+
+As we will be building a group chat application at the end of this section, let's consider a component
+that displays a user's "badge", which is essentially their nickname and their current online status.
+
+<!-- TODO: Screenshot of badge -->
+
+We can break this component down into a number of small, re-usable pieces
+
+```clojure
+(def alan-p {:first-name "Alan"
+             :last-name "Perlis"
+             :online? false})
+
+(defn nickname [entity]
+  (or (:nickname entity)
+      (->> entity
+           ((juxt :first-name :last-name))
+           (s/join " "))))
+
+(defn bold [text]
+  [:strong text])
+
+(defn concat-strings [s1 s2]
+  (s/trim (str s1 " " s2)))
+
+(defn with-class [dom class-name]
+  (if (map? (second dom))
+    (update-in dom [1 :class] concat-strings class-name)
+    (let [[tag & children] dom]
+      (vec (concat [tag {:class class-name}]
+                   children)))))
+
+(defn with-status [dom entity]
+  (with-class entity
+    (if (:online? entity) "online" "offline")))
+
+(defn user-status [user]
+  [:div {:class "user-status"}
+    ((juxt
+      (comp bold nickname)
+      (partial with-status [:span {:class "status-indicator"}]))
+     user)])
+```
+
+// Example should point out difficulty of OO encapsulation:
+// - Easier to share logic between similar instances
+// -
+
+Point out where we have been composing functions already
+
+Introduce partial
+
+Introduce comp
+
+## Writing Pure Functions
 
 Side effects are essential in every useful program. A program with no side effects could not
 modify the DOM, make API requests, save data to `localStorage`, or any of the other things
@@ -95,6 +182,55 @@ Not only is the pure functional core of our code easier to test, it is also
 more resilient to changes that we may want to make to the UI and user experience
 application. If we wanted to change the way that the UI works, we would only need
 to replace the `update-output` function, not any of the conversion logic.
+
+### Referential Transparency
+
+A function is said to be _referentially transparent_ if it fits in the pure substitution model
+of evaluation that we have discussed. That is, a call to a function can always be replaced with
+the value to which it evaluates without having any other effect. This implies that the function
+does not rely on any state other than its parameters, and it does not mutate any external state.
+It also implies that whenever a function is called with the same input values, it always produces
+the same return value. However, since not every function can be referentially transparent in a real
+application, we apply the same strategy of keeping our business logic pure and referentially
+transparent while moving referentially opaque code to the "edges" of the application. A common need
+in many web apps is to take the current time into consideration for some computation. For instance,
+this code will generate a greeting appropriate to the time of day:
+
+```clojure
+(defn get-time-of-day-greeting []
+  (condp >= (.getHours (Date.))
+    11 "Good morning"
+    15 "Good day"
+    "Good evening"))
+```
+
+The problem with this code is that its output will change when given the same input (in
+this case, no input) depending on what time of day it is called. Getting the current time
+of day is intrinsically not referentially transparent, but we can use the technique that we
+applied earlier to separate effectful functions from a functionally pure core of business
+logic:
+
+```clojure
+(defn get-current-hour []                                  ;; <1>
+  (.getHours (Date.)))
+
+(defn get-time-of-day-greeting [hour]                      ;; <2>
+  (condp >= hour
+    11 "Good morning"
+    15 "Good day"
+    "Good evening"))
+
+(get-time-of-day-greeting (get-current-hour))
+;; "Good day"
+```
+
+1. Factor out the function that is not referentially transparent
+2. Ensure that the output of our business logic is solely dependent on its formal parameters
+
+This is a fairly trivial example, but any code that relies on external state - whether it is
+the time of day, the result of an API call, the `(Math.random)` random number generator,
+or anything other than its explicit parameters - breaks the functional paradigm and is more
+difficult to test and evolve as requirements change.
 
 ## Immutable Data
 
@@ -169,54 +305,7 @@ our heads to debug a single computation.
 > fixing bugs that were due to mutable data. The team switched to the Immutable.js
 > library when their tallies no longer fit on the whiteboard.
 
-### Referential Transparency
-
-A function is said to be _referentially transparent_ if it fits in the pure substitution model
-of evaluation that we have discussed. That is, a call to a function can always be replaced with
-the value to which it evaluates without having any other effect. This implies that the function
-does not rely on any state other than its parameters, and it does not mutate any external state.
-It also implies that whenever a function is called with the same input values, it always produces
-the same return value. However, since not every function can be referentially transparent in a real
-application, we apply the same strategy of keeping our business logic pure and referentially
-transparent while moving referentially opaque code to the "edges" of the application. A common need
-in many web apps is to take the current time into consideration for some computation. For instance,
-this code will generate a greeting appropriate to the time of day:
-
-```clojure
-(defn get-time-of-day-greeting []
-  (condp >= (.getHours (Date.))
-    11 "Good morning"
-    15 "Good day"
-    "Good evening"))
-```
-
-The problem with this code is that its output will change when given the same input (in
-this case, no input) depending on what time of day it is called. Getting the current time
-of day is intrinsically not referentially transparent, but we can use the technique that we
-applied earlier to separate effectful functions from a functionally pure core of business
-logic:
-
-```clojure
-(defn get-current-hour []                                  ;; <1>
-  (.getHours (Date.)))
-
-(defn get-time-of-day-greeting [hour]                      ;; <2>
-  (condp >= hour
-    11 "Good morning"
-    15 "Good day"
-    "Good evening"))
-
-(get-time-of-day-greeting (get-current-hour))
-;; "Good day"
-```
-
-1. Factor out the function that is not referentially transparent
-2. Ensure that the output of our business logic is solely dependent on its formal parameters
-
-This is a fairly trivial example, but any code that relies on external state - whether it is
-the time of day, the result of an API call, the `(Math.random)` random number generator,
-or anything other than its explicit parameters - breaks the functional paradigm and is more
-difficult to test and evolve as requirements change.
+## Functional Design Patterns
 
 ## Summary
 
