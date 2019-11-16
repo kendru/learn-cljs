@@ -1,0 +1,58 @@
+body {
+  background-color: #02A4FF;
+  color: #ffffff;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: 300;
+}
+
+.temperatures {
+  display: flex;
+  flex-direction: row;
+  width: 450px;
+}
+
+.temperature {
+  width: 200px;
+  margin: auto;
+  padding: 0;
+  background-color: #fff;
+  border-radius: 10px;
+  color: #333;
+  font-family: Helvetica;
+  text-align: center;
+}
+
+.value {
+  text-align: center;
+  font-size: 30px;
+}
+
+.temperature h2 {
+  margin: 5px auto 0;
+  background-color: #3BB9FC;
+  color: #fff;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 10px 0;
+}
+
+.postal-code input {
+  height: 34px;
+  border: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  line-height: 34px;
+  font-size: 14px;
+  padding: 0 5px;
+}
+
+.postal-code button {
+  padding: 10px 20px;
+  background-color: #005B8C;
+  border: none;
+  color: #fff;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}

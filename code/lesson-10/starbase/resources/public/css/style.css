@@ -1,0 +1,15 @@
+/* some style */
+
+body {
+    background-color: #333;
+}
+
+h1 {
+    color: #fff;
+    font-family: 'Oxygen', sans-serif;
+}
+
+.terminal {
+    max-width: 600px;
+    height: 600px;
+}

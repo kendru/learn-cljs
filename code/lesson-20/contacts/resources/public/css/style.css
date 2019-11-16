@@ -1,0 +1,57 @@
+/* some style */
+
+html, body {
+    font-size: 16px;
+    line-height: 1.5;
+    height: 100%;
+    background-color: #fff;
+    color: #444;
+}
+
+.page-header {
+    padding: 40px 20px;
+}
+
+.contact-form {
+    padding: 0 20px;
+}
+
+.contact-list {
+    display: block;
+    background-color: #fff;
+    border-right: 1px solid #DEDEDE;
+    padding: 40px 20px;
+}
+
+.contact-summary {
+    cursor: pointer;
+}
+
+.contact-summary.selected {
+    background-color: #f5f5f5;
+    border-right: 3px solid #eee;
+}
+
+.contact-summary:hover {
+    color: #000;
+}
+
+.delete-icon {
+    display: inline-block;
+    visibility: hidden;
+    padding: 0 8px;
+}
+
+.contact-summary:hover .delete-icon {
+    visibility: visible;
+}
+
+.contact-summary:hover .delete-icon:hover {
+    color: #f14668;
+}
+
+.notice {
+    text-align: center;
+    font-style: italic;
+    color: #777;
+}

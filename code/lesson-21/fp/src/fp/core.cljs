@@ -25,8 +25,8 @@
            ((juxt :first-name :last-name))
            (s/join " "))))
 
-(defn bold [text]
-  [:strong text])
+(defn bold [child]
+  [:strong child])
 
 (defn concat-strings [s1 s2]
   (s/trim (str s1 " " s2)))
@@ -39,7 +39,7 @@
                    children)))))
 
 (defn with-status [dom entity]
-  (with-class entity
+  (with-class dom
     (if (:online? entity) "online" "offline")))
 
 (defn user-status [user]
