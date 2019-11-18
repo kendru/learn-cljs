@@ -28,7 +28,7 @@ ClojureScript needs JavaScript. Let's explore this interesting symbiosis.
 Having seen ClojureScript's sweet spots, it should be apparent that there are
 some gains that it promises. Still, can we get a similar advantage from
 JavaScript itself without having to learn a new language? Also, does
-ClojureScript really give us that much additional leverage in out daily
+ClojureScript really give us that much additional leverage in our daily
 development tasks? ClojureScript may not be the best tool for trivial tasks, but
 for anything more complex, JavaScript does in fact _need_ a language like
 Clojure to enable more productive and enjoyable development.

@@ -442,8 +442,8 @@ If we were to call `(make-greeter "Howdy")`, the resulting function would always
 to the symbol `greeting` outside the `make-greeter` function, the inner function is not able
 to see it because there is another symbol with the same name *closer* to the function itself.
 We say that the namespace-level `greeting` is _shadowed_ by the inner `greeting`. We will study
-closures in more detail in Lesson 20 and see how we need to modify our mental model of evaluation
-in order to accommodate them.
+closures in more detail in [Lesson 21](/section-4/lesson-21-functional-programming-concepts/)
+and see how we need to modify our mental model of evaluation in order to accommodate them.
 
 ### Functions as Abstraction
 

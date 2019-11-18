@@ -67,22 +67,37 @@ that displays a user's "badge", which is essentially their nickname and their cu
 
 <!-- TODO: Screenshot of badge -->
 
-We can break this component down into a number of small, re-usable pieces
+We can break this component down into a couple of small composable pieces. First,
+let's write functions that will get a user's nickname as well as a function that
+wraps any hiccup-like structure that we give it in a `strong` tag to make it bold.
 
 ```clojure
-(def alan-p {:first-name "Alan"
+(def alan-p {:first-name "Alan"                            <1>
              :last-name "Perlis"
              :online? false})
 
-(defn nickname [entity]
+(defn nickname [entity]                                    <2>
   (or (:nickname entity)
       (->> entity
            ((juxt :first-name :last-name))
            (s/join " "))))
 
-(defn bold [text]
-  [:strong text])
+(defn bold [child]                                         <3>
+  [:strong child])
 
+(bold (nickname alan-p))
+;; => [:strong "Alan Perlis"]
+```
+
+1. Define sample data
+2. Extract a user's nickname
+3. Make some DOM bold
+
+Next, since we know that we will want to add classes to certain elements
+for styling purposes, we can create a function to add a class to any hiccup-like
+tag.
+
+```clojure
 (defn concat-strings [s1 s2]
   (s/trim (str s1 " " s2)))
 
@@ -92,28 +107,100 @@ We can break this component down into a number of small, re-usable pieces
     (let [[tag & children] dom]
       (vec (concat [tag {:class class-name}]
                    children)))))
+```
 
+Since we are using plain data structures to represent the DOM, this function
+can be written in terms of data manipulation functions from the standard library.
+In fact, it does not refer to anything specific to hiccup at all! Now we can write
+a function that adds an "online" or "offline" class to the user badge based on the
+value of the user's `online?` flag:
+
+```clojure
 (defn with-status [dom entity]
-  (with-class entity
+  (with-class dom
     (if (:online? entity) "online" "offline")))
+```
 
+Note that even though we are inspecting the `online?` property of a user, there is
+nothing preventing us from using this function on entities that we want to add in
+the future, such as chatbots. Finally, we can define a `user-status` component almost
+purely in terms of these small building blocks that we just created:
+
+```clojure
 (defn user-status [user]
   [:div {:class "user-status"}
     ((juxt
-      (comp bold nickname)
-      (partial with-status [:span {:class "status-indicator"}]))
+      (comp bold nickname)                                 <1>
+      (partial with-status                                 <2>
+               [:span {:class "status-indicator"}]))
      user)])
 ```
 
-// Example should point out difficulty of OO encapsulation:
-// - Easier to share logic between similar instances
-// -
+1. `comp` creates a new function that _composes_ others together
+2. `partial` creates a function that already has some arguments supplied
 
-Point out where we have been composing functions already
+We first saw `juxt` in the last lesson, but there are two more functions in this
+example that are used very commonly in ClojureScript and are incredibly useful
+in combining smaller functions into larger applications: `comp` and `partial`.
+`comp` performs function composition, similar to mathematical function composition:
 
-Introduce partial
+{{< katex >}}
+\left(f \circ g\right)\left(x\right) = \left(f\left(g\left(x\right)\right)\right)
+{{< /katex >}}
 
-Introduce comp
+_Mathematical Function Composition_
+
+As in mathematics, composing functions f and g creates a function that when applied
+to some argument, `x`, evaluates `(g x)` and then passes that result as the argument
+to `f`, as in the following example.
+
+```clojure
+(= ((comp f g) x) (f (g x)))
+```
+
+_Function Composition in ClojureScript_
+
+We can think of `comp` as similar to the `->` macro applied in reverse, except that
+rather than evaluating the entire pipeline of functions, it produces a new function
+that will evaluate the pipeline with any input that we give it. In the case of our
+user status component, we use `(comp bold nickname)` to create a function that will
+take a user and return a bolded version of that user's nickname.
+
+<!-- TODO: Comp illustration -->
+
+The other new function that we used is `partial`. While `partial` is not directly
+related to function composition, it does give us the ability to take a general
+function and create a more specified version of it by supplying one or more of
+its parameters. The canonical example of partial application is the addition
+function: `(add x y)`. We can use partial to supply the `x` argument, creating
+a new function that only takes `y` and adds the `x` that we already supplied:
+
+```clojure
+(defn add [x y]                                            <1>
+  (+ x y))
+
+(def add-5 (partial add 5))                                <2>
+
+(add-5 10)
+;; 15
+```
+
+1. Define our own add function that only has 2 parameters
+2. Create a partially applied version
+
+In this example, `partial` generates a new function that will call `add` with
+`5` plus any other argument that we give it. The call to `partial` is
+functionally equivalent to the following definition:
+
+```clojure
+(def add-5
+  (fn [y]
+    (add 5 y)))
+```
+
+This trivial example of building a user status component out of small, composable
+functions that operate on simple data should illustrate the power of function
+composition to create an extensible, reusable codebase.
 
 ## Writing Pure Functions
 
@@ -197,7 +284,7 @@ in many web apps is to take the current time into consideration for some computa
 this code will generate a greeting appropriate to the time of day:
 
 ```clojure
-(defn get-time-of-day-greeting []
+(defn get-time-of-day-greeting-impure []
   (condp >= (.getHours (Date.))
     11 "Good morning"
     15 "Good day"
@@ -305,7 +392,258 @@ our heads to debug a single computation.
 > fixing bugs that were due to mutable data. The team switched to the Immutable.js
 > library when their tallies no longer fit on the whiteboard.
 
+<!-- TODO: "Keep Calm and use Immutable Data" illustration -->
+<!-- TODO: Add ability to specify other image as opengraph image -->
+
 ## Functional Design Patterns
+
+Design patterns have gotten something of a bad reputation over the past decade or so, and in
+many cases, the criticism has been well-deserved. Most of the "Gang of Four"[^1] design patterns
+were discovered as workarounds for a lack of flexibility in the object-oriented languages at the
+time. In fact, Peter Norvig, a major player in the Lisp and AI communities, found that 16 out of
+the 23 design patterns presented in the Gang of Four book are either unnecessary in Lisp or arise
+through natural use of the language.[^2] Still, the goal of design patterns is to create a common
+vocabulary around describing problems that occur often in software development and present a
+template for an often-used solution. Even in a dynamic functional language like ClojureScript, there
+is some merit to defining problem and solution sets that occur often, so in this section, we will
+describe several: constructor, closure, strategy, and middleware.
+
+### Constructor
+
+This should be a familiar pattern, as we already covered it in [Lesson 19](/section-3/lesson-19-mastering-data-with-maps-and-vectors/)
+and revisited it in [Lesson 20](/section-3/lesson-20-capstone-3-contact-book/).
+The idea here is to abstract the creation of some data structure behind a function in order to
+assign a name to that data structure and to make it easier to change the structure in the future.
+Since we have already been using this pattern for a couple of lessons, we need not belabor an
+explanation here.
+
+### Closure
+
+Like JavaScript, ClojureScript has the concept of lexical closures. That is, a function can refer to
+any variables that were visible in the scope in which the function was defined. This allows us to
+retain (immutable) state in our functions. This allows us to do things like define a DOM element
+at the top level of a namespace and refer to it within a function defined in that same namespace:
+
+```clojure
+(def user-notes (gdom/getElement "notes"))
+
+(defn get-notes []
+  (.-value user-notes))
+```
+
+This is a pretty trivial use of a closure. Their real power shines when used in conjunction with
+higher-order functions. Recall how at the beginning of this chapter we defined an `add` function
+that simple adds 2 numbers together. We then used partial application to generate a function that
+always adds `5` to its argument. It would be much more flexible, however, if we defined a `make-adder`
+function that accepts a number and returns an adding function that always adds _that_ number to
+its argument. Because of closures, we can do this:
+
+```clojure
+(defn make-adder [x]
+  (fn [y]
+    (add x y)))
+
+((make-adder 1) 5)  ;; 6
+((make-adder 2) 5)  ;; 7
+((make-adder 10) 5) ;; 15
+```
+
+Note that the function we return from `make-adder` can reference any arguments passed into is
+parent function by name. Closures require us to tweak the mental model of evaluation that we
+introduced back in [Lesson 4](/section-0/lesson-4-expressions-and-evaluation/#evaluating-clojurescript-code)
+and extended in [Lesson 12](/section-2/lesson-12-reusing-code-with-functions/#functions-as-expressions), since
+we can no longer assume that we can simply replace a function call by the function's definition with
+all formal parameters replaced by actual parameters. If we did that in the `make-adder` case,
+we would end up with the following:
+
+```clojure
+((make-adder 1) 10)
+
+((fn [y]
+  (add x y)) 10)
+```
+
+This would be a big problem because we would "lose" knowledge of the `1` that we passed
+into `make-adder` and would leave the symbol `x` that is not bound to any value. Let's
+introduce the concept of an _environment_, which is simply a mapping of symbols to
+vars that were visible where the function was defined, and update our model of
+evaluation to say that when we evaluate a function, we replace all symbols within the
+function definition with the formal parameter of the same name _or the value found for the corresponding name in the environment_
+if no matching formal parameter is found.
+
+<!-- TODO: Illustration of closure w/ environment -->
+
+Using this simple principle, we can use closures to emulate objects from the OOP world.
+Consider that we have a constructor that takes some initial state for an object, and
+we return a map of functions that can either update this state, returning a new object,
+or query the state, returning some value.
+
+```clojure
+(defn make-mailbox
+ ([] (make-mailbox {:messages []                           ;; <1>
+                    :next-id 1}))
+ ([state]
+  {:deliver!                                               ;; <2>
+   (fn [msg]
+     (make-mailbox
+       (-> state
+          (update :messages conj
+            (assoc msg :read? false
+                       :id (:next-id state)))
+          (update :next-id inc))))
+
+   :next-unread                                            ;; <3>
+   (fn []
+     (when-let [msg (->> (:messages state)
+                         (filter (comp not :read?))
+                         (first))]
+       (dissoc msg :read?)))
+
+   :read!
+   (fn [id]
+     (make-mailbox
+       (update state :messages
+         (fn [messages]
+           (map #(if (= id (:id %)) (assoc % :read? true) %)
+                 messages)))))}))
+
+(defn call [obj method & args]
+  (apply (get obj method) args))                           ;; <4>
+
+(defn test-mailbox []
+  (loop [mbox (-> (make-mailbox)
+                  (call :deliver! {:subject "Objects are Cool"})
+                  (call :deliver! {:subject "Closures Rule"}))]
+    (when-let [next-message (call mbox :next-unread)]
+      (println "Got message" next-message)
+      (recur
+        (call mbox :read! (:id next-message)))))
+  (println "Read all messages!"))
+;; Got message {:subject "Objects are Cool", :id 1}
+;; Got message {:subject "Closures Rule", :id 2}
+;; Read all messages!
+```
+
+_Purely Functional Objects_
+
+1. Provide a no-arg constructor for convenience
+2. By convention, methods ending in `!` will update the object state and return a new object
+3. Methods not ending in `!` will not update the object but will return a value instead
+4. `apply` calls a function with a collection of arguments
+
+#### You Try It
+
+- Add a few more methods to the mailbox "object":
+  - `:all-messages` - returns all messages in the mailbox
+  - `:unread-messages` - returns all unread messages in the mailbox
+  - `:mark-all-read!` - mutates the state by marking every message as read
+
+### Strategy
+
+As in object-oriented programming, the strategy pattern is a way to separate the implementation
+of an algorithm from higher-level code. This pattern is so natural in functional languages that
+it barely qualifies as a pattern. Let's take an example from the standard library: `filter`. This
+function filters (surprise, surprise!) a sequence, but it does not specify the criteria by which
+each element should be tested for inclusion. That criteria is dictated by the function passed to
+`filter`, which specifies the concrete _strategy_ for determining which elements should be included
+in the new sequence.
+
+```clojure
+(let [xs [0 1 2 3 4 5 6 7 8 9]]
+  (println (filter even? xs))
+  (println (filter odd? xs)))
+;; (0 2 4 6 8)
+;; (1 3 5 7 9)
+```
+
+### Middleware
+
+The final pattern that we will consider is the middleware pattern. This pattern allows us to declare
+"hooks" in a request/response cycle that can transform the request on the way in, the response on
+the way out, or both. It can even be used to short-circuit a request.
+
+Imagine that we need to make a call to some API, but we want to be able to validate the request before
+it is sent. We could add the validation logic directly to the function that performs the API request,
+but this is less than ideal for two reasons: first, it couples validation logic to API logic, and
+second, it makes our app less testable by combining both pure and impure business logic in the same
+function. No problem, let's add separate validation function:
+
+```clojure
+(defn handler [req]
+  (println "Calling API with" req)
+  {:data "is fake"})
+
+(defn validate-request [req]
+  (cond
+    (nil? (:id req)) {:error "id must be present"}
+    (nil? (:count req)) {:error "count must be present"}
+    (< (:count req) 1) {:error "count must be positive"}))
+
+;; Client code
+(if-let [validation-error (validate-request req)]
+  validation-error
+  (handler req))
+```
+
+This works well for a while, but now we need to add logging around each request that goes out and
+its response. We could add more logic to our client code, such as the following:
+
+```clojure
+(do
+  (println "Request" req)
+  (let [res (if-let [validation-error (validate-request req)]
+              validation-error
+              (handler req))]
+    (println "Response" res)
+    res))
+```
+
+Even with 2 hooks that we want to add to the request/response, the code is starting to get a bit
+unwieldy. With the middleware pattern, we can extract each hook into a function that "wraps" the
+handler function. A middleware is simply a function that takes a handler and returns a new handler.
+If we think of a `handler` in general as any function from `Request -> Response`, then a middleware
+is a function from `(Request -> Response) -> (Request -> Response)`. One nice feature of middleware
+is that since they have the same input and output types, they can be combined in any order using
+ordinary function composition!
+
+<!-- TODO: Illustration of middleware -->
+
+Returning to the wrapped API handler example above, writing the validation and logging as middleware
+would look something like the following:
+
+```clojure
+(defn with-validation [handler]
+  (fn [req]
+    (if-let [error (validate-request req)]
+      error
+      (handler req))))
+
+(defn with-logging [handler]
+  (fn [req]
+    (println "Request" req)
+    (let [res (handler req)]
+      (println "Response" res)
+      res)))
+
+(let [wrap-handler (comp with-logging with-validation)
+      handler (wrap-handler handler)]
+  ; Example invalid request
+  (handler {})
+  ;; Request ()
+  ;; Response {:error id must be present}
+
+  ; Example valid request
+  (handler {})
+  ;; Request {:id 123, :count 12}
+  ;; Calling API with {:id 123, :count 12}
+  ;; Response {:response is fake}
+  )
+```
+
+#### Quick Review
+
+- Why can middleware be composed using ordinary function composition?
+- Does the order in which middleware are composed matter? What would have happened if we defined `wrap-handler` as `(comp with-validation with-logging)`?
 
 ## Summary
 
@@ -318,3 +656,6 @@ code that interacts with the DOM, but if we follow the functional programming co
 learned in this lesson, we will end up with a clean functional core of business logic that is primarily
 concerned with data transformation. Over the next few lessons, we will learn more language features
 and techniques that will enable us to be effective practitioners of functional programming.
+
+[^1]: _Design Patterns: Elements of Reusable Object-Oriented Software_ by  Erich Gamma, John Vlissides, Richard Helm, and Ralph Johnson
+[^2]: [Design Patterns in Dynamic Languages](http://www.norvig.com/design-patterns/)

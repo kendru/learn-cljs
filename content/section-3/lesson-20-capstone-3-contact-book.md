@@ -455,8 +455,7 @@ each list item:
 
 ```clojure
 (defn render-contact-list [state]
-  (let [contacts (:contacts state)
-        selected (:selected state)]
+  (let [{:keys [:contacts :selected]} state]
     [:div {:class "contact-list column is-4 hero is-fullheight"}
       (map-indexed (fn [idx contact]
                      (render-contact-list-item idx contact (= idx selected)))

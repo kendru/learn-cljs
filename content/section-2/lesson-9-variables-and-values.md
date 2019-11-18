@@ -137,7 +137,7 @@ _Symbols_
 4. Within the function, the symbol `x` refers to the function parameter, not the global var
 5. Warning when trying to evaluate a symbol that does not refer to anything
 
-#### You Try It
+### You Try It
 
 Almost everything in ClojureScript is a value, and a var can be bound to any
 value. With this knowledge, use `def` to create a var that refers to this
@@ -308,7 +308,7 @@ the binding form followed by a map of name to default value:
 There are more variations to ClojureScript's destructuring forms[^1], but we have covered
 the most common ones that we will use for the rest of this book.
 
-### You Try It
+#### You Try It
 
 - What happens when you use the `& other` form when there are no more elements in a list/vector?
 

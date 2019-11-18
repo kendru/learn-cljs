@@ -204,7 +204,7 @@ cljs.user=> (def tax-rate 0.079)
 #'cljs.user/tax-rate
 
 cljs.user=> (defn add-sales-tax [cart-item]                ;; <1>
-              (let [price (:price cart-item)]
+              (let [{:keys [price]} cart-item]
                 (assoc cart-item :sales-tax (* price tax-rate))))
 #'cljs.user/add-sales-tax
 
