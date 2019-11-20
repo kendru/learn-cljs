@@ -65,7 +65,9 @@ much more limited.
 As we will be building a group chat application at the end of this section, let's consider a component
 that displays a user's "badge", which is essentially their nickname and their current online status.
 
-<!-- TODO: Screenshot of badge -->
+![User Status Badge](/img/lesson21/user-badge.png)
+
+_User Status Badge_
 
 We can break this component down into a couple of small composable pieces. First,
 let's write functions that will get a user's nickname as well as a function that
@@ -155,8 +157,10 @@ to some argument, `x`, evaluates `(g x)` and then passes that result as the argu
 to `f`, as in the following example.
 
 ```clojure
-(= ((comp f g) x) (f (g x)))
+(= ((comp f g) x)
+   (f (g x)))
 ```
+
 
 _Function Composition in ClojureScript_
 
@@ -164,9 +168,12 @@ We can think of `comp` as similar to the `->` macro applied in reverse, except t
 rather than evaluating the entire pipeline of functions, it produces a new function
 that will evaluate the pipeline with any input that we give it. In the case of our
 user status component, we use `(comp bold nickname)` to create a function that will
-take a user and return a bolded version of that user's nickname.
+take a user and return a bolded version of that user's nickname. We can think of the
+new function as a pipeline that connects each function from right to left.
 
-<!-- TODO: Comp illustration -->
+![comp Function Pipeline](/img/lesson21/comp.png)
+
+_`comp` Function Pipeline_
 
 The other new function that we used is `partial`. While `partial` is not directly
 related to function composition, it does give us the ability to take a general
@@ -217,7 +224,9 @@ not going to prevent us from writing code riddled with side effects, we need to 
 constrain ourselves to write _mostly_ pure applications. Thankfully, ClojureScript makes that
 sort of constraint easy.
 
-<!-- TODO: Add diagram of effectful code surrounding a purely functional core -->
+![Keeping a Purely Functional Core](/img/lesson21/pure-functional-core.png)
+
+_Keeping a Purely Functional Core_
 
 While we need side effects, we should strive to segregate functions that perform side effects
 from those that can be pure. The pure functions can then be easily tested and reasoned about.
@@ -392,7 +401,7 @@ our heads to debug a single computation.
 > fixing bugs that were due to mutable data. The team switched to the Immutable.js
 > library when their tallies no longer fit on the whiteboard.
 
-<!-- TODO: "Keep Calm and use Immutable Data" illustration -->
+<div style="text-align:center">![Keep Calm and Use Immutable Data](/img/lesson21/keep-calm.png)</div>
 <!-- TODO: Add ability to specify other image as opengraph image -->
 
 ## Functional Design Patterns
@@ -471,7 +480,7 @@ evaluation to say that when we evaluate a function, we replace all symbols withi
 function definition with the formal parameter of the same name _or the value found for the corresponding name in the environment_
 if no matching formal parameter is found.
 
-<!-- TODO: Illustration of closure w/ environment -->
+![Environment for a Closure](/img/lesson21/closure-environment.png)
 
 Using this simple principle, we can use closures to emulate objects from the OOP world.
 Consider that we have a constructor that takes some initial state for an object, and
@@ -606,7 +615,9 @@ is a function from `(Request -> Response) -> (Request -> Response)`. One nice fe
 is that since they have the same input and output types, they can be combined in any order using
 ordinary function composition!
 
-<!-- TODO: Illustration of middleware -->
+![Middleware Pattern](/img/lesson21/middleware.png)
+
+_Middleware Pattern_
 
 Returning to the wrapped API handler example above, writing the validation and logging as middleware
 would look something like the following:
