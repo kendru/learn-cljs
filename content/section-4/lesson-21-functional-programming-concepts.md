@@ -401,7 +401,9 @@ our heads to debug a single computation.
 > fixing bugs that were due to mutable data. The team switched to the Immutable.js
 > library when their tallies no longer fit on the whiteboard.
 
-<div style="text-align:center">![Keep Calm and Use Immutable Data](/img/lesson21/keep-calm.png)</div>
+<div style="text-align:center">
+  <img alt="Keep Calm and Use Immutable Data" title="Keep Calm and Use Immutable Data" src="/img/lesson21/keep-calm.png">
+</div>
 
 ## Functional Design Patterns
 
