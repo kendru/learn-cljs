@@ -2,7 +2,6 @@
 title: "Functional Programming Concepts | Lesson 21"
 date: 2019-10-06T16:01:35-06:00
 type: "docs"
-draft: true
 ---
 
 # Lesson 21: Functional Programming Concepts
