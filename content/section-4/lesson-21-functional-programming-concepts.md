@@ -660,7 +660,7 @@ would look something like the following:
 In this lesson, we looked briefly at three cornerstones of functional programming: minimizing
 and segregating the side effects, using immutable data, and keeping our business logic
 referentially transparent. When we these ideas, we naturally write programs that take a piece
-of data, pass it through a number of transformations, abd the result is the output of the program.
+of data, pass it through a number of transformations, and the result is the output of the program.
 In reality, most programs are made up of many pure data pipelines that are glued together with impure
 code that interacts with the DOM, but if we follow the functional programming concepts that we have
 learned in this lesson, we will end up with a clean functional core of business logic that is primarily
