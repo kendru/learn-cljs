@@ -147,7 +147,7 @@ The problem with JavaScript is that each of these issues must be addressed
 separately, but your choice for solving one issue may affect others. For
 instance, the module system that we use is a separate concern from our build
 tool, which in turn is separate from our testing framework. However, we need to
-make sure that both our build tool supports out testing framework, and both
+make sure that our build tool supports our testing framework, and both
 support our module system or can be easily integrated with it. Suddenly, the
 awesome app that we were planning to write gets stifled by the fact that we just
 spent 3 days trying to get the build set up. I can tell you that scenarios like
