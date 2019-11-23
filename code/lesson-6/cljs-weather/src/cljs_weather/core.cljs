@@ -15,7 +15,7 @@
 
 (defn handle-response [resp]
   (let [today (get-in resp ["list" 0 "main" "temp"])
-        tomorrow (get-in resp ["list" 24 "main" "temp"])]
+        tomorrow (get-in resp ["list" 8 "main" "temp"])]
     (swap! app-state
       update-in [:temperatures :today :value] (constantly today))
     (swap! app-state
