@@ -64,7 +64,7 @@ What happens when we start Figwheel is that it begins watching our project for
 any changes to the ClojureScript source files. When any of these files are
 changed, Figwheel compiles them to JavaScript, sends the JavaScript to the
 browser, and executes it. What sets this type of development apart from
-most JavaScript code reloading code is that it will
+most JavaScript code reloading code is that it will [FIX-ME]
 
 ## Testing Live Reloading
 
@@ -107,9 +107,9 @@ _src/cljs\_weather/core.cljs_
 2. Allow print statements to go to the JavaScript console
 3. Data structure to hold all UI state
 4. Declare and render a Reagent component
-6. Optional hook into Figwheel's reloading process
+5. Optional hook into Figwheel's reloading process
 
-Let's start be making a minor change to the `hello-world` component. We will add
+Let's start by making a minor change to the `hello-world` component. We will add
 a bit of extra text to it just to make sure that our changes are picked up:
 
 
@@ -150,7 +150,7 @@ earlier pages.
 
 > *Do I need an IDE?*
 >
-> You can edit ClojureScript in any editor ir IDE that you are comfortable with.
+> You can edit ClojureScript in any editor or IDE that you are comfortable with.
 > Most modern text editors have Clojure/ClojureScript plugins that will provide
 > syntax highlighting and often parenthesis balancing. Some of the more popular
 > editors in the ClojureScript community are Emacs, LightTable (which is itself
@@ -161,7 +161,7 @@ earlier pages.
 
 In addition to reloading ClojureScript code, Figwheel also takes care of
 reloading any stylesheets that we may change as well. The Figwheel Leiningen
-template that we used when creating this project configure Figwheel to watch any
+template that we used when creating this project configures Figwheel to watch any
 styles in the `resources/public/css` directory for changes. To test this out, we
 will open the default (empty) stylesheet and add a couple of styles:
 
@@ -214,7 +214,7 @@ our code.
 
 An idempotent function is a function that will have the same effect whether it
 is called once or many times. For instance, a function that sets the `innerHTML`
-property of a DOM element is idempotent, but a function that appends an child
+property of a DOM element is idempotent, but a function that appends a child
 to some other element is not:
 
 #### Idempotent and Non-Idempotent Functions
@@ -235,7 +235,7 @@ will be different when we call it 100 times than when we call it once. The
 `set-content` function, on the other hand, is idempotent - no matter how many
 times we call it, the result is going to be the same. When working with live
 reloading, we should make sure that any function that is called on reload is
-idempotent, otherwise
+idempotent, otherwise [FIXME, TOO]
 
 #### You Try It
 
@@ -271,7 +271,7 @@ where `name` is a symbol that names the var to bind and `expr` is any
 ClojureScript expression. Not only does `defonce` prevent the var from being
 redefined, it also prevents `expr` from being re-evaluated when the var is
 bound. This means that we can wrap initialization code with a `defonce` to
-guarantee that it will only be evaluated once regardless of how often the code
+guarantee that it will only be evaluated once, regardless of how often the code
 is reloaded:
 
 ```clojure
@@ -305,7 +305,7 @@ ensuring that certain code will run only one time.
 
 The separation of display code and business logic is good practice in general,
 but it is even more important for reloadable code. Recall the `append-element`
-function that we wrote several pages back when discussing idempotent functions.
+function that we wrote several moments back when discussing idempotent functions.
 Consider that we were writing a Twitter-like application and used this function
 to append a new message to some feed. There are a couple of ways in which we
 could write this code, but not all of them are conducive to live reloading.
@@ -323,7 +323,7 @@ _Combining Display and Business Logic_
 
 In this example, we combine the logic of processing an incoming message with the
 concern of displaying the message. Now let's say that we want to simplify the UI
-by removing the timestamp from the display. with this code, we would have to
+by removing the timestamp from the display. With this code, we would have to
 modify the `receive-message` function to omit the timestamp then refresh the
 browser, since our new code would not affect any messages already rendered. A
 better alternative would be something like the following:
