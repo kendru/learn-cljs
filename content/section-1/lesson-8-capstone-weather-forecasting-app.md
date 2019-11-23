@@ -307,7 +307,7 @@ consider how to process the results from the OpenWeatherMap API:
 ```clojure
 (defn handle-response [resp]
   (let [today (get-in resp ["list" 0 "main" "temp"])                    ;; <1>
-        tomorrow (get-in resp ["list" 24 "main" "temp"])]
+        tomorrow (get-in resp ["list" 8 "main" "temp"])]
     (swap! app-state
         update-in [:temperatures :today :value] (constantly today))     ;; <2>
     (swap! app-state
