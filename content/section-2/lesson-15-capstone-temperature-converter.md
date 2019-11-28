@@ -15,7 +15,7 @@ already begin to write useful apps.
 
 ---
 
-*In this lesson:*
+*In this lesson we will:*
 
 - Create the structure of an app declaratively in HTML
 - Apply our knowledge of basic ClojureScript to create a widget-like app
@@ -75,7 +75,7 @@ _imperative_ ones. This time, we will define our entire markup in HTML.
 _Temperature Converter Markup_
 
 1. Radio buttons used to switch between units
-2. Text input for the use to enter a temperature
+2. Text input for the user to enter a temperature
 3. Result display area
 
 This markup defines all of the elements that we will use in our app, so we do
@@ -119,7 +119,7 @@ we will still define the business logic of converting temperatures first:
 
 Next, we want to get references to the important elements on the page. We will
 use Google Closure to find DOM elements on the page and bind each element to a
-var. This helps keep the rest of the code clearer, and it helps with performance,
+var. This helps keeping the rest of the code clearer, and it helps with performance,
 since we do not have the overhead of searching the DOM every time we want to use
 one of these elements.
 
@@ -169,13 +169,13 @@ temperature and will update the results section with the converted temperature.
 ```
 
 This function is the core of our app. It handles each event and updates the UI
-accordingly. This function will be called with and event object as an argument,
+accordingly. This function will be called with an event object as an argument,
 but we follow a common convention of using an underscore to name any parameter
-that we do not use. The other novel thing about this code is that it uses `do`
+that we do not use. The other thing to note about this code is that it uses `do`
 to group several expressions together. `do` takes multiple expression, evaluates
 all of them in order, and it evaluates to the value of the last expression.
-thus, the expression, `(do x y z)`, would evaluate `x` then `y` then `z`, and
-the entire expressions would have the same value as just `z`. This is useful if
+Thus, the expression, `(do x y z)`, would evaluate `x` then `y` then `z`, and
+the entire expression would have the same value as just `z`. This is useful if
 `x` and `y` have side effects (in our case, updating DOM elements), but we do
 not care what they evaluate to.
 
