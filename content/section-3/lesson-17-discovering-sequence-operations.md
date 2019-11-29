@@ -69,7 +69,7 @@ more sequences of data at their core. When we approach these types of
 programs from an object-oriented approach, we usually think first
 about the individual objects in the system and what behaviours they
 support. For instance, in the case of an email program, we might be
-inclined to start be creating a `Message` object with messages like
+inclined to start by creating a `Message` object with messages like
 `markRead()` or `getLabels()`. Once we have modeled these objects, we
 might build some sort of collection object to put them in, or we may
 just use an array and iterate over it. The ClojureScript way is a
@@ -95,7 +95,7 @@ _Modeling a shopping cart_
 There are 2 properties that we need to know about this
 sequence. First, we need to know how to calculate sales tax for each
 item in the sequence, and second, we need to know how to sum all of
-the prices and all of the sales tax. The general problems here are
+the prices and all of the sales taxes. The general problems here are
 applying some operation to each element in a sequence and summarizing
 values from across a sequence into a single value. We can solve these
 problems with the functions `map` and `reduce`, respectively.
@@ -117,7 +117,7 @@ cljs.user=> (map inc '(100 200 300))
 When we mapped the `inc` function over the list, `(100 200 300)`, the
 result was a new list, `(101, 201, 301)`. Each number in this new list
 is the increment of each element in the original list. You can imagine
-map as walking over a sequence, and as it comes to each element, it
+`map` as walking over a sequence, and as it comes to each element, it
 takes that element, passes it through a function, and puts the result
 into a new sequence. In this case, it applied `inc` to `100` and put
 the result, `101` into the new sequence. It did the same with the
@@ -160,7 +160,7 @@ Take a look at the following code snippet:
 ### Adding Sales Tax With Map
 
 Coming back to our initial example of adding sales tax to a shopping
-cart, we will use map to create a new cart where each item is like an
+cart, we will use `map` to create a new cart where each item is like an
 item in the original cart, but with the addition of a `:sales-tax`
 key. If we were using JavaScript, this would be an obvious case for a
 for loop, similar to the code below:
@@ -235,7 +235,7 @@ is `(* price tax-rate)`. `assoc` is an incredibly useful utility
 function that allows us to add or update a specific entry in an
 _associative_ collection - that is, a collection that has the concept
 of _keys_ that are associated with a _value_, most commonly maps. We
-pass assoc a collection (in this case, `cart-item`), the key that we
+pass `assoc` a collection (in this case, `cart-item`), the key that we
 wish to set, and the value to set it to, and the result is a new
 collection with the appropriate entry added or updated.
 
@@ -307,7 +307,7 @@ _Coercing a Seq_
 3. Putting the seq into a list reverses the elements
 4. Putting the seq into a set de-duplicates it
 
-Into takes a destination collection and a source collection and
+`into` takes a destination collection and a source collection and
 _conjoins_ every element in the destination collection to the source
 collection. It walks over the source sequence one element at a time,
 using the same semantics as the `conj` function to add each element to
@@ -439,7 +439,7 @@ simplicity that is so highly prized in the ClojureScript community.
 
 Data manipulation is one of ClojureScript's strongest suits, but it
 does not serve much use until we somehow present it to the users of
-our system. Create a ClojureScript file that defines a shopping card
+our system. Create a ClojureScript file that defines a shopping cart
 and renders a list of the name, price, and tax of every _taxable_
 product that it contains. One possible solution is below.
 
