@@ -31,7 +31,7 @@ language.
 
 It should come as no surprise that collections are a core feature of
 ClojureScript - much more, in fact, than in most other languages. We deal with
-collections every day. Take the example of an contact book where we store
+collections every day. Take the example of a contact book where we store
 details for friends and acquaintances. The contact book itself is a
 collection of contact details, and each contact itself is a collection of
 personal information.
@@ -68,11 +68,11 @@ _Modeling an Contact Book in JavaScript_
 
 
 While we can effectively write programs using the arrays and objects that
-JavaScript provides, CloureScript gives is more focused tools, and - more
+JavaScript provides, ClojureScript gives us more focused tools, and - more
 importantly - abstractions. In JavaScript, we can sort or filter a list, and we
 can lookup a property on an object. They are different data types that have
 essentially different behaviours. In ClojureScript, there are multiple
-collection types that all conform to specific collection protocol. For those
+collection types that all conform to a specific collection protocol. For those
 familiar with the concept of an interface, all ClojureScript collections conform
 to a common interface. That means that any code that is designed to work with a
 collection can work with _any_ collection, whether that is a vector, set, list,
@@ -100,7 +100,7 @@ In order for ClojureScript to treat something as a collection, it only needs to
 be able to add something to it, and it does this by using the oddly named `conj`
 function (short for "conjoin"). How that something is added to the collection
 depends on the type of collection. For instance, items are added to the
-beginning of a list but the end of a vector, and adding an item to a set only
+beginning of a list but to the end of a vector, and adding an item to a set only
 grows the set if the item does not already exist. We can see an example of the
 behaviour of `conj` on different collections in the REPL.
 
@@ -193,7 +193,7 @@ to write such tedious code as in the example above!
 
 > *It's all about abstraction*
 >
-> Several JavaScript libraries - most notably and _lodash_ and _Ramda_ - have
+> Several JavaScript libraries - most notably _lodash_ and _Ramda_ - have
 > similar functions that can get the first element and the rest of the elements
 > from an array. The key difference between these libraries' sequence functions
 > and ClojureScript's sequences is that sequences are an _abstraction_ that are
@@ -288,7 +288,7 @@ keywords, and symbols can all be used as functions (although if we do not give
 them the arguments that they require, we may get unexpected results).
 
 We will be working with vectors a great deal, since their performance
-characteristics end up fitting will with many real-world scenarios.
+characteristics end up fitting well with many real-world scenarios.
 
 ## Using Maps for Associative Data
 
@@ -363,7 +363,7 @@ While we can use any value as a key, keywords are most commonly used because of
 their convenient syntax and because they also act as functions that can look up
 the map entry associated with themselves in a map. This is an extremely common
 idiom in ClojureScript and one that will be used extensively throughout this
-book. Additionally, maps map also be used as functions (surprise!) that can look
+book. Additionally, maps may also be used as functions (surprise!) that can look
 up the value associated with the key given as the argument.
 
 ```clojure
