@@ -26,7 +26,7 @@ temperatures between Fahrenheit and Celsius. It would probably be less than
 exciting if the app only converted a predefined temperature from one measurement
 system to the other. In order to do anything useful, we will need to interact
 with the user. Combining what we learn about i/o with our newfound knowledge of
-variables, control structures, and functions will help us build a this
+variables, control structures, and functions will help us build this
 temperature converter.
 
 First, let's use Leiningen to create a new project that uses the Figwheel
@@ -52,7 +52,7 @@ recent browsers (and thus, modern versions of JavaScript), this is not much of
 an issue, but for applications that need to support legacy browsers, a higher-level
 DOM library is very nice to have.
 
-First things first - we will create an DOM element in the REPL and append it to
+First things first - we will create a DOM element in the REPL and append it to
 the `body` of the page. Our browser window will reflect these changes as we make
 them. The result will look like the following:
 
@@ -102,13 +102,13 @@ that the Closure Library normalizes many browser quirks. This `require`
 makes the functions in this namespace available under the alias, `gdom`. When
 calling code that we have imported from another namespace, we use the form,
 `(namespace/function args*)` Thus, we could call the `getDocument()` function in
-this namespace as, `(gdom/getDocument)`.
+this namespace as `(gdom/getDocument)`.
 
 ```clojure
 (def body (.querySelector js/document "body"))
 ```
 
-Next, we user native JavaScript code to get a reference to the `body` element.
+Next, we use native JavaScript code to get a reference to the `body` element.
 We do this by way of example to demonstrate that DOM elements that we obtain
 with raw JavaScript are fully compatible with the Google Closure Library.
 
@@ -199,7 +199,7 @@ html file on the fly.
 
       <p>You said, "<span id="copy-target"></span>". How mighty interesting.</p>
     </div>
-    <script src="js/compiled/temp_converter.js" type="text/javascript"></script> <3>
+    <script src="js/compiled/doing_io.js" type="text/javascript"></script> <3>
   </body>
 </html>
 ```
@@ -297,7 +297,7 @@ cljs.user=> (defn update-target [evt]                      ;; <1>
 #'cljs.user/update-target
 
 cljs.user=> (gevents/listen input                          ;; <2>
-                            goog.events/EventType.KEYUP
+                            gevents/EventType.KEYUP
                             update-target)
 #object[Object [object Object]]
 ```
@@ -320,12 +320,12 @@ Here we create an event handler function that we intend to call on every `keyup`
 event from the input. Notice that the inner portion of this code looks very
 similar to the code that we manually entered in the REPL. They both had the
 form, `(gdom/setTextContent target value)`. The difference here is that we are
-extracting the value from of a JavaScript event rather than a DOM element
+extracting the value from a JavaScript event rather than a DOM element
 directly.
 
 ```clojure
 (gevents/listen input
-                goog.events/EventType.KEYUP
+                gevents/EventType.KEYUP
                 update-target)
 ```
 
@@ -347,6 +347,11 @@ following:
   time a key is pressed
 - Sets the status text to "Matches" when the inputs are the same and "Do not match"
   when they differ.
+  
+Hint:
+
+- Don't forget to get the `app` node to attach the children onto.
+- Bonus points if you do not disclose the typed text in the password fields
 
 *Possible Solution:*
 
@@ -389,7 +394,7 @@ In this lesson, we used both native JavaScript and Google Closure Library code
 to get user input from a webpage and manipulate the DOM. We also learned how to
 attach an event handler to an element so that we can evaluate a callback in
 response to some action that the user takes. Now that we have a way to interact
-with the user, we can begin creating such more useful apps. We should now know
+with the user, we can begin creating much more useful apps. We should now know
 how to:
 
 - Require and use Google Closure library functions
