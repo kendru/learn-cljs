@@ -99,7 +99,7 @@ cljs.user=> (.toFixed total 2)
 
 While the workings of `map` and `filter` were evident just looking at
 some code that uses them, we need to dig a little deeper with
-`reduce`. Like `map` and `filter`, takes a function and a sequence and
+`reduce`. Like `map` and `filter`, it takes a function and a sequence and
 returns _something_. However, `reduce` also takes an extra parameter,
 and the function that it takes looks a little different than the
 functions that we passed to `map` and `filter`. For one thing, this
@@ -130,7 +130,7 @@ able to take a function that does not know how to operate on a
 sequence (`+`) and somehow applied it to get the sum of all of the
 numbers in a sequence.
 
-Imagine someone packing a snowball for a snowball fight. they hold a
+Imagine children packing snowballs for a snowball fight: they hold a
 little bit of snow in one hand and pack on more snow with their other
 hand. Every time they pack on more snow, the snowball grows larger and
 larger, until the snowball is to their liking. Reduce operates in a
@@ -146,7 +146,7 @@ Given the following code:
 ;; Create a seq of words
 (def words (clojure.string/split
             "it was the best of times it was the worst of times"
-            " "))
+            #" "))
 
 (defn count-words [counts word]
   (update-in counts [word] #(inc (or % 0))))
@@ -233,7 +233,7 @@ reduce that we can use in quite a few circumstances:
 
 In this case, we do not supply an initial value to pass to
 `reducing-fn`. It will instead be called initially with the first two
-elements in `vals`. This works very in cases where we are doing
+elements in `vals`. This works very well in cases where we are doing
 something like summing numbers:
 
 ```clojure
