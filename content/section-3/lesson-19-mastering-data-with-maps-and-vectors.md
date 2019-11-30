@@ -7,7 +7,7 @@ type: "docs"
 # Lesson 19: Mastering Data With Maps and Vectors
 
 In this lesson, we will explore some of the features of ClojureScript that make
-it simple to work with data. ClojureScript places a string emphasis on relying
+it simple to work with data. ClojureScript places a strong emphasis on relying on
 generic collection types and the standard functions that operate on them rather
 than creating highly specialized functions that only work on a single type of
 object. The object-oriented approach, which most mainstream languages encourage,
@@ -55,7 +55,7 @@ JavaScript, which leads to more robust and maintainable applications.
 
 ## Domain Modeling with Maps and Vectors
 
-We are now quite familiar with what maps and vectors as well as some of the
+We are now quite familiar with maps and vectors as well as some of the
 collection and sequence operations that can be used on them. Now we can put them
 in practice in a real domain: an analytics dashboard. The main concepts that we
 need to model are _user_, _session_, _pageview_, and _event_, and the
@@ -93,7 +93,7 @@ least a mental schema of the data type. There are libraries that we can use to
 enforce a schema on our data, most notably [clojure.spec](https://clojure.org/about/spec),
 but for now we will just enforce the "shape" of our data structures by convention.
 That is, we will ensure that whenever we create an event, we create it with a timestamp
-and a type. In fact, it is a common practice to define on or more functions for constructing
+and a type. In fact, it is a common practice to define one or more functions for constructing
 the new data types that we create. Here is an example for how we might do this with _events_:
 
 ```clojure
@@ -296,7 +296,7 @@ good tools for operating on them. This is indeed the case. We will look at
 several functions that we will keep coming back to when we work with maps:
 `assoc`, `dissoc`, and `select-keys`. There are more function in the standard
 library that can be used on maps, but these are the most commonly used and
-deserve some explanation. [The Clojure Cheetsheet](http://clojure.org/api/cheatsheet)
+deserve some explanation. [The Clojure Cheatsheet](http://clojure.org/api/cheatsheet)
 is an excellent reference for the functions that we will not be able to cover.
 
 ### More or Less: Adding and Removing Elements
@@ -430,7 +430,7 @@ cljs.user=> (associative? [])
 true
 ```
 
-- Define a vector with several elements at the REPL with
+- Define a vector with several elements at the REPL
 - Use `get` to retrieve the element at a specific index
 - Use `assoc` to update the element at a specific index
 - Try using the `merge` and `dissoc`, functions on the vector. Do the results
@@ -442,7 +442,7 @@ In any but the simplest of programs, we will need to work with nested data at
 some point. The analytics application that we are considering in this chapter is
 a good example, since we have events nested inside pageviews, which are in turn
 nested inside sessions, which themselves are nested inside users. Using only the
-function we have seen so far would be intractable at best. We will now turn our
+functions we have seen so far would be intractable at best. We will now turn our
 attention to several functions that allow us to work with nested data.
 
 ### Drilling Down With get-in
@@ -457,12 +457,12 @@ to locate the data to retrieve. For instance, to get the first pageview of the
 first session of some user, we could use something like the following:
 
 ```clojure
-(get-in user [:sessons 0 :pageviews 0])
+(get-in user [:sessions 0 :pageviews 0])
 ```
 
 _Getting Nested Data_
 
-This will first look up the `:sessions` get on the `user` that we passed
+This will first look up the `:sessions` key on the `user` that we passed
 in. Next, it will get the first session (at index 0), then it will get the
 `:pageviews` key on this session. Finally, it will get the first of the
 pageviews. Notice that the get-in is really just a convenience for repeated
