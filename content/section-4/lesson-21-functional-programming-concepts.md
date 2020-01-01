@@ -183,10 +183,10 @@ function: `(add x y)`. We can use partial to supply the `x` argument, creating
 a new function that only takes `y` and adds the `x` that we already supplied:
 
 ```clojure
-(defn add [x y]                                            <1>
+(defn add [x y]                                            ;; <1>
   (+ x y))
 
-(def add-5 (partial add 5))                                <2>
+(def add-5 (partial add 5))                                ;; <2>
 
 (add-5 10)
 ;; 15
@@ -641,11 +641,11 @@ would look something like the following:
       handler (wrap-handler handler)]
   ; Example invalid request
   (handler {})
-  ;; Request ()
+  ;; Request {}
   ;; Response {:error id must be present}
 
   ; Example valid request
-  (handler {})
+  (handler {:id 123, :count 12})
   ;; Request {:id 123, :count 12}
   ;; Calling API with {:id 123, :count 12}
   ;; Response {:response is fake}

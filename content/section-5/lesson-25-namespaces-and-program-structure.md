@@ -2,6 +2,7 @@
 title: "Namespaces and Program Structure | Lesson 25"
 type: "docs"
 date: 2019-10-01T21:43:00-06:00
+draft: true
 ---
 
 

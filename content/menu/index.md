@@ -29,3 +29,8 @@ headless = true
   - [Capstone 3 - Contact Book](/section-3/lesson-20-capstone-3-contact-book/)
 - [Section 4: Idiomatic ClojureScript](/section-4/)
   - [Functional Programming Concepts](/section-4/lesson-21-functional-programming-concepts/)
+  - [Managing State](/section-4/lesson-22-managing-state/)
+
+<!--
+  - [Namespaces and Program Structure](/section-4/lesson-24-namespaces-and-program-structure/)
+-->

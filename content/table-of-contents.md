@@ -123,23 +123,22 @@ date: 2019-09-19T21:43:56-06:00
     - [Immutable Data](/section-4/lesson-21-functional-programming-concepts/#immutable-data)
     - [Functional Design Patterns](/section-4/lesson-21-functional-programming-concepts/#functional-design-patterns)
     - [Summary](/section-4/lesson-21-functional-programming-concepts/#summary)
-- Lesson 22: Namespaces and Program Structure
-    - Grouping Related Functions
-    - Avoiding “Hidden” OOP
-    - Taking Advantage of Polymorphism
-    - Summary
+- [Lesson 22: Managing State](/section-4/lesson-22-managing-state/)
+    - [Atoms](/section-4/lesson-22-managing-state/#atoms)
+    - [Transients](/section-4/lesson-22-managing-state/#transients)
+    - [Using State Wisely](/section-4/lesson-22-managing-state/#using-state-wisely)
+    - [Summary](/section-4/lesson-22-managing-state/#summary)
 - Lesson 23: Google Closure Library
-    - ClojureScript’s other “stdlib”
+    - ClojureScript’s other "stdlib"
     - Solving Browser Quirks
     - Simplifying Ajax
     - Better DOM
     - Standard Events
     - Summary
-- Lesson 24: Managing State
-    - Atoms
-    - Transients
-    - Anti-Patterns
-    - Using State Wisely
+- Lesson 24: Namespaces and Program Structure
+    - Grouping Related Functions
+    - Avoiding "Hidden" OOP
+    - Taking Advantage of Polymorphism
     - Summary
 - Lesson 25: Handling Exceptions and Errors
     - Handling Exceptions with try/catch
@@ -240,3 +239,11 @@ date: 2019-09-19T21:43:56-06:00
     - Compiler basics
     - Wrapping example
     - cljsjs libraries
+
+<!--
+- [Lesson 24: Namespaces and Program Structure](/section-4/lesson-22-namespaces-and-program-structure/)
+    - [Grouping Related Functions](/section-4/lesson-22-namespaces-and-program-structure/#grouping-related-functions)
+    - [Avoiding “Hidden” OOP](/section-4/lesson-22-namespaces-and-program-structure/#avoiding-hidden-oop)
+    - [Taking Advantage of Polymorphism](/section-4/lesson-22-namespaces-and-program-structure/#taking-advantage-of-polymorphism)
+    - [Summary](/section-4/lesson-22-namespaces-and-program-structure/#summary)
+-->

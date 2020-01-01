@@ -1,3 +1,4 @@
 /public
 resources/_gen
 .rebel_readline_history
+static/pdf

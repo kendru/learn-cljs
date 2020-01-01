@@ -15,7 +15,7 @@ already begin to write useful apps.
 
 ---
 
-*In this lesson we will:*
+*In this lesson:*
 
 - Create the structure of an app declaratively in HTML
 - Apply our knowledge of basic ClojureScript to create a widget-like app
