@@ -36,14 +36,16 @@ that they refer to can be swapped out with another value. Moreover, our code can
 whenever these state swaps occur. This gives us a convenient way to deal with state that
 changes over time.
 
-<!-- TODO: River illustration -->
-
 Unlike JavaScript, ClojureScript separates the ideas of identity and state[^1]. An _identity_
 is a reference to a logical entity. That entity may change over time, but it still retains
 its identity in the same way that a river retains its identity even though it has different
 water flowing through it over the course of time. An identity may be associated with various
 values over the course of time, and these values are its _state_. Atoms are the state containers
 that we use in CloureScript to represent identities.
+
+![State of a River](/img/lesson22/state-river.png)
+
+_A River Has Many States Over Time_
 
 ### Updating state with `swap!`
 
@@ -182,6 +184,10 @@ watch function itself takes the keyword that was passed to `add-watch`, the atom
 atom's old state, and its new state. In most cases, the old and new state are the only things
 that we are interested in. To get our feet wet, let's implement a simple counter with buttons
 that can be used to add or subtract from its value.
+
+![Watching a Counter Atom](/img/lesson22/counter-swap.png?foo=123)
+
+_Watching a Counter Atom_
 
 ```clojure
 (defonce app-state (atom 0))                               ;; <1>

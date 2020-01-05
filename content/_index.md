@@ -75,7 +75,7 @@ UI, he always uses ClojureScript (naturally).
 <footer class="attribution">
 {{< columns >}}
 
-Copyright 2019 Andrew Meredith
+Copyright 2020 Andrew Meredith
 
 <--->
 
