@@ -128,29 +128,22 @@ date: 2019-09-19T21:43:56-06:00
     - [Transients](/section-4/lesson-22-managing-state/#transients)
     - [Using State Wisely](/section-4/lesson-22-managing-state/#using-state-wisely)
     - [Summary](/section-4/lesson-22-managing-state/#summary)
-- Lesson 23: Google Closure Library
-    - ClojureScript’s other "stdlib"
-    - Solving Browser Quirks
-    - Simplifying Ajax
-    - Better DOM
-    - Standard Events
-    - Summary
-- Lesson 24: Namespaces and Program Structure
-    - Grouping Related Functions
-    - Avoiding "Hidden" OOP
-    - Taking Advantage of Polymorphism
-    - Summary
-- Lesson 25: Handling Exceptions and Errors
+- [Lesson 23: Namespaces and Program Structure](/section-4/lesson-23-namespaces-and-program-structure/)
+    - [Namespace Declarations](/section-4/lesson-23-namespaces-and-program-structure/#namespace-declarations)
+    - [Grouping Related Functions](/section-4/lesson-23-namespaces-and-program-structure/#grouping-related-functions)
+    - [Namespaces and the REPL](/section-4/lesson-23-namespaces-and-program-structure/#namespaces-and-the-repl)
+    - [Summary](/section-4/lesson-23-namespaces-and-program-structure/#summary)
+- Lesson 24: Handling Exceptions and Errors
     - Handling Exceptions with try/catch
     - Functional Alternatives to Exceptions
     - Summary
-- Lesson 26: Intro to core.async
+- Lesson 25: Intro to core.async
     - Overview of CSP
     - Coroutines as Lightweight Processes
     - Communicating Over Channels
     - Channels as Values
     - Summary
-- Lesson 27: Capstone 4 - Group Chat
+- Lesson 26: Capstone 4 - Group Chat
     - Thinking About Interactions
     - Realtime Communication
     - Rooms and Conversations
@@ -158,28 +151,28 @@ date: 2019-09-19T21:43:56-06:00
 
 ## Section 5: ClojureScript Applications
 
-- Lesson 28: React.js as a Platform
+- Lesson 27: React.js as a Platform
     - Functional Programming Model
     - DOM Diffing
     - Creating Fast Apps
     - Summary
-- Lesson 29: Using React via Reagent
+- Lesson 28: Using React via Reagent
     - Defining a Data Model
     - Writing Queries for Views
     - Writing Transition Functions
     - Building Components
     - Summary
-- Lesson 30: Separate Concerns
+- Lesson 29: Separate Concerns
     - Connecting Components With Channels
     - Message Patterns
     - Client/Server Architecture
     - Summary
-- Lesson 31: Consuming Remote APIs
+- Lesson 30: Consuming Remote APIs
     - Flattening Callbacks
     - Writing Views as Pure Functions
     - Centralizing Coordination Logic
     - Summary
-- Lesson 32: Capstone 5 - Deal of the Day
+- Lesson 31: Capstone 5 - Deal of the Day
     - Building a Reagent UI
     - Handling User Interactions
     - Handling API Interactions
@@ -187,19 +180,19 @@ date: 2019-09-19T21:43:56-06:00
 
 ## Section 6: Testing
 
-- Lesson 33: REPL-Driven Development
+- Lesson 32: REPL-Driven Development
     - The Advantages of Testing Functional Code
     - Validating Code With the REPL
     - REPL Sessions as Tests
     - Live Coding With Figwheel
     - Summary
-- Lesson 34: Intro To Unit Testing
+- Lesson 33: Intro To Unit Testing
     - Understanding the Need for Unit Tests
     - Testing Pure Functions
     - Testing Impure Functions
     - Test Set-Up and Context
     - Summary
-- Lesson 35: Don’t Write Tests - Let The Computer Write Them
+- Lesson 34: Don’t Write Tests - Let The Computer Write Them
     - What Is Property-Based Testing?
     - Introducing test.check
     - Use Cases
@@ -207,23 +200,23 @@ date: 2019-09-19T21:43:56-06:00
 
 ## Section 7: Advanced ClojureScript
 
-- Lesson 36: Protocols and Records
+- Lesson 35: Protocols and Records
     - Enforcing Stricter Contracts
     - Extending Existing Types
     - Anonymous Instances With reify
     - Flexible Dispatch with Multimethods
     - Summary
-- Lesson 37: Survey of Advanced Language Features
+- Lesson 36: Survey of Advanced Language Features
     - Programmable Programming Language
     - Macros
     - Extending Core Protocols
     - Summary
-- Lesson 38: Transducers
+- Lesson 37: Transducers
     - Transwhatsers?
     - Dataflow with core transducers
     - Writing our own transducers
     - Summary
-- Lesson 39: Compiler Deep Dive
+- Lesson 38: Compiler Deep Dive
     - Compilation pipeline
     - Advanced options
     - Bootstrapped ClojureScript

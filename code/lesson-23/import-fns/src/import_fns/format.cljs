@@ -1,7 +1,7 @@
 (ns import-fns.format
   (:require [clojure.string :as s]))
 
-(defn- ends-with-any? [word suffixes]
+(defn ends-with-any? [word suffixes]
   (some (fn [suffix]
           (s/ends-with? word suffix)
          suffixes)))
