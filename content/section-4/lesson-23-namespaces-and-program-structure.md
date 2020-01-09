@@ -4,7 +4,7 @@ date: 2019-11-20T21:48:49-07:00
 type: "docs"
 ---
 
-# Lesson 24: Namespaces and Program Structure
+# Lesson 23: Namespaces and Program Structure
 
 In ClojureScript, the unit of modularity is the namespace. A namespace is simply a
 logical grouping of functions and data that can be required and used by another
