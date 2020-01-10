@@ -57,9 +57,11 @@ find $TMP_DIR -type f -print \
         --file-scope \
         --toc \
         --toc-depth 2 \
+        --template="${BASE_DIR}/scripts/templates/default.latex" \
         -V geometry:margin=1.25in \
         -V fontsize=10pt \
         -V documentclass=report \
+        -V gendate="$(date +%Y-%m-%d)" \
         -fmarkdown-implicit_figures \
         --dpi 300 \
         --include-in-header="${TMP_DIR}/fontoptions.tex" \
