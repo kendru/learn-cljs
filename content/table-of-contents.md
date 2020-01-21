@@ -133,10 +133,10 @@ date: 2019-09-19T21:43:56-06:00
     - [Grouping Related Functions](/section-4/lesson-23-namespaces-and-program-structure/#grouping-related-functions)
     - [Namespaces and the REPL](/section-4/lesson-23-namespaces-and-program-structure/#namespaces-and-the-repl)
     - [Summary](/section-4/lesson-23-namespaces-and-program-structure/#summary)
-- Lesson 24: Handling Exceptions and Errors
-    - Handling Exceptions with try/catch
-    - Functional Alternatives to Exceptions
-    - Summary
+- [Lesson 24: Handling Exceptions and Errors](/section-4/lesson-24-handling-exceptions-and-errors/)
+    - [Handling Exceptions with try/catch](/section-4/lesson-24-handling-exceptions-and-errors/#handling-exceptions-with-try-catch)
+    - [Functional Alternatives to Exceptions](/section-4/lesson-24-handling-exceptions-and-errors/#functional-alternatives-to-exceptions)
+    - [Summary](/section-4/lesson-24-handling-exceptions-and-errors/#summary)
 - Lesson 25: Intro to core.async
     - Overview of CSP
     - Coroutines as Lightweight Processes

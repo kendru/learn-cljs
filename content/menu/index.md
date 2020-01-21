@@ -31,6 +31,7 @@ headless = true
   - [Functional Programming Concepts](/section-4/lesson-21-functional-programming-concepts/)
   - [Managing State](/section-4/lesson-22-managing-state/)
   - [Namespaces and Program Structure](/section-4/lesson-23-namespaces-and-program-structure/)
+  - [Handling Exceptions and Errors](/section-4/lesson-24-handling-exceptions-and-errors/)
 
 <!--
   - [Namespaces and Program Structure](/section-4/lesson-24-namespaces-and-program-structure/)
