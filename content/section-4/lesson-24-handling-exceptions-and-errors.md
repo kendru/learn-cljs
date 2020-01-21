@@ -2,7 +2,6 @@
 title: "Handling Exceptions and Errors | Lesson 24"
 date: 2020-01-11T16:43:38-07:00
 type: "docs"
-draft: true
 ---
 
 # Lesson 24: Handling Exceptions and Errors
