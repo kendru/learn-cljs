@@ -23,5 +23,5 @@ create a group chat application.
 - [Lesson 22: Managing State](/section-4/lesson-22-managing-state/)
 - [Lesson 23: Namespaces and Program Structure](/section-4/lesson-23-namespaces-and-program-structure/)
 - [Lesson 24: Handling Exceptions and Errors](/section-4/lesson-24-handling-exceptions-and-errors/)
-- Lesson 25: Intro to core.async
+- [Lesson 25: Intro to core.async](/section-4/lesson-25-intro-to-core-async/)
 - Lesson 26: Capstone 4 - Group Chat

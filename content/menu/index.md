@@ -32,7 +32,4 @@ headless = true
   - [Managing State](/section-4/lesson-22-managing-state/)
   - [Namespaces and Program Structure](/section-4/lesson-23-namespaces-and-program-structure/)
   - [Handling Exceptions and Errors](/section-4/lesson-24-handling-exceptions-and-errors/)
-
-<!--
-  - [Namespaces and Program Structure](/section-4/lesson-24-namespaces-and-program-structure/)
--->
+  - [Intro to core.async](/section-4/lesson-25-intro-to-core-async/)

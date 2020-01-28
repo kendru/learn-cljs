@@ -137,12 +137,12 @@ date: 2019-09-19T21:43:56-06:00
     - [Handling Exceptions with try/catch](/section-4/lesson-24-handling-exceptions-and-errors/#handling-exceptions-with-try-catch)
     - [Functional Alternatives to Exceptions](/section-4/lesson-24-handling-exceptions-and-errors/#functional-alternatives-to-exceptions)
     - [Summary](/section-4/lesson-24-handling-exceptions-and-errors/#summary)
-- Lesson 25: Intro to core.async
-    - Overview of CSP
-    - Coroutines as Lightweight Processes
-    - Communicating Over Channels
-    - Channels as Values
-    - Summary
+- [Lesson 25: Intro to core.async](/section-4/lesson-25-intro-to-core-async/)
+    - [Overview of CSP](/section-4/lesson-25-intro-to-core-async/#overview-of-csp)
+    - [Go Blocks as Lightweight Processes](/section-4/lesson-25-intro-to-core-async/#go-blovks-as-lightweight-processes)
+    - [Communicating Over Channels](/section-4/lesson-25-intro-to-core-async/#communicating-over-channels)
+    - [Channels as Values](/section-4/lesson-25-intro-to-core-async/#channels-as-values)
+    - [Summary](/section-4/lesson-25-intro-to-core-async/#summary)
 - Lesson 26: Capstone 4 - Group Chat
     - Thinking About Interactions
     - Realtime Communication

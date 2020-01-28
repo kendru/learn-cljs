@@ -1,0 +1,52 @@
+/* some style */
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.workspace {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.query-container, .result-container {
+    padding: 0 12px;
+}
+
+.query-container {
+    flex: 1 1 50%;
+    background-color: #555;
+    color: #ffffff;
+    border-bottom: 2px solid #333;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.query-container > .section-heading {
+    flex: 0 1 32px;
+}
+
+.query-container > textarea {
+    flex: 1 0 auto;
+    background-color: #ffffff;
+    color: #333;
+    border: none;
+}
+
+.result-container {
+    flex: 1 1 auto;
+    background-color: #eeeeee;
+    color: #333333;
+}
+
+.section-heading {
+    margin: 0;
+    line-height: 32px;
+}
