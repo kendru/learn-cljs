@@ -80,6 +80,10 @@ Caught value: {:type :custom-error, :message Something unpleasant occurred}
 nil
 ```
 
+![Control Flow for try/catch](/img/lesson24/control-flow-try-catch.png)
+
+_Control Flow for try/catch_
+
 ### Quick Review
 
 <!-- Using a list messes up the indentation of a code block following a list item, so we "fake" a list -->
@@ -322,6 +326,10 @@ a judicious use of exception handling code at the boundaries of our application.
 several excellent libraries that help take care of the boilerplate associated with this
 error-as-value approach, such as Adam Bard's [failjure](https://github.com/adambard/failjure).
 
+![Control Flow for Errors as Values](/img/lesson24/control-flow-values.png)
+
+_Control Flow for Errors as Values_
+
 ### Conditions and Restarts
 
 Given the long history of the Lisp family of programming languages, we should briefly mention
@@ -410,7 +418,9 @@ in the `handle-parse-error` function: `(condition :reparse "currUser")`. This ab
 code in the lower-level functions that can be dispatched based on higher-level logic is what makes
 conditions so powerful.
 
-<!-- TODO: condition signaling diagram -->
+![Control Flow for Conditions](/img/lesson24/control-flow-conditions.png)
+
+_Control Flow for Conditions_
 
 ### Quick Review
 

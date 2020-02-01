@@ -6,13 +6,13 @@ type: "docs"
 
 # Lesson 25: Intro to Core Async
 
-Asynchronous programming is at the heart of web development. Almost every app needs
-to communicate with an API back-end, respond to user input, or perform some other
+Asynchronous programming loves at the heart of web development. Almost every app needs
+to communicate with an API backend, respond to user input, or perform some other
 IO task without blocking the main thread. While it is entirely possible to use
 JavaScript's Promise API from ClojureScript, we have another paradigm for asynchronous
 programming at our disposal - the `core.async` library. This library implements the
 same concurrency model as the Go programming language, and it allows us to write
-code as sequential processes that may need to communicate asynchronously.
+code as sequential processes that may need to communicate with each other.
 
 ---
 
@@ -51,7 +51,9 @@ concurrently (ClojureScript is is charge of scheduling what process should run w
 though communication is a cornerstone of CSP, processes do not necessarily _have_ to communicate
 with any other processes.
 
-<!-- TODO: Illustration of processes -->
+![Concurrent Processes](/img/lesson25/concurrent-processes.png)
+
+_Concurrent Processes_
 
 Moving on from processes, the next key object in CSP is the _channel_[^1]. A channel is simply a
 conduit that can carry values from one process to another. By default, each channel can only convey
@@ -72,7 +74,9 @@ values (via `dropping-buffer`) or push out the oldest value in the buffer (via `
 > of the channel changes. We avoid using the language of blocking, since ClojureScript runs in the
 > single-threaded context of JavaScript, and parking a process does not block that thread.
 
-<!-- TODO: Illustration of channels -->
+![Synchronization with Channels](/img/lesson25/channel-sync.png)
+
+_Synchronization with Channels_
 
 With this understanding of how processes and channels work, we are ready to dig in to an example. Let's
 say that we are building an SQL query editor, and whenever the user is focused in the query input and
