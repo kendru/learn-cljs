@@ -2,6 +2,7 @@
 title: "Intro to Core Async | Lesson 25"
 date: 2020-01-21T07:00:36-07:00
 type: "docs"
+opengraphImage: "https://www.learn-clojurescript.com/img/lesson25/channel-sync.png"
 ---
 
 # Lesson 25: Intro to Core Async
