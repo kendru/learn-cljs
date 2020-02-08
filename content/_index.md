@@ -32,7 +32,7 @@ By the end of the book, you will have created:
 {{< columns >}}
 ## About the author
 
-Andrew has been writing Clojure code both personally and since 2012. He lives in
+Andrew has been writing Clojure code both personally and professionally since 2012. He lives in
 Colorado with his wife, four children, and a couple of toads that found their way into his
 window well. Andrew works as a software architect at [Quantum Metric](https://www.quantummetric.com),
 where he focuses on prototyping data-intensive applications. When he has a chance to write a
