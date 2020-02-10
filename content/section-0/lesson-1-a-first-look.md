@@ -227,7 +227,7 @@ know that it enables a completely new way of thinking about async.
 In the early days of JavaScript, we probably wrote a single JavaScript file that
 we included in every page of a website that covered all of the scripting that
 we needed on the site. If the file got too big or different pages had entirely
-different requirements, we probably wrote several JavaScript files an included
+different requirements, we probably wrote several JavaScript files and included
 them on the applicable pages. Maybe eventually we heard about the "Module
 Pattern" or "Revealing Module Pattern" and separated our code into narrowly
 focused modules with one file per module. Now we had to worry about loading
@@ -283,7 +283,7 @@ into the category of research languages. ClojureScript made significant
 improvements to JavaScript while sustaining the community support required of a
 language intended for professional use.
 
-In addition the other languages that compile to JavaScript, we must consider
+In addition to the other languages that compile to JavaScript, we must consider
 the fact that many of us are compiling newer versions of JavaScript to older
 versions so that we can take advantage of language features that make JavaScript
 more productive and enjoyable before they are supported by the major browsers.
