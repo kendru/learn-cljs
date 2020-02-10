@@ -67,13 +67,13 @@ maintenance phases of an application.
 
 When we write less code to accomplish a given task, there are a couple of
 benefits. First, it almost goes without saying that it is quicker to write a
-little code than it is to a lot of code. Even though more time is usually spent
+little code than it is a lot of code. Even though more time is usually spent
 designing and planning code than actually writing it, we do not want to be
 hampered by how many keystrokes it takes to turn our ideas into code. Second,
 fewer lines of code means fewer bugs. The developer who would rather spend her
 time fixing bugs than writing new features is either a rarity or nonexistent.
 The terseness of a high-level language like ClojureScript means that there are
-fewer places for bugs to hide, an in turn, we can spend more time making
+fewer places for bugs to hide, and in turn, we can spend more time making
 forward progress.
 
 ### Less Boilerplate
@@ -263,7 +263,7 @@ Scripting is another area where Java is fairly weak. Whether as a scripting
 language embedded in a larger application or as a system shell scripting
 language, Java is too large and complex, and the startup time of the JVM makes
 it impractical for short-lived programs like simple scripts. JavaScript is a
-great scripting languages. Node.js allows us to write system scripts as well as
+great scripting language. Node.js allows us to write system scripts as well as
 web servers.
 
 ### Quick Review
@@ -276,7 +276,7 @@ libraries?
 ## Summary
 
 In this lesson, we have explored the relationship of ClojureScript to its host,
-JavaScript. We have seen learned:
+JavaScript. We have learned:
 
 - How ClojureScript improves on JavaScript's development experience
 - How JavaScript's lightweight and ubiquitous runtime allows us to write
