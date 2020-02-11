@@ -6,7 +6,7 @@ date: 2019-09-19T12:57:04-06:00
 
 # Lesson 4: Expressions and Evaluation
 
-As we briefly touched on in the previous lesson, the concept an _expression_ is
+As we briefly touched on in the previous lesson, the concept of an _expression_ is
 at the core of ClojureScript code. For programmers coming from a language like
 JavaScript, thinking in terms of expressions requires a shift in perspective,
 but like most aspects of ClojureScript, we will find that programming with
@@ -76,7 +76,7 @@ _S-Expressions_
 5. S-expressions can be nested
 6. Just because an s-expression is syntactically valid does not guarantee that it will run.
 
-At this point, we can begin to see that all of the parehtneses serve a purpose
+At this point, we can begin to see that all of the parentheses serve a purpose
 after all (even this author had his doubts at first). They provide a consistent
 and explicit structure for evaluating any code. While other programming
 languages generally have separate syntax for function calls, math and logic
@@ -339,7 +339,7 @@ what remains to learn is the vocabulary and common idioms.
 ## Order of Operations
 
 It may come as a surprise, but ClojureScript has no concept of operator
-precedence. That is, there no rules indicating that multiplication should be
+precedence. That is, there are no rules indicating that multiplication should be
 performed before addition or any such thing. Instead of having a set of rules
 that implicitly determine the order in which to evaluate an expression, we
 specify the order by how we nest s-expressions. For example, the following code
