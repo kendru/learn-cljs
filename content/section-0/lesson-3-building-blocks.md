@@ -51,7 +51,7 @@ initial "paren shock", ClojureScript begins to look simple, even elegant.
 ### Expressions and Function Evaluation
 
 Parentheses are used in ClojureScript to indicate expressions to be evaluated.
-We will look much deeper into expressions in the next lesson, but they are so
+We will look much deeper into these so called `s-expressions` in the next lesson, but they are so
 critical that we must at least mention them here. At a high level, every
 ClojureScript program has basically the following form:
 
@@ -101,12 +101,13 @@ description and an example of how it is expressed in code.
 | --------- | ----------- | ------- |
 | Number | Integer or floating point numbers | `17.4` |
 | String | Textual data | `"Today is the first day..."` |
+| Character | Textual data | `\a` |
 | Boolean | Logical true/false | `true` |
 | Keyword | Lightweight identifiers | `:role` |
 | Symbol | Identifiers that are extensively used internal to ClojureScript | `'cljs-is-awesome` |
 | List | Ordered collection supporting efficient traversal | `'(1 3 5 7 9)` |
 | Vector | Ordered collection supporting efficient access by index | `[0 2 4 6 8]` |
-| Map | Unordered associating unique keys to values | `{:name "Kayleigh", :age 29}` |
+| Map | Unordered collection associating unique keys to values | `{:name "Kayleigh", :age 29}` |
 | Set | Unordered collection of unique values | `#{true "ubiquity" 9.2}` |
 | nil | The empty value | `nil` |
 | Object | JavaScript object - used for interop | `#js {"isJs" true, "isImmutable" false}` |
@@ -139,8 +140,8 @@ of the different formats that ClojureScript recognizes as valid numbers.
 ```
 
 1. Decimal integer
-2. Octal integer
-3. Hexidecimal integer
+2. Octal integer starts with a leading zero
+3. Hexidecimal integer starts with leading `0x`
 4. Float
 5. Float with an exponent
 6. Float with a sign and and exponent with a sign
@@ -241,11 +242,14 @@ made up of lists.
 '(+ 1 2 3 4)                                                ;; <2>
 
 '(some data)                                                ;; <3>
+
+'()                                                         ;; <4>
 ```
 
 1. A list that is interpreted as an expression and evaluated
 2. Prevent evaluation of a list by starting it with a single quote
 3. Lists can contain any ClojureScript data type
+4. An empty list
 
 ### Vectors
 
@@ -344,4 +348,4 @@ about:
 - How parentheses are used to evaluate functions
 - The scalar data types: number, string, boolean, keyword, and symbol
 - The collection data types: list, vector, map, and set
-- The empty value, `nil`
+- The empty value: `nil`
