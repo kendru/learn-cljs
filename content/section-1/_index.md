@@ -12,10 +12,10 @@ few decades). While there are some code samples and exercises in this section - 
 simple but complete application in [Lesson 8](/section-1/lesson-8-capstone-weather-forecasting-app) -
 the focus is on learning the tools that will make you an effective ClojureScript programmer.
 Just as a new JavaScript developer needs a basic understanding of Babel and Webpack, and the
-browser dev tools, a new ClojureScript developer ought to have a famialiarity with the tools that
+browser dev tools, a new ClojureScript developer ought to have a familiarity with the tools that
 we cover in this section.
 
-Now that we have a high-level perspective on ClojureScript as a language and is place in
+Now that we have a high-level perspective on ClojureScript as a language and its place in
 the JavaScript ecosystem, we will walk through the process of bootstrapping a new ClojureScript
 project, using Leiningen, the defacto Clojure and ClojureScript build tool. Next, we will introduce
 Figwheel, an invaluable tool for live-reloading code and styles, and we will learn how to write code
