@@ -30,7 +30,7 @@ feel for how fun and productive a ClojureScript project can be.
 To start out, we will learn how to create and build a ClojureScript project.
 Just as the carpenter must be familiar with all of his tools before he can
 create a masterpiece, we must get acquainted to the tools of our trade. Coming
-from the glut of tools that we have need for JavaScript development, it should
+from the glut of tools that we have need for in JavaScript development, it should
 come as a relief that there are only a few key tools that we need for any
 ClojureScript project.
 
@@ -50,7 +50,7 @@ Leiningen is the defacto build tool for Clojure and ClojureScript. We will use
 it for bootstrapping a project, managing dependencies, compiling, and testing
 our projects. Using a single tool for all of these concerns should come as a
 welcome change from the proliferation of tools in the JavaScript
-landscape. Before proceeding any farther, we should install Java and
+landscape. Before proceeding any further, we should install Java and
 Leiningen. See Appendix A for details on installing these tools for your
 platform. One interesting feature of ClojureScript, is that we do not need to
 install it manually - we only need to specify it as a dependency of our
@@ -79,14 +79,14 @@ OSX or Linux. Windows users may have to make minor adaptations the commands.
 Similar to JavaScript tools such as Grunt and Gulp, Leiningen provides a
 platform for creating build-related and utility tasks. However, the focus of
 Leiningen is broader than that of its JavaScript counterparts. For instance,
-Leiningen can scaffold:[Scaffolding is the process of generating the files and
+Leiningen can scaffold [Scaffolding is the process of generating the files and
 directories that will be necessary for most projects. Without scaffolding, we
 would have to manually create the same files by hand for every new project.] a
 new project, manage dependencies, run build tasks, and deploy a completed
 application. In the JavaScript world, one might use four separate tools to cover
 each of these concerns: Yeoman for scaffolding, NPM for managing dependencies,
 Grunt for running build tasks, and ad-hoc bash scripts for deploying. Compared
-to the overhead of learning four tools to manage a JavaScript, using a single,
+to the overhead of learning four tools to manage a JavaScript app, using a single,
 well-supported tool for a ClojureScript application is a simpler alternative.
 
 In the examples in this book, we will only be scratching the surface of
@@ -113,7 +113,7 @@ _Summary of key Leiningen Tasks_
 
 Now that we have had a whirlwind tour of Leiningen, let's dive in and create our
 first simple project, a weather forecasting app. Since we will be using Figwheel
-to automatically compile and code in the browser as we make changes, we can make
+to automatically compile and (re-)load[?] code in the browser as we make changes, we can make
 use of a Leiningen _template_, which is a blueprint for the files and directory
 structure to create. By default there are several built-in templates for
 generating Clojure applications and Leiningen projects, but we can specify other
@@ -185,7 +185,7 @@ $ tree -a                    <1>
 
 _Exploring the Generated Project_
 
-1. View the contents of the project directory recursively
+1. View the contents of the project directory recursively (Windows users may try `tree /f`)
 2. The `resources` directory contains the HTML page that will load our application as well as any styles and assets we need.
 3. The `src` directory contains ClojureScript sourc code
 
@@ -195,7 +195,7 @@ needs, including project metadata (name, version, etc.), dependencies, and
 ClojureScript compiler options. This file is the equivalent of `package.json` in
 a JavaScript project that uses NPM. We will be digging into this file as we
 build more applications in Section 3. For now, we only need to know how it is
-used. Finally, the .gitignore file will exclude all of the local files the
+used. Finally, the .gitignore file will exclude all of the local files that
 Leiningen, the ClojureScript compiler, or figwheel might generate. All things
 considered, this is quite a bit of boilerplace that was handled by a single
 command.
@@ -215,14 +215,13 @@ start to build out the weather forecasting app. For now, we will look at the
 namespace declaration at the top of the file, since it is closely tied to the
 structure of the project. Each ClojureScript file contains a single _namespace_,
 which is simply a collection of data and functions. The namespace is the unit of
-modularity in ClojureScript. If we open up the `core.cljs` file that was
-created, we can see the namespace declared on the first line: `(ns
+modularity in ClojureScript. We can see the namespace declared on the first line: `(ns
 cljs-weather.core ...)`. The ClojureScript compiler uses a simple naming
 convention for namespaces based on the name of the file that houses them:
 
 1. Take the file path relative to the source directory
 2. Replace the path separator ("/" on Unix-like systems and "\" on Windows) with a dot, "."
-3. Replace hyphens, "-", with underscores "_"
+3. Replace underscores "_", with hyphens, "-"
 
 ![Filename to Namespace Convention](/img/lesson5/namespace-transformation.png)
 
@@ -242,7 +241,7 @@ _Filename to Namespace Convention_
 The `resources/` directory contains all of the assets that we need to serve a
 website, including an `index.html`, a stylesheet (which is empty by default),
 and once we build our project, it will additionally contain all of the compiled
-JavaScript code as well. This template also created an `index.html` with a
+JavaScript code as well. The template created the `index.html` with a
 single div that we can load our application into and includes the JavaScript
 file that will load our application as well as all of its dependencies. This is
 fine for development, but when it comes time to deploy, we probably want to
@@ -260,16 +259,16 @@ We already get a taste on ClojureScript's focus on simplicity: bootstrapping a
 new project did not create dozens of files full of boilerplate code; it only
 created 4 project-related files, plus a `.gitignore` and a README. The amazing
 thing is that we really do not need more than this to start a new project.
-ClojureScript development focuses on building incrementally from a
+ClojureScript development focuses on building incrementally from a small base!
 
 ### Challenge
 
 Visit Leiningen's website and explore what you can do with it. Remember that
 Leiningen is a build tool for both ClojureScript and Clojure (JVM), so some of
-the instrution is geared towards Clojure. Here are a few exercises to help
+the instruction is geared towards Clojure. Here are a few exercises to help
 understand what Leiningen does for you:
 
-- Create a new leingen project from the _mies_ template and see what (if anything) is different from the project that we generated.
+- Create a new leiningen project from the _mies_ template and see what (if anything) is different from the project that we generated.
 - Replicate the files that Leiningen generated by hand. Was it difficult?
 - Write out the name of each of the files that was generated and explain the purpose of each.
 
