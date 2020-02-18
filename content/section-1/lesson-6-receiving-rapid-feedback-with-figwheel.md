@@ -204,7 +204,7 @@ consider as the "Pillars of Reloadable Code": idempotent functions,
 
 _The Pillars of Reloadable Code_
 
-When we write code that hold to these three pillars, we will often
+When we write code that holds to these three pillars, we will often
 find that not only do we end up with reloadable code, but our code
 often ends up being much more robust and maintainable as well. With
 that, we'll dig into each of these pillars and how to apply them to
@@ -376,7 +376,7 @@ In this lesson, we examined a core feature of interactive development in
 ClojureScript - live reloading. We used Figwheel to reload our code whenever it
 changed, and we looked at the principles behind writing code that is reloadable.
 Equipped with this knowledge, we can take our productivity to the next level and
-enjoy much quicker feedback that we normally get with JavaScript. We now know:
+enjoy much quicker feedback than we normally get with JavaScript. We now know:
 
 - How to start Figwheel from the command line
 - How Figwheel reloads code when it changes
