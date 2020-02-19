@@ -252,7 +252,7 @@ the page.
 > Anything that we have defined in the REPL will only last until we close or
 > refresh the web browser, so if we want to discard everything that we have
 > defined in the REPL, we can simply refresh the browser. Conversely, when in the
-> middle of in involved REPL session, we should take care to not refresh the
+> middle of an involved REPL session, we should take care to not refresh the
 > browser, lest we lose the state that we have built up.
 
 We will probably want to get the value of some input that triggered an event in
