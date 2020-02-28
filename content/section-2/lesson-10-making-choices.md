@@ -447,10 +447,10 @@ options, but if there is a lot of common code in each of the test expressions,
 `condp` can usually help us factor it out. In our case, we test the value of
 "answer" for equality with some string in every test expression.
 
-This is a great case for `condp`, which take a binary predicate - that is, a
-function that take two arguments and returns a boolean value, e.g. `=` - an
-expression to use as the righthand side in every test, and any number of
-lefthand expression/result pairs. It can also take an optional default value to
+This is a great case for `condp`, which takes 1) a binary predicate -- that is, a
+function that take two arguments and returns a boolean value, e.g. `=` 2) an
+expression to use as the righthand side in every test, and 3) any number of
+lefthand test-expression/result pairs. It can also take 4) an optional default value to
 use if none of the prior tests were truthy.
 
 ```clojure
@@ -492,16 +492,16 @@ used to test multiple values when the full flexibility of case is not required.
 
 ### Quick Review
 
-- Using `cond` write some code that will evaluate to `:pos` when a given number is positive, `:neg` when it is negative, and `:zero` when it is exactly zero
+- Using `cond` to write some code that will evaluate to `:pos` when a given number is positive, `:neg` when it is negative, and `:zero` when it is exactly zero
 - Write code that will do the same thing using `condp`
 
 ## Summary
 
 In this lesson, we learned what are usually referred to as the branching control
-structures. We learned that, in contrast to JavaScript an other imperative
+structures. We learned that, in contrast to JavaScript and other imperative
 languages, these structures are used as expressions that choose between values
 rather than imperative statements that direct the flow of execution. We also
-looked at ClojureScript's concept of truthiness and how is is simpler than that
+looked at ClojureScript's concept of truthiness and how it is simpler than that
 of most other languages. We can now:
 
 - Choose between two values using `if`
