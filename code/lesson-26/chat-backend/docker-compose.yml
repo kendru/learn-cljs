@@ -1,0 +1,16 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:12.2-alpine
+    volumes:
+    - "pgdata_chat:/var/lib/postgresql/data/pgdata"
+    ports:
+    - "5432:5432"
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_DB: chat
+      POSTGRES_USER: chat
+      POSTGRES_PASSWORD: s3cr3t
+
+volumes:
+  pgdata_chat:
