@@ -7,7 +7,7 @@ opengraphImage: "https://www.learn-clojurescript.com/img/lesson25/channel-sync.p
 
 # Lesson 25: Intro to Core Async
 
-Asynchronous programming loves at the heart of web development. Almost every app needs
+Asynchronous programming lives at the heart of web development. Almost every app needs
 to communicate with an API backend, respond to user input, or perform some other
 IO task without blocking the main thread. While it is entirely possible to use
 JavaScript's Promise API from ClojureScript, we have another paradigm for asynchronous
@@ -38,8 +38,8 @@ multiple processes can _synchronize_ such that one process waits for a specific 
 before proceeding.
 
 In ClojureScript, the _core.async_ library provides the functionality that we need to create these
-asynchronous workflows in thr form of the `go` macro, which creates a new lightweight process,
-`chan`, which creates a channel, and the operators, `<!` (take) and `>!` (put), and
+asynchronous workflows in the form of the `go` macro, which creates a new lightweight process,
+`chan`, which creates a channel, and the operators, `<!` (take), `>!` (put), and
 `alts!` (take from one of many channels). Using only these primitives, we can create very
 sophisticated asynchronous communication patterns. Before diving in with `core.async`, let's take
 a quick step back to talk about CSP.
@@ -60,7 +60,7 @@ Moving on from processes, the next key object in CSP is the _channel_[^1]. A cha
 conduit that can carry values from one process to another. By default, each channel can only convey
 a single value at once. That is, once a process sends a value on a channel, the next process that
 tries to send on that channel will be parked until another process takes the value out of that
-channel. Additionally, trying to take a value from an empty channel with park the receiver until
+channel. Additionally, trying to take a value from an empty channel will park the receiver until
 a value is put in. Channels can also be created with buffers that can hold up to some specified number
 of values that have not been taken out of the channel. Additionally, these buffers can either park
 producers when they fill up (which is the default behaviour), or they can silently discard any new
