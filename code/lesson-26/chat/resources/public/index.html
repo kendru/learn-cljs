@@ -15,7 +15,11 @@
       </div>
     </main>
     <script type="text/javascript">
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
       window.WS_API_URL = 'ws://localhost:8080';
+    } else {
+      window.WS_API_URL = 'wss://chat-api.learn-cljs.com/';
+    }
     </script>
     <script src="js/compiled/chat.js" type="text/javascript"></script>
   </body>

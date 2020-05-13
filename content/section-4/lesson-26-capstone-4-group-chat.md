@@ -12,7 +12,7 @@ up some tools and techniques that will make us more productive, but nothing is
 stopping us from writing complete, production-quality apps with what we have learned
 so far. For this capstone, we will be writing a realtime group chat application -
 similar to a very slimmed-down version of Slack. You can connect to a live instance of
-this application at https://chat.learn-clojurescript.com/.
+this application at https://chat.learn-cljs.com/.
 
 ---
 
