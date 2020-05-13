@@ -144,13 +144,13 @@ of the different formats that ClojureScript recognizes as valid numbers.
 3. Hexidecimal integer starts with leading `0x`
 4. Float
 5. Float with an exponent
-6. Float with a sign and and exponent with a sign
+6. Float with a sign and exponent with a sign
 
 ### Strings
 
 Strings, like numbers, use JavaScript primitives. However, ClojureScript's
 string syntax is more restricted than JavaScript's. Notably, strings _must_ be
-contained in double quotes, since ClojuseScript uses single quotes for other
+contained in double quotes, since ClojureScript uses single quotes for other
 purposes. Double quotes and other special characters are escaped with a
 backslash.
 
