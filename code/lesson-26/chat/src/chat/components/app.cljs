@@ -4,19 +4,18 @@
             [chat.components.messages :refer [init-messages]]
             [chat.components.compose :refer [init-composer]]
             [chat.components.auth :refer [init-auth]]
-            [goog.dom :as gdom])
-  (:import [goog.dom TagName]))
+            [chat.components.dom :as dom]))
 
-(defn init-main [cmd-ch]
-  (doto (gdom/createDom TagName.SECTION "content-main")
-    (.appendChild (init-header))
-    (.appendChild (init-messages))
-    (.appendChild (init-composer cmd-ch))))
+(defn init-main [msg-ch]
+  (dom/section "content-main"
+    (init-header)
+    (init-messages)
+    (init-composer msg-ch)))
 
-(defn init-app [el cmd-ch]
-  (let [wrapper (gdom/createDom TagName.DIV "app-wrapper"
-                  (init-sidebar cmd-ch)
-                  (init-main cmd-ch)
-                  (init-auth cmd-ch))]
+(defn init-app [el msg-ch]
+  (let [wrapper (dom/div "app-wrapper"
+                  (init-sidebar msg-ch)
+                  (init-main msg-ch)
+                  (init-auth msg-ch))]
     (set! (.-innerText el) "")
     (.appendChild el wrapper)))

@@ -33,3 +33,4 @@ headless = true
   - [Namespaces and Program Structure](/section-4/lesson-23-namespaces-and-program-structure/)
   - [Handling Exceptions and Errors](/section-4/lesson-24-handling-exceptions-and-errors/)
   - [Intro to core.async](/section-4/lesson-25-intro-to-core-async/)
+  - [Capstone 4 - Group Chat](/section-4/lesson-26-capstone-4-group-chat/)

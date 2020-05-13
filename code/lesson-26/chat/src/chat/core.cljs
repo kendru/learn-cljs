@@ -1,7 +1,7 @@
 (ns chat.core
     (:require [chat.state :as state]
               [chat.api :as api]
-              [chat.command :as cmd]
+              [chat.message-bus :as bus]
               [chat.components.app :refer [init-app]]
               [chat.handlers]
               [goog.dom :as gdom]))
@@ -10,10 +10,9 @@
 
 (defonce initialized?
   (do
-    (cmd/init!)
-    (api/init! cmd/cmd-ch)
+    (api/init! bus/msg-ch js/WS_API_URL)
     (init-app
       (gdom/getElement "app")
-      cmd/cmd-ch)
+      bus/msg-ch)
     (set! (.-getAppState js/window) #(clj->js @state/app-state))
     true))

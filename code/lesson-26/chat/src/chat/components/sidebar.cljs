@@ -1,80 +1,82 @@
 (ns chat.components.sidebar
-  (:require [chat.components.component :refer [init-component]]
-            [chat.components.helpers :as helpers]
-            [chat.command :as cmd]
-            [goog.dom :as gdom]
+  (:require [chat.components.dom :as dom]
+            [chat.components.component :refer [init-component]]
+            [chat.components.render-helpers :as helpers]
+            [chat.message-bus :as bus]
             [goog.events :as gevents]
-            [chat.state :as state])
-  (:import [goog.dom TagName]))
+            [chat.state :as state]))
 
 (defn sidebar-header [title]
-  (gdom/createDom TagName.DIV "sidebar-header" title))
+  (dom/div "sidebar-header" title))
 
-(defn render-room [cmd-ch room]
+(defn render-room [msg-ch room]
   (let [class-name (str "sidebar-item" (when (:active? room) " active"))
         text (:name room)]
-    (doto (gdom/createDom TagName.DIV class-name text)
-      (.addEventListener "click"
-        #(cmd/dispatch! cmd-ch :switch-to-room
+    (doto (dom/div class-name text)
+      (gevents/listen "click"
+        #(bus/dispatch! msg-ch :switch-to-room
            {:id (:id room)})))))
 
-(defn render-create-room [cmd-ch el open?]
+(defn render-create-room [msg-ch el open?]
   (if open?
-    (let [add-room-input (gdom/createDom TagName.INPUT "add-room-input")]
-      (.appendChild el
+    (let [add-room-input (dom/input "add-room-input")]
+      (dom/with-children el
         (doto add-room-input
-          (.addEventListener "keyup"
+          (gevents/listen "keyup"
             #(when (= (.-key %) "Enter")
-              (cmd/dispatch! cmd-ch :create-room (.-value add-room-input))))
-          (.addEventListener "blur"
-            #(cmd/dispatch! cmd-ch :close-create-room-input))))
+              (bus/dispatch! msg-ch
+                :create-room (.-value add-room-input))))
+          (gevents/listen "blur"
+            #(bus/dispatch! msg-ch
+               :close-create-room-input))))
       (.focus add-room-input))
-    (.appendChild el
-      (doto (gdom/createDom TagName.DIV "add-room" "Add")
-        (.addEventListener "click"
-          #(cmd/dispatch! cmd-ch :open-create-room-input))))))
+    (dom/with-children el
+      (doto (dom/div "add-room" "Add")
+        (gevents/listen "click"
+          #(bus/dispatch! msg-ch :open-create-room-input))))))
 
-(defn render-create-room-item [cmd-ch]
-  (doto (gdom/createDom TagName.DIV "sidebar-item no-highlight")
-    (init-component :sidebar-create-room
-      :create-room-input-open?
-      (partial render-create-room cmd-ch))))
+(defn render-create-room-item [msg-ch]
+  (init-component
+    (dom/div "sidebar-item no-highlight")
+    :sidebar-create-room
+    :create-room-input-open?
+    (partial render-create-room msg-ch)))
 
-(defn render-rooms [cmd-ch el rooms]
-  (doseq [room rooms]
-    (.appendChild el
-      (render-room cmd-ch room)))
-  (.appendChild el
-    (render-create-room-item cmd-ch)))
+(defn render-rooms [msg-ch el rooms]
+  (apply dom/with-children el
+    (conj
+      (mapv #(render-room msg-ch %) rooms)
+      (render-create-room-item msg-ch))))
 
-(defn sidebar-rooms [cmd-ch]
-  (doto (gdom/createDom TagName.DIV "sidebar-rooms")
-        (init-component :sidebar-rooms
-          state/room-list
-          (partial render-rooms cmd-ch))))
+(defn sidebar-rooms [msg-ch]
+   (init-component
+     (dom/div "sidebar-rooms")
+     :sidebar-rooms
+     state/room-list
+     (partial render-rooms msg-ch)))
 
-(defn render-person [cmd-ch person]
+(defn render-person [msg-ch person]
   (let [class-name (str "sidebar-item" (when (:active? person) " active"))
         text (helpers/display-name person)]
-    (doto (gdom/createDom TagName.DIV class-name text)
-      (.addEventListener "click"
-        #(cmd/dispatch! cmd-ch :switch-to-conversation
+    (doto (dom/div class-name text)
+      (gevents/listen "click"
+        #(bus/dispatch! msg-ch :switch-to-conversation
            {:username (:username person)})))))
 
-(defn render-people [cmd-ch el people]
-  (doseq [person people]
-    (.appendChild el
-      (render-person cmd-ch person))))
+(defn render-people [msg-ch el people]
+  (apply dom/with-children el
+    (map #(render-person msg-ch %) people)))
 
-(defn sidebar-people [cmd-ch]
-  (doto (gdom/createDom TagName.DIV "sidebar-people")
-        (init-component :sidebar-people
-          state/people-list
-          (partial render-people cmd-ch))))
+(defn sidebar-people [msg-ch]
+   (init-component
+     (dom/div "sidebar-people")
+     :sidebar-people
+     state/people-list
+     (partial render-people msg-ch)))
 
-(defn init-sidebar [cmd-ch]
-  (doto (gdom/createDom TagName.ASIDE "sidebar")
-    (.appendChild (sidebar-header "Rooms"))
-    (.appendChild (sidebar-rooms cmd-ch))
-    (.appendChild (sidebar-header "People"))
-    (.appendChild (sidebar-people cmd-ch))))
+(defn init-sidebar [msg-ch]
+  (dom/aside "sidebar"
+    (sidebar-header "Rooms")
+    (sidebar-rooms msg-ch)
+    (sidebar-header "People")
+    (sidebar-people msg-ch)))

@@ -143,11 +143,11 @@ date: 2019-09-19T21:43:56-06:00
     - [Communicating Over Channels](/section-4/lesson-25-intro-to-core-async/#communicating-over-channels)
     - [Channels as Values](/section-4/lesson-25-intro-to-core-async/#channels-as-values)
     - [Summary](/section-4/lesson-25-intro-to-core-async/#summary)
-- Lesson 26: Capstone 4 - Group Chat
-    - Thinking About Interactions
-    - Realtime Communication
-    - Rooms and Conversations
-    - Summary
+- [Lesson 26: Capstone 4 - Group Chat](/section-4/lesson-26-capstone-4-group-chat/)
+    - [Thinking About Interactions](/section-4/lesson-26-capstone-4-group-chat/#thinking-about-interactions)
+    - [Building Components](/section-4/lesson-26-capstone-4-group-chat/#building-components)
+    - [Realtime Communication](/section-4/lesson-26-capstone-4-group-chat/#realtime-communication)
+    - [Summary](/section-4/lesson-26-capstone-4-group-chat/#summary)
 
 ## Section 5: ClojureScript Applications
 

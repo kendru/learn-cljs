@@ -1,9 +1,8 @@
 (ns chat.components.header
-  (:require [goog.dom :as gdom]
+  (:require [chat.components.dom :as dom]
             [chat.components.component :refer [init-component]]
-            [chat.components.helpers :as helpers]
-            [chat.state :as state])
-  (:import [goog.dom TagName]))
+            [chat.components.render-helpers :refer [display-name]]
+            [chat.state :as state]))
 
 (defn accessor [app]
   (cond
@@ -20,23 +19,20 @@
      :title (-> app
                 (get-in [:current-view :username])
                 (->> (state/person-by-username app))
-                helpers/display-name)
+                display-name)
      :current-user (:current-user app)}
 
     :else
     {:title "Welcome to ClojureScript Chat"}))
 
 (defn render [header {:keys [icon title current-user]}]
-  (doto header
-    (.appendChild
-      (gdom/createDom TagName.H1 "view-name"
-        (gdom/createDom TagName.I "material-icons" icon)
-        title))
-    (.appendChild
-      (gdom/createDom TagName.DIV "user-name"
-        (when current-user
-          (helpers/display-name current-user))))))
+  (dom/with-children header
+    (dom/h1 "view-name"
+      (dom/i "material-icons" icon) title)
+    (dom/div "user-name"
+      (when (some? current-user)
+        (display-name current-user)))))
 
 (defn init-header []
-  (doto (gdom/createDom TagName.HEADER "app-header")
-        (init-component :header accessor render)))
+  (init-component (dom/header "app-header")
+    :header accessor render))

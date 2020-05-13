@@ -1,38 +1,18 @@
 (ns chat.state)
 
 (def initial-state
-  {:current-user nil
-   :auth-modal :sign-in
-   :rooms []
+  {:rooms []
    :people []
-   :current-view nil
-  ;  :current-view {:type ::room
-  ;                 :id 1}
-  ;  :messages [{:sender "thedoc"
-  ;              :content "Hi There!"
-  ;              :timestamp 1581340044000}
-  ;             {:sender "dt"
-  ;              :content "Hulloa!"
-  ;              :timestamp 1581340219000}]})
    :messages []
+   :current-user nil
+   :current-view nil
+   :auth-modal :sign-in
    :create-room-input-open? false})
 
 (defonce app-state (atom initial-state))
 
 ;;;;;;;;;;;;
 ;; Queries
-
-(defn is-current-view-room? [state]
-  (= ::room (get-in state [:current-view :type])))
-
-(defn current-room-id [state]
-  (get-in state [:current-view :id]))
-
-(defn is-current-view-conversation? [state]
-  (= ::conversation (get-in state [:current-view :type])))
-
-(defn current-conversation-recipient [state]
-  (get-in state [:current-view :username]))
 
 (defn room-by-id [state id]
   (->> state
@@ -45,6 +25,18 @@
        :people
        (filter #(= username (:username %)))
        first))
+
+(defn is-current-view-room? [state]
+  (= ::room (get-in state [:current-view :type])))
+
+(defn current-room-id [state]
+  (get-in state [:current-view :id]))
+
+(defn is-current-view-conversation? [state]
+  (= ::conversation (get-in state [:current-view :type])))
+
+(defn current-conversation-recipient [state]
+  (get-in state [:current-view :username]))
 
 (defn room-list [state]
   (let [current-room (when (is-current-view-room? state)
@@ -92,22 +84,8 @@
 (defn received-rooms-list [state rooms]
   (assoc state :rooms rooms))
 
-(defn create-room-input-opened [state]
-  (assoc state :create-room-input-open? true))
-
-(defn create-room-input-closed [state]
-  (assoc state :create-room-input-open? false))
-
 (defn room-added [state room]
   (update state :rooms conj room))
-
-(defn switched-to-room [state room-id]
-  (assoc state :current-view {:type ::room
-                              :id room-id}))
-
-(defn switched-to-conversation [state username]
-  (assoc state :current-view {:type ::conversation
-                              :username username}))
 
 (defn message-received [state message]
   (update state :messages conj message))
@@ -118,11 +96,24 @@
 (defn messages-cleared [state]
   (assoc state :messages []))
 
+(defn switched-to-room [state room-id]
+  (assoc state :current-view {:type ::room
+                              :id room-id}))
+
+(defn switched-to-conversation [state username]
+  (assoc state :current-view {:type ::conversation
+                              :username username}))
+
 (defn auth-modal-toggled [state]
-  (assoc state :auth-modal
-    (if (= (:auth-modal state) :sign-in)
-      :sign-up
-      :sign-in)))
+  (update state :auth-modal
+    {:sign-up :sign-in
+     :sign-in :sign-up}))
 
 (defn user-authenticated [state user]
   (assoc state :current-user user))
+
+(defn create-room-input-opened [state]
+  (assoc state :create-room-input-open? true))
+
+(defn create-room-input-closed [state]
+  (assoc state :create-room-input-open? false))

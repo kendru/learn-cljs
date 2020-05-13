@@ -1,5 +1,5 @@
 (ns chat.handlers
-  (:require [chat.command :as cmd]
+  (:require [chat.message-bus :as bus]
             [chat.api :as api]
             [chat.state :as state]))
 
@@ -18,7 +18,7 @@
     ;;;;;;;;;;;;;;;;;;;;;
     ;; Sidebar
 
-    (cmd/handle! cmd/cmd-bus :switch-to-conversation
+    (bus/handle! bus/msg-bus :switch-to-conversation
       (fn [{:keys [username]}]
         (api/send! :set-view {:type :conversation, :username username})
         (swap! state/app-state
@@ -26,7 +26,7 @@
                (state/switched-to-conversation username)
                (state/messages-cleared)))))
 
-    (cmd/handle! cmd/cmd-bus :switch-to-room
+    (bus/handle! bus/msg-bus :switch-to-room
       (fn [{:keys [id]}]
         (api/send! :set-view {:type :room, :id id})
         (swap! state/app-state
@@ -37,48 +37,48 @@
     ;;;;;;;;;;;;;;;;;;;;;
     ;; Composer
 
-    (cmd/handle! cmd/cmd-bus :add-message
+    (bus/handle! bus/msg-bus :add-message
       (fn [content]
         (api/send! :add-message {:content content})))
 
     ;;;;;;;;;;;;;;;;;;;;;
     ;; People
 
-    (cmd/handle! cmd/cmd-bus :api/people-listed
+    (bus/handle! bus/msg-bus :api/people-listed
       (fn [people]
         (swap! state/app-state state/received-people-list people)))
 
-    (cmd/handle! cmd/cmd-bus :api/person-joined
+    (bus/handle! bus/msg-bus :api/person-joined
       (fn [person]
         (swap! state/app-state state/person-joined person)))
 
-    (cmd/handle! cmd/cmd-bus :api/person-left
+    (bus/handle! bus/msg-bus :api/person-left
       (fn [username]
         (swap! state/app-state state/person-left username)))
 
     ;;;;;;;;;;;;;;;;;;;;;
     ;; Rooms
 
-    (cmd/handle! cmd/cmd-bus :open-create-room-input
+    (bus/handle! bus/msg-bus :open-create-room-input
       (fn []
         (swap! state/app-state state/create-room-input-opened)))
 
-    (cmd/handle! cmd/cmd-bus :close-create-room-input
+    (bus/handle! bus/msg-bus :close-create-room-input
       (fn []
         (swap! state/app-state state/create-room-input-closed)))
 
-    (cmd/handle! cmd/cmd-bus :create-room
+    (bus/handle! bus/msg-bus :create-room
       (fn [name]
         (api/send! :create-room {:name name})))
 
-    (cmd/handle! cmd/cmd-bus :api/rooms-listed
+    (bus/handle! bus/msg-bus :api/rooms-listed
       (fn [rooms]
         (swap! state/app-state state/received-rooms-list rooms)
         (when-let [first-room (first rooms)]
-          (cmd/dispatch! cmd/cmd-ch :switch-to-room
+          (bus/dispatch! bus/msg-ch :switch-to-room
             {:id (:id first-room)}))))
 
-    (cmd/handle! cmd/cmd-bus :api/room-created
+    (bus/handle! bus/msg-bus :api/room-created
       (fn [room]
         (swap! state/app-state
           #(-> %
@@ -88,12 +88,12 @@
     ;;;;;;;;;;;;;;;;;;;;;
     ;; Messages
 
-    (cmd/handle! cmd/cmd-bus :api/message-received
+    (bus/handle! bus/msg-bus :api/message-received
       (fn [{:keys [message username room]}]
         (when (should-set-message? username room)
           (swap! state/app-state state/message-received message))))
 
-    (cmd/handle! cmd/cmd-bus :api/messages-received
+    (bus/handle! bus/msg-bus :api/messages-received
       (fn [{:keys [messages username room]}]
         (when (should-set-message? username room)
           (swap! state/app-state state/messages-received messages))))
@@ -101,19 +101,19 @@
     ;;;;;;;;;;;;;;;;;;;;;
     ;; Auth
 
-    (cmd/handle! cmd/cmd-bus :toggle-auth-modal
+    (bus/handle! bus/msg-bus :toggle-auth-modal
       (fn []
         (swap! state/app-state state/auth-modal-toggled)))
 
-    (cmd/handle! cmd/cmd-bus :sign-in
+    (bus/handle! bus/msg-bus :sign-in
       (fn [data]
         (api/send! :sign-in data)))
 
-    (cmd/handle! cmd/cmd-bus :sign-up
+    (bus/handle! bus/msg-bus :sign-up
       (fn [data]
         (api/send! :sign-up data)))
 
-    (cmd/handle! cmd/cmd-bus :api/authenticated
+    (bus/handle! bus/msg-bus :api/authenticated
       (fn [user-info]
         (swap! state/app-state state/user-authenticated user-info)
         (api/send! :list-people)

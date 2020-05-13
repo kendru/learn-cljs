@@ -1,18 +1,16 @@
 (ns chat.components.compose
-  (:require [goog.dom :as gdom]
-            [chat.command :as cmd])
-  (:import [goog.dom TagName]))
+  (:require [chat.components.dom :as dom]
+            [chat.message-bus :as bus]))
 
-(defn init-composer [cmd-ch]
-  (let [composer-input (gdom/createDom TagName.TEXTAREA
-                         #js{"class" "message-input"})]
-    (gdom/createDom TagName.DIV "compose"
-      (doto composer-input
-        (.addEventListener "keyup"
-          (fn [e]
-            (when (= (.-key e) "Enter")
-              (.preventDefault e)
-              (let [content (.-value composer-input)]
-                (set! (.-value composer-input) "")
-                (cmd/dispatch! cmd-ch :add-message content)))))))))
+(defn init-composer [msg-ch]
+  (let [composer-input (dom/textarea "message-input")]
+    (.addEventListener composer-input "keyup"
+      (fn [e]
+        (when (= (.-key e) "Enter")
+          (.preventDefault e)
+          (let [content (.-value composer-input)]
+            (set! (.-value composer-input) "")
+            (bus/dispatch! msg-ch :add-message content)))))
+    (dom/div "compose" composer-input)))
+
 
