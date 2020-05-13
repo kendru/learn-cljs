@@ -2,6 +2,7 @@
 title: "Capstone 4 - Group Chat | Lesson 26"
 date: 2020-04-26T11:57:50-06:00
 type: "docs"
+opengraphImage: "https://www.learn-clojurescript.com/img/lesson26/cljs-chat-screenshot.png"
 ---
 
 # Lesson 26: Capstone 4 - Group Chat
