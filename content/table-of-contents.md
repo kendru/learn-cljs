@@ -216,11 +216,6 @@ date: 2019-09-19T21:43:56-06:00
     - Dataflow with core transducers
     - Writing our own transducers
     - Summary
-- Lesson 38: Compiler Deep Dive
-    - Compilation pipeline
-    - Advanced options
-    - Bootstrapped ClojureScript
-    - Summary
 
 ## End Matter
 
@@ -232,11 +227,3 @@ date: 2019-09-19T21:43:56-06:00
     - Compiler basics
     - Wrapping example
     - cljsjs libraries
-
-<!--
-- [Lesson 24: Namespaces and Program Structure](/section-4/lesson-22-namespaces-and-program-structure/)
-    - [Grouping Related Functions](/section-4/lesson-22-namespaces-and-program-structure/#grouping-related-functions)
-    - [Avoiding “Hidden” OOP](/section-4/lesson-22-namespaces-and-program-structure/#avoiding-hidden-oop)
-    - [Taking Advantage of Polymorphism](/section-4/lesson-22-namespaces-and-program-structure/#taking-advantage-of-polymorphism)
-    - [Summary](/section-4/lesson-22-namespaces-and-program-structure/#summary)
--->
