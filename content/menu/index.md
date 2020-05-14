@@ -34,3 +34,5 @@ headless = true
   - [Handling Exceptions and Errors](/section-4/lesson-24-handling-exceptions-and-errors/)
   - [Intro to core.async](/section-4/lesson-25-intro-to-core-async/)
   - [Capstone 4 - Group Chat](/section-4/lesson-26-capstone-4-group-chat/)
+- [Section 5: ClojureScript Applications](/section-5/)
+  - [React as a Platform](/section-5/lesson-27-react-as-a-platform/)

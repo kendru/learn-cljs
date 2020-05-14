@@ -151,11 +151,11 @@ date: 2019-09-19T21:43:56-06:00
 
 ## Section 5: ClojureScript Applications
 
-- Lesson 27: React.js as a Platform
-    - Functional Programming Model
-    - DOM Diffing
-    - Creating Fast Apps
-    - Summary
+- [Lesson 27: React as a Platform](/section-5/lesson-27-react-as-a-platform/)
+    - [Functional Programming Model](/section-5/lesson-27-react-as-a-platform/#functional-programing-model)
+    - [DOM Diffing](/section-5/lesson-27-react-as-a-platform/#dom-diffing)
+    - [Creating Fast Apps](/section-5/lesson-27-react-as-a-platform/#creating-fast-apps)
+    - [Summary](/section-5/lesson-27-react-as-a-platform/#summary)
 - Lesson 28: Using React via Reagent
     - Defining a Data Model
     - Writing Queries for Views
@@ -172,7 +172,7 @@ date: 2019-09-19T21:43:56-06:00
     - Writing Views as Pure Functions
     - Centralizing Coordination Logic
     - Summary
-- Lesson 31: Capstone 5 - Deal of the Day
+- Lesson 31: Capstone 5 - Agile Estimates
     - Building a Reagent UI
     - Handling User Interactions
     - Handling API Interactions
