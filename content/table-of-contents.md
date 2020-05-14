@@ -85,7 +85,7 @@ date: 2019-09-19T21:43:56-06:00
     - [Code Walkthrough](/section-2/lesson-15-capstone-temperature-converter/#code-walkthrough)
     - [Summary](/section-2/lesson-15-capstone-temperature-converter/#summary)
 
-## Section 3: Working With Data
+## [Section 3: Working With Data](/section-3/)
 
 - [Lesson 16: Grokking Collections](/section-3/lesson-16-grokking-collections/)
     - [Defining Collections and Sequences](/section-3/lesson-16-grokking-collections/#)
@@ -115,7 +115,7 @@ date: 2019-09-19T21:43:56-06:00
     - [Creating the UI](/section-3/lesson-20-capstone-3-contact-book/#creating-the-ui)
     - [Summary](/section-3/lesson-20-capstone-3-contact-book/#summary)
 
-## Section 4: Idiomatic ClojureScript
+## [Section 4: Idiomatic ClojureScript](/section-4/)
 
 - [Lesson 21: Functional Programming Concepts](/section-4/lesson-21-functional-programming-concepts/)
     - [Composing Behaviour from Small Pieces](/section-4/lesson-21-functional-programming-concepts/#composing-behaviour-from-small-pieces)
@@ -149,7 +149,7 @@ date: 2019-09-19T21:43:56-06:00
     - [Realtime Communication](/section-4/lesson-26-capstone-4-group-chat/#realtime-communication)
     - [Summary](/section-4/lesson-26-capstone-4-group-chat/#summary)
 
-## Section 5: ClojureScript Applications
+## [Section 5: ClojureScript Applications](/section-5/)
 
 - [Lesson 27: React as a Platform](/section-5/lesson-27-react-as-a-platform/)
     - [Functional Programming Model](/section-5/lesson-27-react-as-a-platform/#functional-programing-model)
