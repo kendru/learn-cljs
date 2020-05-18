@@ -36,3 +36,4 @@ headless = true
   - [Capstone 4 - Group Chat](/section-4/lesson-26-capstone-4-group-chat/)
 - [Section 5: ClojureScript Applications](/section-5/)
   - [React as a Platform](/section-5/lesson-27-react-as-a-platform/)
+  - [Using React via Reagent](/section-5/lesson-28-using-react-via-reagent/)

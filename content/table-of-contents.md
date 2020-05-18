@@ -156,12 +156,12 @@ date: 2019-09-19T21:43:56-06:00
     - [DOM Diffing](/section-5/lesson-27-react-as-a-platform/#dom-diffing)
     - [Creating Fast Apps](/section-5/lesson-27-react-as-a-platform/#creating-fast-apps)
     - [Summary](/section-5/lesson-27-react-as-a-platform/#summary)
-- Lesson 28: Using React via Reagent
-    - Defining a Data Model
-    - Writing Queries for Views
-    - Writing Transition Functions
-    - Building Components
-    - Summary
+- [Lesson 28: Using React via Reagent](/section-5/lesson-28-using-react-via-reagent/)
+    - [Reactive Data](/section-5/lesson-28-using-react-via-reagent/#reactive-data)
+    - [Building Components](/section-5/lesson-28-using-react-via-reagent/#building-components)
+    - [Updating State](/section-5/lesson-28-using-react-via-reagent/#updating-state)
+    - [Writing Reactive Queries](/section-5/lesson-28-using-react-via-reagent/#writing-reactive-queries)
+    - [Summary](/section-5/lesson-28-using-react-via-reagent/#summary)
 - Lesson 29: Separate Concerns
     - Connecting Components With Channels
     - Message Patterns
