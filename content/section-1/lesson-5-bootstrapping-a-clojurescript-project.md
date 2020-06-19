@@ -187,7 +187,7 @@ _Exploring the Generated Project_
 
 1. View the contents of the project directory recursively
 2. The `resources` directory contains the HTML page that will load our application as well as any styles and assets we need.
-3. The `src` directory contains ClojureScript sourc code
+3. The `src` directory contains ClojureScript source code
 
 Leiningen generated several top-level files, a `src` directory, and a `resources`
 directory. Leiningen uses the `project.clj` file for all configuration that it
