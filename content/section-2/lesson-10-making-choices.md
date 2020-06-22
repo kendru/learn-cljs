@@ -99,7 +99,7 @@ the following:
 2. If the test is true, evaluate to `:low-balance`
 3. If the test is false, evaluate to `:ok`
 
-> *Note: Special Forms*
+> **NOTE: Special Forms**
 >
 > When we write an s-expression, ClojureScript will evaluate it as long as the
 > first symbol in the expression resolves to the name of a function, a macro, or

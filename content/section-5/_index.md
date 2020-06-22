@@ -16,6 +16,6 @@ library to create simple, extensible, and pure applications.
 
 - [Lesson 27: React as a Platform](/section-5/lesson-27-react-as-a-platform/)
 - [Lesson 28: Using React via Reagent](/section-5/lesson-28-using-react-via-reagent/)
-- Lesson 29: Separate Concerns
+- [Lesson 29: Separate Concerns](/section-5/lesson-29-separate-concerns/)
 - Lesson 30: Consuming Remote APIs
 - Lesson 31: Capstone 5 - Agile Estimates

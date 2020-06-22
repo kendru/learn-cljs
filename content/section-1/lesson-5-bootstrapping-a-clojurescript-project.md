@@ -71,8 +71,10 @@ run `lein help TASK` where `TASK` is the name of any Leiningen task available.
 While Leiningen provides a number of tasks by default, we will often run tasks
 provided by plugins.
 
-NOTE: The terminal examples in this book are for a Unix-like environment such as
-OSX or Linux. Windows users may have to make minor adaptations the commands.
+> **NOTE**
+>
+> The terminal examples in this book are for a Unix-like environment such as
+> OSX or Linux. Windows users may have to make minor adaptations the commands.
 
 ### Understanding Leiningen
 

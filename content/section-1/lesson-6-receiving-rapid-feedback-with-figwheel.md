@@ -356,9 +356,11 @@ Figwheel reloaded our code, the messages list would remain untouched, but the
 display function would behave differently, and when `render-all-messages!` is
 called, the display for all messages would be updated.
 
-*NOTE:* The implementation of the above code is inefficient, since the entire list
-is re-rendered every time we call `render-all-messages!`. In later lessons, we
-will use the Reagent framework to achieve similar results much more efficiently.
+> **NOTE**
+>
+> The implementation of the above code is inefficient, since the entire list
+> is re-rendered every time we call `render-all-messages!`. In later lessons, we
+> will use the Reagent framework to achieve similar results much more efficiently.
 
 ### Quick Review
 

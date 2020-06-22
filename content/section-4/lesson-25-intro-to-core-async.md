@@ -66,7 +66,7 @@ of values that have not been taken out of the channel. Additionally, these buffe
 producers when they fill up (which is the default behaviour), or they can silently discard any new
 values (via `dropping-buffer`) or push out the oldest value in the buffer (via `sliding-buffer`).
 
-> *Note:*
+> **NOTE**
 >
 > We mention that processes can _park_ when trying to read from an empty channel or write to a full
 > channel. From the perspective of the process, it is _blocked_ and cannot make any progress until

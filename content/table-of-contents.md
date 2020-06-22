@@ -162,11 +162,11 @@ date: 2019-09-19T21:43:56-06:00
     - [Updating State](/section-5/lesson-28-using-react-via-reagent/#updating-state)
     - [Writing Reactive Queries](/section-5/lesson-28-using-react-via-reagent/#writing-reactive-queries)
     - [Summary](/section-5/lesson-28-using-react-via-reagent/#summary)
-- Lesson 29: Separate Concerns
-    - Connecting Components With Channels
-    - Message Patterns
-    - Client/Server Architecture
-    - Summary
+- [Lesson 29: Separate Concerns](/section-5/lesson-29-separate-concerns/)
+    - [Connecting Components With Channels](/section-5/lesson-29-separate-concerns/#connecting-components-with-channels)
+    - [Message Patterns](/section-5/lesson-29-separate-concerns/#message-patterns)
+    - [Client/Server Architecture](/section-5/lesson-29-separate-concerns/#client-server-architecture)
+    - [Summary](/section-5/lesson-29-separate-concerns/#summary)
 - Lesson 30: Consuming Remote APIs
     - Flattening Callbacks
     - Writing Views as Pure Functions

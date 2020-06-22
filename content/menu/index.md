@@ -37,3 +37,4 @@ headless = true
 - [Section 5: ClojureScript Applications](/section-5/)
   - [React as a Platform](/section-5/lesson-27-react-as-a-platform/)
   - [Using React via Reagent](/section-5/lesson-28-using-react-via-reagent/)
+  - [Separate Concerns](/section-5/lesson-29-separate-concerns/)

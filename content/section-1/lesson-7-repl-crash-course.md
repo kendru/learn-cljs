@@ -50,7 +50,7 @@ and _Print_ portions, and it needs a browser to perform the _Eval_ step, so if
 you kill the browser, the REPL will not be able to evaluate anything else until
 you open a browser that it can connect to again.
 
-> *Note*
+> **NOTE**
 >
 > There are several different REPL options with ClojureScript, but we will be
 > using Figwheel throughout this book. Much of the information will apply to any
