@@ -244,7 +244,7 @@ simpler. Instead of automatically syncing the application state and the UI in a
 bidirectional fashion, Reagent (and the underlying React framework) only updates
 the UI when the underlying state changes. Thus, we describe our components in
 terms of our data mode, update that model when we receive input, and let the
-framework handle ensuring that the UI reflects the new state.
+framework ensure that the UI reflects the new state.
 
 ![Data Binding Strategies](/img/lesson8/data_binding_strategies.png)
 
