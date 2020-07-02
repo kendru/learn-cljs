@@ -164,7 +164,7 @@ _The Components of Our App_
    [:h2 (:label temp)]])
 
 (defn postal-code []
-  [:div {:class-name "postal-code"}
+  [:div {:class "postal-code"}
    [:h3 "Enter your postal code"]
    [:input {:type "text"
             :placeholder "Postal Code"
@@ -179,8 +179,8 @@ _The Components of Our App_
       [temperature temp])]
    [postal-code]])
 
-(reagent/render-component [app]                   ;; <4>
-                          (. js/document (getElementById "app")))
+(rd/render [app]                                  ;; <4>
+           (. js/document (getElementById "app")))
 ```
 
 1. A Reagent component that expects `temp` to be passed in
