@@ -61,15 +61,16 @@ single Reagent component and renders it.
 
 ```clojure
 (ns cljs-weather.core                                       ;; <1>
-  (:require [reagent.core :as reagent :refer [atom]]))
+  (:require [reagent.core :as reagent :refer [atom]]
+            [reagent.dom :as rd]))
 
 (enable-console-print!)                                     ;; <2>
 
 (defn hello-world []                                        ;; <3>
   [:h1 {:class "app-title"} "Hello, World"])
 
-(reagent/render-component [hello-world]                     ;; <4>
-                          (. js/document (getElementById "app")))
+(rd/render [hello-world]                                    ;; <4>
+           (. js/document (getElementById "app")))
 ```
 
 _src/cljs\_weather/core.cljs_
