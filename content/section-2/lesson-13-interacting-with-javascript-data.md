@@ -16,7 +16,7 @@ structures.
 
 ---
 
-*In this lesson:*
+*In this lesson we will:*
 
 - Convert between ClojureScript and JavaScript data types
 - Integrate ClojureScript code with an existing JavaScript codebase
@@ -138,10 +138,10 @@ We still have a reference to the `js/testScores` variable.
 and symbols get converted to strings. This means that some ClojureScript value
 contained in the var, <code>x</code>, is not always equal to <code>(js->clj (clj->js x))</code>. For
 instance, if we have a set, <code>#{"Lucy" "Ricky" "Fred" "Ethel"}</code>, and we convert
-this to JavaScript, we will end up with and array: <code>["Ricky", "Fred", "Lucy", "Ethel"]</code>
+this to JavaScript, we will end up with an array: <code>["Ricky", "Fred", "Lucy", "Ethel"]</code>
 (remember, sets are not ordered, so the order in which the elements
 appear when converted to an array is arbitrary). If we convert this array back
-to ClojureScript, we end up with the vector, <code>["Ricky" "Fred" "Lucy" "Ethel"]</code>,
+to ClojureScript, we end up with a vector, <code>["Ricky" "Fred" "Lucy" "Ethel"]</code>,
 not the set that we started with, as we demonstrate below.</p>
 
 <pre>
@@ -189,7 +189,7 @@ _Constructing JavaScript Objects_
 1. Creating an object with the `js-obj` function
 2. Creating an object with the literal `#js {}` syntax
 
-The `js-obj` function takes an even number of arguments, which expected to be
+The `js-obj` function takes an even number of arguments, which are expected to be
 pairs of key, value. The literal syntax looks like a ClojureScript map proceeded
 by `#js`. Both of these forms produce identical JavaScript objects, but the
 literal syntax is by far the most common.
@@ -373,7 +373,7 @@ var books = [
 ```
 
 - Write an `aget` expression that will retrieve the value, "Scheme":
-- Write an `aset` expression that will change the title of, "All About Animals" to "Dangerous Creatures".
+- Write an `aset` expression that will change the title "All About Animals" to "Dangerous Creatures".
 
 ### Challenge
 
@@ -392,7 +392,7 @@ Possible Solution:
 
 ## Summary
 
-ClojureScript has a symbiotic relationship with JavaScript, and to effective use
+ClojureScript has a symbiotic relationship with JavaScript, and to effectively use
 it, we must be comfortable interacting with the host language. In this lesson,
 we looked at how to work with JavaScript data. We used both the ClojureScript
 REPL and the browser's JavaScript dev tools to walk through the process of
