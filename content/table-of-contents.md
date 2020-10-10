@@ -167,55 +167,11 @@ date: 2019-09-19T21:43:56-06:00
     - [Message Patterns](/section-5/lesson-29-separate-concerns/#message-patterns)
     - [Client/Server Architecture](/section-5/lesson-29-separate-concerns/#client-server-architecture)
     - [Summary](/section-5/lesson-29-separate-concerns/#summary)
-- Lesson 30: Consuming Remote APIs
-    - Flattening Callbacks
-    - Writing Views as Pure Functions
-    - Centralizing Coordination Logic
-    - Summary
-- Lesson 31: Capstone 5 - Agile Estimates
-    - Building a Reagent UI
-    - Handling User Interactions
-    - Handling API Interactions
-    - Summary
-
-## Section 6: Testing
-
-- Lesson 32: REPL-Driven Development
-    - The Advantages of Testing Functional Code
-    - Validating Code With the REPL
-    - REPL Sessions as Tests
-    - Live Coding With Figwheel
-    - Summary
-- Lesson 33: Intro To Unit Testing
-    - Understanding the Need for Unit Tests
-    - Testing Pure Functions
-    - Testing Impure Functions
-    - Test Set-Up and Context
-    - Summary
-- Lesson 34: Don’t Write Tests - Let The Computer Write Them
-    - What Is Property-Based Testing?
-    - Introducing test.check
-    - Use Cases
-    - Summary
-
-## Section 7: Advanced ClojureScript
-
-- Lesson 35: Protocols and Records
-    - Enforcing Stricter Contracts
-    - Extending Existing Types
-    - Anonymous Instances With reify
-    - Flexible Dispatch with Multimethods
-    - Summary
-- Lesson 36: Survey of Advanced Language Features
-    - Programmable Programming Language
-    - Macros
-    - Extending Core Protocols
-    - Summary
-- Lesson 37: Transducers
-    - Transwhatsers?
-    - Dataflow with core transducers
-    - Writing our own transducers
-    - Summary
+- [Lesson 30: Capstone 5 - Agile Estimates](/section-5/lesson-30-capstone-5-agile-estimates/)
+    - [Building a Reagent UI](/section-5/lesson-30-capstone-5-agile-estimates/#TODO)
+    - [Handling User Interactions](/section-5/lesson-30-capstone-5-agile-estimates/#TODO)
+    - [Handling API Interactions](/section-5/lesson-30-capstone-5-agile-estimates/#TODO)
+    - [Summary](/section-5/lesson-30-capstone-5-agile-estimates/#summary)
 
 ## End Matter
 

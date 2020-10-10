@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="css/bulma.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link
+      rel="icon"
+      href="https://clojurescript.org/images/cljs-logo-icon-32.png"
+    />
+    <script>
+      window.uuidv4_TEMP = () => {
+        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+          (
+            c ^
+            (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+          ).toString(16)
+        );
+      };
+    </script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="sidebar">
+        <div class="sidebar-content"></div>
+      </div>
+
+      <div class="main"></div>
+    </div>
+    <script type="text/javascript">
+      if (
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+      ) {
+        window.WS_API_URL = "ws://localhost:8080/ws";
+      } else {
+        window.WS_API_URL = "wss://estimates.learn-cljs.com/ws";
+      }
+    </script>
+    <script src="js/compiled/estimates.js" type="text/javascript"></script>
+  </body>
+</html>
