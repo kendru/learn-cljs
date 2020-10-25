@@ -1,5 +1,5 @@
 /*
-Copyright © 2020 NAME HERE <EMAIL ADDRESS>
+Copyright © 2020 Andrew Meredith <andrew@learn-clojurescript.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,7 +20,8 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"learn-cljs.com/notes/internal/app"
+	"learn-cljs.com/notes/internal/note"
+	"learn-cljs.com/notes/internal/transport"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
@@ -33,21 +34,14 @@ var staticFileDir string
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "notes",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
+	Short: "RESTful backend for note-taking application",
 	Run: func(cmd *cobra.Command, args []string) {
-		app := app.NewApp(app.Config{
+		notes := note.Service{note.NewInMemoryRepo()}
+		httpServer := transport.NewHTTPServer(transport.Config{
 			Addr:          bindAddress,
 			StaticFileDir: staticFileDir,
-		})
-		app.Serve()
+		}, notes)
+		httpServer.Serve()
 	},
 }
 
