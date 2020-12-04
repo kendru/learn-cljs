@@ -155,7 +155,7 @@ nil
 
 In order to change to a different namespace, we can use the `in-ns` function.
 This function takes as an argument a _symbol_ with the name of the namespace to
-enter and changes the REPL's environment to that namespace. For esample, to
+enter and changes the REPL's environment to that namespace. For example, to
 change into the main namespace of our application, we can simply enter,
 `(in-ns 'cljs-weather.core)`. To draw an analogy to a filesystem, a namespace is
 like a directory, defining a var with `def` or `defn` is like creating a new
