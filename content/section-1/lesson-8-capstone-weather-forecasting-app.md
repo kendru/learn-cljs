@@ -291,7 +291,7 @@ requests.
                  [org.clojure/core.async "0.2.374"
                   :exclusions [org.clojure/tools.reader]]
                  [reagent "0.5.1"]
-                 [cljs-ajax "0.5.3"]]
+                 [cljs-ajax "0.8.0"]]
 ```
 
 _project.clj_
@@ -362,6 +362,7 @@ account.
 ```clojure
 (ns cljs-weather.core
   (:require [reagent.core :as reagent :refer [atom]]
+            [reagent.dom :as rd]
             [ajax.core :refer [GET]]))
 
 (enable-console-print!)
@@ -377,7 +378,7 @@ account.
 
 (defn handle-response [resp]                                             ;; <2>
   (let [today (get-in resp ["list" 0 "main" "temp"])
-        tomorrow (get-in resp ["list" 24 "main" "temp"])]
+        tomorrow (get-in resp ["list" 8 "main" "temp"])]
     (swap! app-state
       update-in [:temperatures :today :value] (constantly today))
     (swap! app-state
@@ -387,7 +388,7 @@ account.
   (let [postal-code (:postal-code @app-state)]
     (GET "http://api.openweathermap.org/data/2.5/forecast"
          {:params {"q" postal-code
-                   "units" "imperial"
+                   "units" "imperial"                                    ;; alternatively, use "metric"
                    "appid" api-key}
           :handler handle-response})))
 
@@ -417,8 +418,7 @@ account.
       [temperature temp])]
    [postal-code]])
 
-(reagent/render-component [app]                                          ;; <5>
-                          (. js/document (getElementById "app")))
+(rd/render [app] (. js/document (getElementById "app")))                 ;; <5>
 ```
 
 _Complete Weather Forecasting App_
