@@ -16,8 +16,15 @@ limitations under the License.
 package cmd
 
 import (
+	"context"
 	"fmt"
+	"log"
+	"net/http"
 	"os"
+	"os/signal"
+	"strings"
+	"syscall"
+	"time"
 
 	"github.com/spf13/cobra"
 	"learn-cljs.com/notes/internal/note"
@@ -28,21 +35,76 @@ import (
 )
 
 var cfgFile string
-var bindAddress string
-var staticFileDir string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "notes",
 	Short: "RESTful backend for note-taking application",
 	Run: func(cmd *cobra.Command, args []string) {
-		notes := note.Service{note.NewInMemoryRepo()}
-		httpServer := transport.NewHTTPServer(transport.Config{
-			Addr:          bindAddress,
-			StaticFileDir: staticFileDir,
-		}, notes)
-		httpServer.Serve()
+		var cfg Config
+		if err := viper.Unmarshal(&cfg); err != nil {
+			log.Fatalf("error unmarshaling config: %v", err)
+		}
+
+		repository, err := note.NewRepository(cfg.Repository)
+		if err != nil {
+			log.Fatalf("error creating repository: %v", err)
+		}
+
+		ctx, cancel := context.WithCancel(context.Background())
+
+		service := note.NewService(repository)
+		server := transport.NewHTTPServer(
+			transport.Config{
+				Addr:          cfg.BindAddress,
+				StaticFileDir: cfg.StaticFileDir,
+				Context:       ctx,
+				NoteService:   service,
+			},
+		)
+
+		go func() {
+			if err := server.Serve(); err != http.ErrServerClosed {
+				fmt.Printf("error in HTTP server", err)
+			}
+		}()
+
+		signalChan := make(chan os.Signal, 1)
+		signal.Notify(
+			signalChan,
+			syscall.SIGHUP,
+			syscall.SIGINT,
+			syscall.SIGQUIT,
+		)
+
+		<-signalChan
+		log.Println("Received interrupt. Stopping gracefully. Ctl+C will force stop.")
+
+		go func() {
+			<-signalChan
+			log.Fatalln("Received abort signal. Terminating.")
+		}()
+
+		gracefullCtx, cancelShutdown := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancelShutdown()
+
+		if err := server.Shutdown(gracefullCtx); err != nil {
+			log.Printf("shutdown error: %v\n", err)
+			defer os.Exit(1)
+		}
+		service.Close()
+
+		// manually cancel context if not using httpServer.RegisterOnShutdown(cancel)
+		cancel()
+
+		defer os.Exit(0)
 	},
+}
+
+type Config struct {
+	BindAddress   string `mapstructure:"addr"`
+	StaticFileDir string `mapstructure:"dir"`
+	Repository    note.RepositoryConfig
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -57,13 +119,12 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.notes.yaml)")
-	rootCmd.PersistentFlags().StringVar(&bindAddress, "addr", "0.0.0.0:8080", "address to which to bind server")
-	rootCmd.PersistentFlags().StringVar(&staticFileDir, "dir", "./static", "Directory from which to serve static files")
+	rootCmd.PersistentFlags().String("addr", "0.0.0.0:8080", "address to which to bind server")
+	rootCmd.PersistentFlags().String("dir", "./static", "Directory from which to serve static files")
+
+	rootCmd.PersistentFlags().String("repository.type", "memory", "repo type")
+	rootCmd.PersistentFlags().String("repository.badger-dir", "./db", "Badger repository directory")
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -83,11 +144,14 @@ func initConfig() {
 		viper.AddConfigPath(home)
 		viper.SetConfigName(".notes")
 	}
-	if bindAddress == "" {
-		bindAddress = "0.0.0.0:8080"
-	}
 
 	viper.AutomaticEnv() // read in environment variables that match
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	viper.SetEnvPrefix("STS")
+
+	if err := viper.BindPFlags(rootCmd.PersistentFlags()); err != nil {
+		panic(fmt.Sprintf("Could not bind config: %v", err))
+	}
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {

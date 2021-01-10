@@ -15,7 +15,9 @@ limitations under the License.
 */
 package main
 
-import "learn-cljs.com/notes/cmd"
+import (
+	"learn-cljs.com/notes/cmd"
+)
 
 func main() {
 	cmd.Execute()

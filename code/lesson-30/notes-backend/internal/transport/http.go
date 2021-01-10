@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"strconv"
 	"time"
@@ -14,31 +15,36 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/cors"
 	"github.com/go-chi/render"
 )
 
 type HTTPServer struct {
-	srv    http.Server
+	http.Server
 	config Config
 
-	notes note.Service
+	notes *note.Service
 }
 
 type Config struct {
+	Context       context.Context
 	Addr          string
 	StaticFileDir string
+	NoteService   *note.Service
 }
 
-func NewHTTPServer(c Config, notes note.Service) *HTTPServer {
+func NewHTTPServer(c Config) *HTTPServer {
 	var s = &HTTPServer{
 		config: c,
-
-		notes: notes,
+		notes:  c.NoteService,
 	}
 
-	s.srv = http.Server{
+	s.Server = http.Server{
 		Addr:    c.Addr,
 		Handler: s.newRouter(c.StaticFileDir),
+		BaseContext: func(l net.Listener) context.Context {
+			return c.Context
+		},
 	}
 
 	return s
@@ -54,6 +60,14 @@ func (s *HTTPServer) newRouter(staticFileDir string) chi.Router {
 		middleware.Recoverer,
 		middleware.StripSlashes,
 		middleware.Timeout(20*time.Second),
+		cors.Handler(cors.Options{
+			AllowedOrigins:   []string{"*"},
+			AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
+			AllowedHeaders:   []string{"Accept", "Content-Type"},
+			ExposedHeaders:   []string{"Location"},
+			AllowCredentials: false,
+			MaxAge:           300,
+		}),
 	)
 
 	r.Route("/notes", func(r chi.Router) {
@@ -65,7 +79,18 @@ func (s *HTTPServer) newRouter(staticFileDir string) chi.Router {
 			r.Get("/", s.getNote)
 			r.Put("/", s.updateNote)
 			r.Delete("/", s.deleteNote)
+
+			r.Route("/tags/{tagID}", func(r chi.Router) {
+				r.Use(s.tagCtx)
+				r.Put("/", s.tagNote)
+				r.Delete("/", s.untagNote)
+			})
 		})
+	})
+
+	r.Route("/tags", func(r chi.Router) {
+		r.Post("/", s.handleCreateTag)
+		r.Get("/", s.handleListTags)
 	})
 
 	// Since all files are relative to the root path, we do not need to worry about
@@ -82,20 +107,55 @@ func (s *HTTPServer) handleCreateNote(w http.ResponseWriter, r *http.Request) {
 		render.Render(w, r, errInvalidRequest(err))
 		return
 	}
-	if err := s.notes.Create(n); err != nil {
+	if err := s.notes.Transaction("TODO: Get Tenant").CreateNote(n); err != nil {
 		render.Render(w, r, errInvalidRequest(err))
 		return
 	}
-	w.WriteHeader(http.StatusCreated)
+
+	w.Header().Add("Location", fmt.Sprintf("/notes/%d", n.ID))
+	if err := json.NewEncoder(w).Encode(n); err != nil {
+		render.Render(w, r, errServerError(err))
+		return
+	}
 }
 
 func (s *HTTPServer) handleListNotes(w http.ResponseWriter, r *http.Request) {
-	notes, err := s.notes.FindAll()
+	notes, err := s.notes.Transaction("TODO: Get Tenant").FindAllNotes()
 	if err != nil {
 		render.Render(w, r, errServerError(err))
 		return
 	}
 	if err := json.NewEncoder(w).Encode(notes); err != nil {
+		render.Render(w, r, errServerError(err))
+		return
+	}
+}
+
+func (s *HTTPServer) handleCreateTag(w http.ResponseWriter, r *http.Request) {
+	t := &note.Tag{}
+	if err := json.NewDecoder(r.Body).Decode(t); err != nil {
+		render.Render(w, r, errInvalidRequest(err))
+		return
+	}
+	if err := s.notes.Transaction("TODO: Get Tenant").CreateTag(t); err != nil {
+		render.Render(w, r, errInvalidRequest(err))
+		return
+	}
+
+	w.Header().Add("Location", fmt.Sprintf("/tags/%d", t.ID))
+	if err := json.NewEncoder(w).Encode(t); err != nil {
+		render.Render(w, r, errServerError(err))
+		return
+	}
+}
+
+func (s *HTTPServer) handleListTags(w http.ResponseWriter, r *http.Request) {
+	tags, err := s.notes.Transaction("TODO: Get Tenant").FindAllTags()
+	if err != nil {
+		render.Render(w, r, errServerError(err))
+		return
+	}
+	if err := json.NewEncoder(w).Encode(tags); err != nil {
 		render.Render(w, r, errServerError(err))
 		return
 	}
@@ -114,7 +174,7 @@ func (s *HTTPServer) noteCtx(next http.Handler) http.Handler {
 				return
 			}
 
-			note, err = s.notes.FindByID(id)
+			note, err = s.notes.Transaction("TODO: Get Tenant").FindNoteByID(id)
 
 			if err != nil {
 				render.Render(w, r, errServerError(
@@ -153,7 +213,67 @@ func (s *HTTPServer) updateNote(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := s.notes.Update(id, n); err != nil {
+	if err := s.notes.Transaction("TODO: Get Tenant").UpdateNote(id, n); err != nil {
+		render.Render(w, r, errServerError(err))
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
+}
+
+func (s *HTTPServer) tagCtx(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		tagID := chi.URLParam(r, "tagID")
+		if tagID == "" {
+			render.Render(w, r, errInvalidRequest(errors.New("tagID must not be empty")))
+			return
+		}
+
+		id, err := strconv.ParseUint(tagID, 10, 64)
+		if err != nil {
+			render.Render(w, r, errInvalidRequest(
+				fmt.Errorf("error parsing tagID: %w", err),
+			))
+			return
+		}
+
+		tag, err := s.notes.Transaction("TODO: Get Tenant").FindTagByID(id)
+
+		if err != nil {
+			render.Render(w, r, errServerError(
+				fmt.Errorf("error loading tag: %w", err),
+			))
+			return
+		}
+
+		if tag == nil {
+			render.Render(w, r, errNotFound)
+			return
+		}
+
+		ctx := context.WithValue(r.Context(), "tagID", id)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
+}
+
+func (s *HTTPServer) tagNote(w http.ResponseWriter, r *http.Request) {
+	noteID := r.Context().Value("note").(*note.Note).ID
+	tagID := r.Context().Value("tagID").(uint64)
+
+	if err := s.notes.Transaction("TODO: Get Tenant").TagNote(noteID, tagID); err != nil {
+		render.Render(w, r, errServerError(err))
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
+}
+
+func (s *HTTPServer) untagNote(w http.ResponseWriter, r *http.Request) {
+	noteID := r.Context().Value("note").(*note.Note).ID
+	tagID := r.Context().Value("tagID").(uint64)
+
+	if err := s.notes.Transaction("TODO: Get Tenant").UntagNote(noteID, tagID); err != nil {
 		render.Render(w, r, errServerError(err))
 		return
 	}
@@ -163,7 +283,7 @@ func (s *HTTPServer) updateNote(w http.ResponseWriter, r *http.Request) {
 
 func (s *HTTPServer) deleteNote(w http.ResponseWriter, r *http.Request) {
 	id := r.Context().Value("note").(*note.Note).ID
-	if err := s.notes.Delete(id); err != nil {
+	if err := s.notes.Transaction("TODO: Get Tenant").DeleteNote(id); err != nil {
 		render.Render(w, r, errServerError(err))
 		return
 	}
@@ -171,9 +291,9 @@ func (s *HTTPServer) deleteNote(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
-func (s *HTTPServer) Serve() {
+func (s *HTTPServer) Serve() error {
 	log.Printf("Server listening on %s", s.config.Addr)
-	log.Fatal(s.srv.ListenAndServe())
+	return s.ListenAndServe()
 }
 
 // The ErrResponse struct implements render so that chi can generate an HTTP

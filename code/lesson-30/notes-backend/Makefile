@@ -1,14 +1,19 @@
-.PHONY: build
+.PHONY: build clean compile test dev run
 build: clean compile
 
-.PHONY: clean
 clean:
-	rm -f notes
+	rm -rf notes db-data
 
-.PHONY: compile
-compile:
-	go build -o notes main.go
-
-.PHONY: test
+compile: notes
+	
 test:
 	go test ./...
+
+run:
+	go run main.go --config config.dev.toml
+
+dev: 
+	go run github.com/codegangsta/gin --immediate main.go --config config.dev.toml
+
+notes:
+	go build -o notes main.go

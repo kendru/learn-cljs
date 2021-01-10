@@ -1,17 +1,50 @@
 package note
 
+import "fmt"
+
 type Read interface {
-	FindByID(id uint64) (*Note, error)
-	FindAll() ([]*Note, error)
+	FindNoteByID(id uint64) (*Note, error)
+	FindAllNotes() ([]*Note, error)
+
+	FindTagByID(id uint64) (*Tag, error)
+	FindAllTags() ([]*Tag, error)
 }
 
 type Mutate interface {
-	Create(*Note) error
-	Update(id uint64, note *Note) error
-	Delete(id uint64) error
+	CreateNote(*Note) error
+	UpdateNote(id uint64, note *Note) error
+	DeleteNote(id uint64) error
+
+	CreateTag(*Tag) error
+	DeleteTag(id uint64) error
+
+	TagNote(noteID, tagID uint64) error
+	UntagNote(noteID, tagID uint64) error
+}
+
+type Transaction interface {
+	Read
+	Mutate
 }
 
 type Repository interface {
-	Read
-	Mutate
+	Transaction(tenantID string) Transaction
+	Close() error
+}
+
+func NewRepository(c RepositoryConfig) (Repository, error) {
+	switch c.Type {
+	case "memory":
+		return NewInMemoryRepo(), nil
+	case "badgerdb":
+		return NewBadgerRepo(c)
+	default:
+		return nil, fmt.Errorf("Invalid repository type: %q", c.Type)
+	}
+}
+
+type RepositoryConfig struct {
+	Type string
+
+	BadgerDir string `mapstructure:"badger-dir"`
 }
