@@ -16,7 +16,7 @@ to the domain of exceptions!
 
 ---
 
-*In this lesson:*
+_In this lesson:_
 
 - Handle exceptional conditions with try/catch
 - Add metadata to errors
@@ -83,6 +83,7 @@ nil
 ### Quick Review
 
 <!-- Using a list messes up the indentation of a code block following a list item, so we "fake" a list -->
+
 1&#x002E; What is the value of each of the following expressions?
 
 ```clojure
@@ -241,7 +242,7 @@ create a few functions that define this "error" type and work with its values:
 
 (def unwrap second)
 
-(defn unwrap-or [err on-error]
+(defn unwrap-or [on-error err]
   (if (is-ok? err)
     (unwrap err)
     (on-error (unwrap err))))
@@ -294,16 +295,16 @@ that it calls will look like the following:
 ```clojure
 (defn get-results-and-handle-error []
   (unwrap-or
-    (get-results)                                          ;; <1>
-    (fn [err]                                              ;; <2>
+    (fn [err]                                              ;; <1>
       (display-err err)
-      [])))
+      [])
+    (get-results)))                                        ;; <2>
 ```
 
 _Handling an Error_
 
-1. `get-results` may fail
-2. The callback will be called when `get-results` fails, and its value will be returned from `get-results-and-handle-error`
+1. The callback will be called when `get-results` fails, and its value will be returned from `get-results-and-handle-error`
+2. `get-results` may fail
 
 On the other hand, when we have a function that should propagate an error when one of the
 functions that it calls fails, our function will look like this:
@@ -398,7 +399,7 @@ _Handling conditions_
 2. Provide a default value if the condition is not managed
 3. Provide a "restart" that allows us to proceed with specific behaviour
 4. Trigger the `:reparse` restart
-5. Create a managed version  of the `get-parsed-data` function with handlers for each condition type
+5. Create a managed version of the `get-parsed-data` function with handlers for each condition type
 6. Declare a handler as the condition keyword followed by a function of the condition value to the desired value
 
 This example is fairly dense, so let's unpack it a bit. First, there are two functions that we
@@ -452,7 +453,6 @@ function. However, since a restart returns control to the function where the err
 they are closer to the functional end of the spectrum than are exceptions.
 
 ## Summary
-
 
 In this lesson, we learned how to use ClojureScript's version of `try/catch` to deal with
 exceptions that occur in our code or code that we call. We saw how to use `ex-info` to create

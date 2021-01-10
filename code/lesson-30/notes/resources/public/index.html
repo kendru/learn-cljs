@@ -33,9 +33,11 @@
         window.location.hostname === "localhost" ||
         window.location.hostname === "127.0.0.1"
       ) {
-        window.WS_API_URL = "ws://localhost:8080/ws";
+        window.API_URL = "http://localhost:8080";
+        window.API_TOKEN = "38d4814719a121668450b8d0503118bf7bea6bc4923e2f67661a2145ad41544e68c8f3afa49e45b5";
       } else {
-        window.WS_API_URL = "wss://notes.learn-cljs.com/ws";
+        window.API_URL = "https://notes.learn-cljs.com/api";
+        window.API_TOKEN = "Get an API token with: curl -X POST https://notes.learn-cljs.com/api/tenant"
       }
     </script>
     <script src="js/compiled/notes.js" type="text/javascript"></script>

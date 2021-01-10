@@ -17,14 +17,17 @@ const (
 	tagIDSeq  = "tagIDs"
 )
 
-func NewBadgerRepo(c RepositoryConfig) (*badgerRepo, error) {
+func NewBadgerRepo(c RepositoryConfig, idx SearchIndex) (*badgerRepo, error) {
 	dir := c.BadgerDir
 	db, err := badger.Open(badger.DefaultOptions(dir))
 	if err != nil {
 		return nil, fmt.Errorf("error opening BadgerDB at %q: %w", dir, err)
 	}
 
-	repo := &badgerRepo{db: db}
+	repo := &badgerRepo{
+		db:  db,
+		idx: idx,
+	}
 
 	if repo.noteIDs, err = db.GetSequence([]byte(noteIDSeq), 100); err != nil {
 		return nil, fmt.Errorf("error acquiring note id seq: %w", err)
@@ -46,6 +49,7 @@ func NewBadgerRepo(c RepositoryConfig) (*badgerRepo, error) {
 
 type badgerRepo struct {
 	db      *badger.DB
+	idx     SearchIndex
 	noteIDs *badger.Sequence
 	tagIDs  *badger.Sequence
 }
@@ -186,25 +190,38 @@ func (tx *badgerTransaction) CreateNote(note *Note) error {
 	note.ID = id
 	note.CreatedAt = now
 	note.UpdatedAt = now
-	return tx.db.Update(func(txn *badger.Txn) error {
+	err = tx.db.Update(func(txn *badger.Txn) error {
 		return txn.Set(key.Bytes(), note.MustMarshal())
 	})
+	if err == nil {
+		go tx.updateSearchIndex(id)
+	}
+	return err
 }
 
 func (tx *badgerTransaction) UpdateNote(id uint64, note *Note) error {
 	key := tx.noteKey(id)
 	note.UpdatedAt = time.Now()
-	return tx.db.Update(func(txn *badger.Txn) error {
+	err := tx.db.Update(func(txn *badger.Txn) error {
 		return txn.Set(key.Bytes(), note.MustMarshal())
 	})
+	if err == nil {
+		go tx.updateSearchIndex(id)
+	}
+
+	return err
 }
 
 func (tx *badgerTransaction) DeleteNote(id uint64) error {
 	key := tx.noteKey(id)
 	// TODO: Schedule deletion of note/tag associations for this note
-	return tx.db.Update(func(txn *badger.Txn) error {
+	err := tx.db.Update(func(txn *badger.Txn) error {
 		return txn.Delete(key.Bytes())
 	})
+	if err == nil {
+		go tx.idx.RemoveNote(tx.tenantID, id)
+	}
+	return err
 }
 
 func (tx *badgerTransaction) CreateTag(tag *Tag) error {
@@ -233,7 +250,7 @@ func (tx *badgerTransaction) TagNote(noteID, tagID uint64) error {
 	// TODO: Validate existence of note and tag
 	noteIDBytes := tx.noteKey(noteID).entityKey
 	tagIDBytes := tx.tagKey(tagID).entityKey
-	return tx.db.Update(func(txn *badger.Txn) error {
+	err := tx.db.Update(func(txn *badger.Txn) error {
 		noteToTagKey := tx.noteTagKey(noteID, tagID)
 		if err := txn.Set(noteToTagKey.Bytes(), tagIDBytes); err != nil {
 			// If there is an error here, we will end up in an inconsistent state
@@ -248,10 +265,14 @@ func (tx *badgerTransaction) TagNote(noteID, tagID uint64) error {
 
 		return nil
 	})
+	if err == nil {
+		go tx.updateSearchIndex(noteID)
+	}
+	return err
 }
 
 func (tx *badgerTransaction) UntagNote(noteID, tagID uint64) error {
-	return tx.db.Update(func(txn *badger.Txn) error {
+	err := tx.db.Update(func(txn *badger.Txn) error {
 		noteToTagKey := tx.noteTagKey(noteID, tagID)
 		if err := txn.Delete(noteToTagKey.Bytes()); err != nil {
 			return err
@@ -264,6 +285,22 @@ func (tx *badgerTransaction) UntagNote(noteID, tagID uint64) error {
 
 		return nil
 	})
+	if err == nil {
+		go tx.updateSearchIndex(noteID)
+	}
+	return err
+}
+
+func (tx *badgerTransaction) updateSearchIndex(noteID uint64) {
+	note, err := tx.FindNoteByID(noteID)
+	if err != nil {
+		fmt.Printf("error loading note for index %d: %v", note.ID, err)
+		return
+	}
+
+	if err = tx.idx.IndexNote(tx.tenantID, note); err != nil {
+		fmt.Printf("Error indexing note %d: %v", note.ID, err)
+	}
 }
 
 func (tx *badgerTransaction) withTags(note *Note) error {

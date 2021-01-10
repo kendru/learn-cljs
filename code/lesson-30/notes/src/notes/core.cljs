@@ -1,9 +1,11 @@
 (ns notes.core
-  (:require [notes.ui.sidebar :refer [sidebar]]
+  (:require [notes.ui.header :refer [header]]
             [notes.ui.main :refer [main]]
-            [notes.api :as api]
+            [notes.ui.sidebar :refer [sidebar]]
+            [notes.ui.footer :refer [footer]]
+            [notes.ui.notifications :refer [notifications]]
             [notes.routes]
-            [reagent.core :as r]
+            [notes.event-handlers.core]
             [reagent.dom :as rdom]
             [goog.dom :as gdom]))
 
@@ -11,14 +13,12 @@
 
 (defn app []
   [:div.app
-    [sidebar]
-    [main]])
+   [header]
+   [main]
+   [sidebar]
+   [footer]
+   [notifications]])
 
 (rdom/render
-  [app]
-  (gdom/getElement "app"))
-
-(defonce inititialized?
-  (do
-    (api/init! js/WS_API_URL)
-    true))
+ [app]
+ (gdom/getElement "app"))

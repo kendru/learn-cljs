@@ -2,6 +2,10 @@ package transport
 
 import (
 	"context"
+	"crypto/hmac"
+	"crypto/rand"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -9,6 +13,7 @@ import (
 	"net"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"learn-cljs.com/notes/internal/note"
@@ -31,6 +36,7 @@ type Config struct {
 	Addr          string
 	StaticFileDir string
 	NoteService   *note.Service
+	SigningSecret []byte
 }
 
 func NewHTTPServer(c Config) *HTTPServer {
@@ -61,16 +67,20 @@ func (s *HTTPServer) newRouter(staticFileDir string) chi.Router {
 		middleware.StripSlashes,
 		middleware.Timeout(20*time.Second),
 		cors.Handler(cors.Options{
-			AllowedOrigins:   []string{"*"},
-			AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
-			AllowedHeaders:   []string{"Accept", "Content-Type"},
+			AllowOriginFunc: func(r *http.Request, origin string) bool {
+				return true
+			},
+			AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+			AllowedHeaders:   []string{"Authorization", "Accept", "Content-Type"},
 			ExposedHeaders:   []string{"Location"},
-			AllowCredentials: false,
+			AllowCredentials: true,
 			MaxAge:           300,
 		}),
 	)
 
+	r.Post("/tenant", s.handleGenerateTenant)
 	r.Route("/notes", func(r chi.Router) {
+		r.Use(s.tenantCtx) // Add tenantID based on header
 		r.Post("/", s.handleCreateNote)
 		r.Get("/", s.handleListNotes)
 
@@ -101,13 +111,47 @@ func (s *HTTPServer) newRouter(staticFileDir string) chi.Router {
 	return r
 }
 
+func (s *HTTPServer) handleGenerateTenant(w http.ResponseWriter, r *http.Request) {
+	tid := make([]byte, 8)
+	_, err := rand.Read(tid)
+	if err != nil {
+		render.Render(w, r, errServerError(err))
+		return
+	}
+	mac := hmac.New(sha256.New, s.config.SigningSecret)
+	mac.Write(tid)
+	tidMAC := mac.Sum(nil)
+	tid = append(tid, tidMAC...)
+	authenticTID := hex.EncodeToString(tid)
+	w.Write([]byte(authenticTID))
+	w.WriteHeader(http.StatusOK)
+}
+
+func (s *HTTPServer) decodeTenantID(encoded string) (string, bool) {
+	data, err := hex.DecodeString(encoded)
+	if err != nil {
+		return "", false
+	}
+	tid := data[0:8]
+	expectedMAC := data[8:]
+	mac := hmac.New(sha256.New, s.config.SigningSecret)
+	mac.Write(tid)
+	tidMAC := mac.Sum(nil)
+	if !hmac.Equal(tidMAC, expectedMAC) {
+		return "", false
+	}
+
+	return hex.EncodeToString(tid), true
+}
+
 func (s *HTTPServer) handleCreateNote(w http.ResponseWriter, r *http.Request) {
 	n := &note.Note{}
 	if err := json.NewDecoder(r.Body).Decode(n); err != nil {
 		render.Render(w, r, errInvalidRequest(err))
 		return
 	}
-	if err := s.notes.Transaction("TODO: Get Tenant").CreateNote(n); err != nil {
+	tenantID := r.Context().Value("tenantID").(string)
+	if err := s.notes.Transaction(tenantID).CreateNote(n); err != nil {
 		render.Render(w, r, errInvalidRequest(err))
 		return
 	}
@@ -120,7 +164,15 @@ func (s *HTTPServer) handleCreateNote(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *HTTPServer) handleListNotes(w http.ResponseWriter, r *http.Request) {
-	notes, err := s.notes.Transaction("TODO: Get Tenant").FindAllNotes()
+	var notes []*note.Note
+	var err error
+	tenantID := r.Context().Value("tenantID").(string)
+	if q, ok := r.URL.Query()["q"]; ok && len(q) == 1 {
+		notes, err = s.notes.SearchNotes(tenantID, q[0])
+	} else {
+		fmt.Println("Listing all")
+		notes, err = s.notes.Transaction(tenantID).FindAllNotes()
+	}
 	if err != nil {
 		render.Render(w, r, errServerError(err))
 		return
@@ -137,7 +189,8 @@ func (s *HTTPServer) handleCreateTag(w http.ResponseWriter, r *http.Request) {
 		render.Render(w, r, errInvalidRequest(err))
 		return
 	}
-	if err := s.notes.Transaction("TODO: Get Tenant").CreateTag(t); err != nil {
+	tenantID := r.Context().Value("tenantID").(string)
+	if err := s.notes.Transaction(tenantID).CreateTag(t); err != nil {
 		render.Render(w, r, errInvalidRequest(err))
 		return
 	}
@@ -150,7 +203,8 @@ func (s *HTTPServer) handleCreateTag(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *HTTPServer) handleListTags(w http.ResponseWriter, r *http.Request) {
-	tags, err := s.notes.Transaction("TODO: Get Tenant").FindAllTags()
+	tenantID := r.Context().Value("tenantID").(string)
+	tags, err := s.notes.Transaction(tenantID).FindAllTags()
 	if err != nil {
 		render.Render(w, r, errServerError(err))
 		return
@@ -159,6 +213,29 @@ func (s *HTTPServer) handleListTags(w http.ResponseWriter, r *http.Request) {
 		render.Render(w, r, errServerError(err))
 		return
 	}
+}
+
+func (s *HTTPServer) tenantCtx(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		authHeader := r.Header.Get("Authorization")
+		if !strings.HasPrefix(authHeader, "Bearer ") {
+			render.Render(w, r, errInvalidRequest(
+				errors.New("incorrect auth header"),
+			))
+			return
+		}
+		encodedTenantID := authHeader[7:]
+		tenantID, ok := s.decodeTenantID(encodedTenantID)
+		if !ok {
+			render.Render(w, r, errInvalidRequest(
+				errors.New("invalid tenant supplied"),
+			))
+			return
+		}
+
+		ctx := context.WithValue(r.Context(), "tenantID", tenantID)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
 }
 
 func (s *HTTPServer) noteCtx(next http.Handler) http.Handler {
@@ -174,7 +251,8 @@ func (s *HTTPServer) noteCtx(next http.Handler) http.Handler {
 				return
 			}
 
-			note, err = s.notes.Transaction("TODO: Get Tenant").FindNoteByID(id)
+			tenantID := r.Context().Value("tenantID").(string)
+			note, err = s.notes.Transaction(tenantID).FindNoteByID(id)
 
 			if err != nil {
 				render.Render(w, r, errServerError(
@@ -213,7 +291,8 @@ func (s *HTTPServer) updateNote(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := s.notes.Transaction("TODO: Get Tenant").UpdateNote(id, n); err != nil {
+	tenantID := r.Context().Value("tenantID").(string)
+	if err := s.notes.Transaction(tenantID).UpdateNote(id, n); err != nil {
 		render.Render(w, r, errServerError(err))
 		return
 	}
@@ -238,7 +317,8 @@ func (s *HTTPServer) tagCtx(next http.Handler) http.Handler {
 			return
 		}
 
-		tag, err := s.notes.Transaction("TODO: Get Tenant").FindTagByID(id)
+		tenantID := r.Context().Value("tenantID").(string)
+		tag, err := s.notes.Transaction(tenantID).FindTagByID(id)
 
 		if err != nil {
 			render.Render(w, r, errServerError(
@@ -258,10 +338,11 @@ func (s *HTTPServer) tagCtx(next http.Handler) http.Handler {
 }
 
 func (s *HTTPServer) tagNote(w http.ResponseWriter, r *http.Request) {
+	tenantID := r.Context().Value("tenantID").(string)
 	noteID := r.Context().Value("note").(*note.Note).ID
 	tagID := r.Context().Value("tagID").(uint64)
 
-	if err := s.notes.Transaction("TODO: Get Tenant").TagNote(noteID, tagID); err != nil {
+	if err := s.notes.Transaction(tenantID).TagNote(noteID, tagID); err != nil {
 		render.Render(w, r, errServerError(err))
 		return
 	}
@@ -270,10 +351,11 @@ func (s *HTTPServer) tagNote(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *HTTPServer) untagNote(w http.ResponseWriter, r *http.Request) {
+	tenantID := r.Context().Value("tenantID").(string)
 	noteID := r.Context().Value("note").(*note.Note).ID
 	tagID := r.Context().Value("tagID").(uint64)
 
-	if err := s.notes.Transaction("TODO: Get Tenant").UntagNote(noteID, tagID); err != nil {
+	if err := s.notes.Transaction(tenantID).UntagNote(noteID, tagID); err != nil {
 		render.Render(w, r, errServerError(err))
 		return
 	}
@@ -282,8 +364,9 @@ func (s *HTTPServer) untagNote(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *HTTPServer) deleteNote(w http.ResponseWriter, r *http.Request) {
+	tenantID := r.Context().Value("tenantID").(string)
 	id := r.Context().Value("note").(*note.Note).ID
-	if err := s.notes.Transaction("TODO: Get Tenant").DeleteNote(id); err != nil {
+	if err := s.notes.Transaction(tenantID).DeleteNote(id); err != nil {
 		render.Render(w, r, errServerError(err))
 		return
 	}

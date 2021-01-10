@@ -46,26 +46,36 @@ var rootCmd = &cobra.Command{
 			log.Fatalf("error unmarshaling config: %v", err)
 		}
 
-		repository, err := note.NewRepository(cfg.Repository)
+		if cfg.SigningSecret == "" {
+			log.Fatalf("signing secret must be set")
+		}
+
+		idx, err := note.NewBleveSearchindex(cfg.Search)
+		if err != nil {
+			log.Fatalf("error creating repository: %v", err)
+		}
+
+		repository, err := note.NewRepository(cfg.Repository, idx)
 		if err != nil {
 			log.Fatalf("error creating repository: %v", err)
 		}
 
 		ctx, cancel := context.WithCancel(context.Background())
 
-		service := note.NewService(repository)
+		service := note.NewService(repository, idx)
 		server := transport.NewHTTPServer(
 			transport.Config{
 				Addr:          cfg.BindAddress,
 				StaticFileDir: cfg.StaticFileDir,
 				Context:       ctx,
 				NoteService:   service,
+				SigningSecret: []byte(cfg.SigningSecret),
 			},
 		)
 
 		go func() {
 			if err := server.Serve(); err != http.ErrServerClosed {
-				fmt.Printf("error in HTTP server", err)
+				fmt.Printf("error in HTTP server: %v", err)
 			}
 		}()
 
@@ -104,7 +114,9 @@ var rootCmd = &cobra.Command{
 type Config struct {
 	BindAddress   string `mapstructure:"addr"`
 	StaticFileDir string `mapstructure:"dir"`
+	SigningSecret string `mapstructure:"signing-secret"`
 	Repository    note.RepositoryConfig
+	Search        note.SearchIndexConfig
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -122,9 +134,12 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.notes.yaml)")
 	rootCmd.PersistentFlags().String("addr", "0.0.0.0:8080", "address to which to bind server")
 	rootCmd.PersistentFlags().String("dir", "./static", "Directory from which to serve static files")
+	rootCmd.PersistentFlags().String("signing-secret", "", "Secret used to sign tenantIDs")
 
 	rootCmd.PersistentFlags().String("repository.type", "memory", "repo type")
-	rootCmd.PersistentFlags().String("repository.badger-dir", "./db", "Badger repository directory")
+	rootCmd.PersistentFlags().String("repository.badger-dir", "./db-data/kv", "Badger repository directory")
+
+	rootCmd.PersistentFlags().String("search.bleve-path", "./db-data/search/index.bleve", "Search index file")
 }
 
 // initConfig reads in config file and ENV variables if set.

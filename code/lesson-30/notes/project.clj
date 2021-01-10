@@ -10,7 +10,8 @@
                  [org.clojure/clojure "1.10.0"]
                  [org.clojure/clojurescript "1.10.773"]
                  [org.clojure/core.async  "0.4.500"]
-                 [funcool/bide "1.6.0"]]
+                 [funcool/bide "1.6.0"]
+                 [camel-snake-kebab "0.4.2"]]
 
   :plugins [[lein-figwheel "0.5.20"]
             [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]]

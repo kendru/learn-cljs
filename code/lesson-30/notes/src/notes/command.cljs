@@ -1,20 +1,39 @@
 (ns notes.command
   (:require [notes.api :as api]
-            [notes.messages :as msg]
-            [cljs.core.async :refer [go-loop pub sub chan put! <!]]))
+            [notes.events :refer [emit!]]
+            [notes.routes :as routes]))
 
 (defn handle-navigate! [route-params]
-  (msg/emit! :route/navigated route-params))
+  (routes/navigate! route-params))
 
-(defn handle-session-start! [_]
-  (let [id (js/uuidv4_TEMP)]
-    (msg/emit! :session/pending)
-    (api/send! :start-session {:name name})))
+(defn handle-get-notes! [_]
+  (api/get-notes!))
 
+(defn handle-add-notification! [notification]
+  (emit! :notification/added notification))
 
-;; DIFF: channel not passed in - event-ch implicit through file.
-(defn dispatch! [command payload]
- (case command
-   ;; ... handle other commands
-   :route/navigate! (handle-navigate! payload)
-   :session/start! (handle-session-start! payload)))
+(defn handle-remove-notification! [id]
+  (emit! :notification/removed id))
+
+(defn handle-update-search-input! [text]
+  (emit! :search/input-updated text))
+
+(defn handle-submit-search-input! [text]
+  (api/do-search! text)
+  (emit! :search/input-cleared))
+
+(defn dispatch!
+  ([command] (dispatch! command nil))
+  ([command payload]
+   (case command
+     :route/navigate (handle-navigate! payload)
+
+     :notes/get-notes (handle-get-notes! payload)
+
+     :notification/add (handle-add-notification! payload)
+     :notification/remove (handle-remove-notification! payload)
+
+     :search/update-input  (handle-update-search-input! payload)
+     :search/submit-input  (handle-submit-search-input! payload)
+
+     (js/console.error (str "Error: unhandled command: " command)))))

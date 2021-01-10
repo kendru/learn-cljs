@@ -32,12 +32,12 @@ type Repository interface {
 	Close() error
 }
 
-func NewRepository(c RepositoryConfig) (Repository, error) {
+func NewRepository(c RepositoryConfig, idx SearchIndex) (Repository, error) {
 	switch c.Type {
 	case "memory":
 		return NewInMemoryRepo(), nil
 	case "badgerdb":
-		return NewBadgerRepo(c)
+		return NewBadgerRepo(c, idx)
 	default:
 		return nil, fmt.Errorf("Invalid repository type: %q", c.Type)
 	}

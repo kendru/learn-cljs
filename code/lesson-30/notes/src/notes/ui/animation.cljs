@@ -6,14 +6,14 @@
         (r/children (r/current-component))))
 
 (defn slide-in [opts]
-  (let [{:keys [direction speed]
+  (let [{:keys [direction]
          :or {direction :left}} opts
         triggered? (r/atom false)]
     (js/requestAnimationFrame #(reset! triggered? true))
     (fn [_ _]
       (into
-        [:div {:class (str "slide-in"
+       [:div {:class (str "slide-in"
                           " transition-" (if @triggered? "triggered" "initial")
                           " direction-" (name direction))}]
-        (r/children (r/current-component))))))
+       (r/children (r/current-component))))))
 
