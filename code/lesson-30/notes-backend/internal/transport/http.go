@@ -99,6 +99,7 @@ func (s *HTTPServer) newRouter(staticFileDir string) chi.Router {
 	})
 
 	r.Route("/tags", func(r chi.Router) {
+		r.Use(s.tenantCtx)
 		r.Post("/", s.handleCreateTag)
 		r.Get("/", s.handleListTags)
 	})

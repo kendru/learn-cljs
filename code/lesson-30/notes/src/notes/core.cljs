@@ -4,7 +4,7 @@
             [notes.ui.sidebar :refer [sidebar]]
             [notes.ui.footer :refer [footer]]
             [notes.ui.notifications :refer [notifications]]
-            [notes.routes]
+            [notes.routes :as routes]
             [notes.event-handlers.core]
             [reagent.dom :as rdom]
             [goog.dom :as gdom]))
@@ -22,3 +22,8 @@
 (rdom/render
  [app]
  (gdom/getElement "app"))
+
+(defonce initialized?
+  (do
+    (routes/initialize!)
+    true))

@@ -2,7 +2,7 @@
   (:require [reagent.core :as r]
             [notes.command :refer [dispatch!]]
             [notes.state :refer [app]]
-            [notes.ui.util :refer [link]]))
+            [notes.ui.common :refer [button]]))
 
 ;; (defn search []
 ;;   (let [input (r/cursor app [:search-input])]
@@ -17,7 +17,5 @@
 
 (defn header []
   [:header.page-header
-  ;;  [link "Home" :home]
-  ;;  [link "New Note" :home]
-  ;;  [search]
-   ])
+   [button "+ New Note" {:route-params [:create-note]
+                         :class "inverse"}]])

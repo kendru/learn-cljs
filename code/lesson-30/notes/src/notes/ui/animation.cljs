@@ -3,7 +3,7 @@
 
 (defn duration [ms]
   (into [:span {:style {"--anim-duration" (str ms "ms")}}]
-        (r/children (r/current-component))))
+        (drop 1 (r/children (r/current-component)))))
 
 (defn slide-in [opts]
   (let [{:keys [direction]

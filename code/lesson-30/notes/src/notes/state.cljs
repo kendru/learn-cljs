@@ -5,10 +5,9 @@
 (def initial-state
   {:current-route [:home]
    :search-input ""
-   :data {:notes {:order-by :created-at
-                  :order-dir :desc}
-          :tags {:order-by :name
-                 :order-dir :asc}}
+   :note-form {}
+   :data {:notes {}
+          :tags {}}
    :notifications {:messages []
                    :next-id 0}})
 

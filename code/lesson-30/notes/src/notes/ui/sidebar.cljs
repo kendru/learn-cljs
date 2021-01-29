@@ -3,28 +3,26 @@
             [reagent.ratom :as ratom]
             [notes.state :refer [app]]
             [notes.command :refer [dispatch!]]
-            [notes.ui.util :refer [link]]))
+            [notes.ui.common :refer [link]]))
 
-(defn sorter [property dir]
-  (fn [a b]
-    (let [compare-fn (if (= :asc dir) < >)]
-      (compare-fn (get a property)
-                  (get b property)))))
+(defn created-at-sorter [a b]
+  (> (:created-at a)
+     (:created-at b)))
 
 (defn notes-list []
   (let [notes (r/cursor app [:data :notes])
         notes-list (ratom/make-reaction
-                    #(let [{:keys [order-by order-dir by-id]} @notes]
-                       (->> by-id
-                            (vals)
-                            (sort (sorter order-by order-dir))
-                            (take 10))))]
+                    #(->> @notes
+                          (vals)
+                          (sort created-at-sorter)))]
     (dispatch! :notes/get-notes)
     (fn []
-      [:ul.notes-list
-       (for [note @notes-list]
-         ^{:key (:id note)}
-         [:li [link (:title note) {:route-params [:edit-note {:note-id (:id note)}]}]])])))
+      [:nav
+       [:ul.notes-list
+        (for [note @notes-list
+              :let [{:keys [id title]} note]]
+          ^{:key id}
+          [:li [link title [:edit-note {:note-id id}]]])]])))
 
 (defn sidebar []
   [:nav.sidebar

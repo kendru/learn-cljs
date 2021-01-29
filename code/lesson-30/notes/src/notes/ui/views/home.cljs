@@ -1,13 +1,6 @@
-(ns notes.ui.views.home
-  (:require [reagent.core :as r]
-            [notes.state :refer [app]]
-            [notes.api :as api]))
+(ns notes.ui.views.home)
 
-
-(defn tags-list []
-  [:div.tags-list "TODO: Tags"])
-
-;; The home view displays a list of notes on the left and a list of tags on the right.
 (defn home []
-  [:div.home
-   [tags-list]])
+  [:div.home.hero
+   [:h1.title "Welcome to Notes"]
+   [:h2.subtitle "Select a note or create a new one to get started."]])
