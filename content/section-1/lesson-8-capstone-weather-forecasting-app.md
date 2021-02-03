@@ -146,7 +146,7 @@ a remote API. We can create a skeleton of this app state in the
 ```
 
 With the basic data structure in place we can identify and define the components
-that we will make up our interface:
+that will make up our interface:
 
 ![The Components of Our App](/img/lesson8/components_annotated.png)
 
@@ -195,7 +195,7 @@ Now that we have an app running and rendering data, the next step is to let the
 user interact with the page. We will allow the user to input their postal code
 so that we can fetch weather data for their location. As we would in JavaScript,
 we attach an event handler to the input element. This handler will update the
-app state on every keystroke. The `postal-code` already gets it value from the
+app state on every keystroke. The `postal-code` component already gets it value from the
 app state. The only step that we need to take is to attach the handler, and the
 input will stay synchronized.
 
@@ -280,7 +280,7 @@ component to view the current app state.
 
 The final piece of our weather forcast app is getting data from a remote
 API. While it is entirely possible to make an Ajax request using only the Google
-Closure libraries that are built in to CLojureScript, but using an external
+Closure libraries that are built in to ClojureScript, using an external
 library will greatly simplify the process. We simply need to add the `cljs-ajax`
 library to the `:dependencies` section of `project.clj` and restart Figwheel. At
 that point, we can require the library in our namespace and start making
@@ -323,7 +323,7 @@ _Handling the Response_
 There are 2 pieces of data that we care about the data that the API provides -
 the current temperature and the forecasted temperature for 1 day in the future.
 `handle-response` takes care of extracting these pieces of data nested deep in
-the response and updates the values for today and tomorrow's temperatures in the
+the response and updates the values for today's and tomorrow's temperatures in the
 app state. Next, we'll look at the code necessary to make the remote API
 request.
 
@@ -430,7 +430,7 @@ _Complete Weather Forecasting App_
 4. Define UI components
 5. Instruct Reagent to render the UI
 
-While this app may not be a shining exemplar of single-page application design,
+While this app may not be a shining example of single-page application design,
 it is representative of the types of apps that we will be creating with
 ClojureScript. While its design is simple, this app demonstrates the major
 concerns that we are likely to face in any front-end app: component design, user
