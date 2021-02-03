@@ -429,7 +429,7 @@ _Complete Weather Forecasting App_
 4. Define UI components
 5. Instruct Reagent to render the UI
 
-While this app may not be a shining exemple of single-page application design,
+While this app may not be a shining example of single-page application design,
 it is representative of the types of apps that we will be creating with
 ClojureScript. While its design is simple, this app demonstrates the major
 concerns that we are likely to face in any front-end app: component design, user
