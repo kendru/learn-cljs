@@ -71,8 +71,10 @@ run `lein help TASK` where `TASK` is the name of any Leiningen task available.
 While Leiningen provides a number of tasks by default, we will often run tasks
 provided by plugins.
 
-NOTE: The terminal examples in this book are for a Unix-like environment such as
-OSX or Linux. Windows users may have to make minor adaptations the commands.
+> **NOTE**
+>
+> The terminal examples in this book are for a Unix-like environment such as
+> OSX or Linux. Windows users may have to make minor adaptations the commands.
 
 ### Understanding Leiningen
 
@@ -187,7 +189,7 @@ _Exploring the Generated Project_
 
 1. View the contents of the project directory recursively
 2. The `resources` directory contains the HTML page that will load our application as well as any styles and assets we need.
-3. The `src` directory contains ClojureScript sourc code
+3. The `src` directory contains ClojureScript source code
 
 Leiningen generated several top-level files, a `src` directory, and a `resources`
 directory. Leiningen uses the `project.clj` file for all configuration that it

@@ -1,0 +1,18 @@
+{
+    "development": {
+        "driver": "pg",
+        "user": "chat",
+        "password": "s3cr3t",
+        "host": "127.0.0.1",
+        "database": "chat",
+        "port": "5432"
+    },
+    "production": {
+        "driver": "pg",
+        "user": {"ENV": "POSTGRES_USER"},
+        "password": {"ENV": "POSTGRES_PASSWORD"},
+        "host": {"ENV": "POSTGRES_HOST"},
+        "database": {"ENV": "POSTGRES_DB"},
+        "port": {"ENV": "POSTGRES_PORT"}
+    }
+}

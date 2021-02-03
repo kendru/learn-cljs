@@ -2,3 +2,6 @@
 resources/_gen
 .rebel_readline_history
 static/pdf
+node_modules
+.lsp
+.clj-kondo

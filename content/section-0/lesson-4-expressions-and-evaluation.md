@@ -86,7 +86,7 @@ walk through the rules for how an s-expression is evaluated, but first, we will
 take a brief detour to discuss the emphasis on _evaluation of expressions_
 rather than _execution of statements_.
 
-> Note
+> **NOTE**
 >
 > Using a language based on s-expressions means that there is no such thing as
 > operator precedence. In JavaScript, we must recall that `*` has higher

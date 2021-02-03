@@ -1,0 +1,82 @@
+/* some style */
+
+:root {
+    --main-bg: #abf0e9;
+    --main-fill: #63b7af;
+    --main-text: #162447;
+    --light-bg: #d4f3ef;
+    --accent: #ee8572;
+}
+
+html, body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: var(--main-text);
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chart, .input-form {
+    width: 400px;
+}
+
+.chart {
+    background-color: var(--light-bg);
+    border-bottom: 2px solid var(--main-bg);
+}
+
+.chart rect {
+    fill: var(--main-fill);
+}
+
+.chart rect:hover {
+    fill: var(--accent);
+    stroke: var(--main-text);
+    cursor: pointer;
+}
+
+.input-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+}
+
+.input-wrapper > input {
+    border: 2px solid var(--main-text);
+    padding: 4px;
+    flex-basis: 50%;
+}
+
+.input-wrapper > input:focus {
+    border-color: var(--main-fill);
+    outline: none;
+}
+
+.actions {
+    display: flex;
+    padding-top: 12px;
+    justify-content: space-around;
+}
+
+.actions > button {
+    display: inline-block;
+    padding: 0.35em 1.2em;
+    border: 0.1em solid var(--accent);
+    border-radius: 0.12em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-weight: 300;
+    font-size: 100%;
+    color: var(--accent);
+    text-align: center;
+    transition: all 0.2s;
+    cursor: pointer;
+    width: 100%;
+}
+.actions > button:hover {
+    color:#fff;
+    background-color: var(--accent);
+}

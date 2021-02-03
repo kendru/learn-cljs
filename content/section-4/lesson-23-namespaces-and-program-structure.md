@@ -137,7 +137,7 @@ as `mark-user-inactive` and `mark-customer-inactive`.
 
 _Forms of Require_
 
-> *Note:*
+> **NOTE**
 >
 > There is a form, `:refer-clojure` that allows us to rename a var from the ClojureScript standard
 > library (or exclude it altogether) in the event that we want to define a var in our namespace

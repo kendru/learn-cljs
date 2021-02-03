@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="icon" href="https://clojurescript.org/images/cljs-logo-icon-32.png">
+  </head>
+  <body>
+    <main id="app">
+      <div class="app-wrapper">
+        <sidebar class="sidebar"></sidebar>
+        <section class="content-main"></section>
+      </div>
+    </main>
+    <script type="text/javascript">
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      window.WS_API_URL = 'ws://localhost:8080';
+    } else {
+      window.WS_API_URL = 'wss://chat-api.learn-cljs.com/';
+    }
+    </script>
+    <script src="js/compiled/chat.js" type="text/javascript"></script>
+  </body>
+</html>

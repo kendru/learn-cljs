@@ -393,7 +393,7 @@ be mutated as it is passed around, complexity skyrockets. When we allow mutable
 data, we need to keep track of a potentially enormous number of variables in
 our heads to debug a single computation.
 
-> *Note:*
+> **NOTE**
 >
 > The author once worked on a team responsible for a very large JavaScript
 > application. That team discovered that unexpected mutation was the cause of so

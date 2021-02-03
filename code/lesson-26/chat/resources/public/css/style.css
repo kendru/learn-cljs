@@ -1,0 +1,349 @@
+html, body, #app {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f6f6f6;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.app-wrapper {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+/* Sidebar */
+
+.sidebar {
+    height: 100%;
+    background-color: #2f3f76;
+    color: white;
+    overflow-y: auto;
+    flex-basis: 300px;
+}
+
+.sidebar-header, .sidebar-item {
+    padding: 8px 8px 8px 12px;
+}
+
+.sidebar-header {
+    text-align: center;
+    font-size: 110%;
+    border-bottom: 1px solid #516794;
+}
+
+.sidebar-item {
+    vertical-align: middle;
+    line-height: 24px;
+    cursor: pointer;
+}
+
+.sidebar-item.active::before {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    vertical-align: middle;
+}
+
+.sidebar-rooms .sidebar-item.active::before {
+    content: "meeting_room";
+}
+.sidebar-people .sidebar-item.active::before {
+    content: "person";
+}
+
+.material-icons {
+    vertical-align: middle;
+}
+
+.sidebar-item:hover, .sidebar-item.active {
+    background-color: #516794;
+}
+
+.sidebar-item.no-highlight:hover {
+    background: none;
+}
+
+.sidebar-item .add-room {
+    border: 1px solid #516794;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.sidebar-item .add-room:hover {
+    background-color: #516794;
+}
+
+.sidebar-item .add-room-input {
+    border: none;
+    font-size: 16px;
+    width: 100%;
+    margin: 0;
+    padding: 4px;
+    margin-left: -4px;
+}
+
+.sidebar-item .add-room-input:focus {
+    outline: none;
+}
+
+/* Header */
+
+.app-header {
+    background-color: #fff;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.app-header > .view-name {
+    font-size: 125%;
+    font-weight: normal;
+    margin: 0 12px 0 0;
+}
+
+.app-header > .user-name {
+    margin: 0 12px 0 0;
+}
+
+/* Content Area */
+
+.content-main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.messages {
+    flex-grow: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.messages-inner {
+    overflow-y: auto;
+}
+
+.message {
+    padding: 12px 24px;
+    border-bottom: 1px solid #eee;
+    background-color: #fff;
+}
+
+.message-header {
+    display: flex;
+    line-height: 32px;
+}
+
+.author-avatar {
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+    border-radius: 100%;
+    color: #fff;
+    background-color: #a5435c;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.author-name, .message-timestamp {
+    border-bottom: 1px solid #eee;
+}
+
+.author-name {
+    display: inline-block;
+    margin-left: 12px;
+    flex-grow: 1;
+}
+
+.message-timestamp {
+    color: #999;
+    font-size: 80%;
+    font-weight: lighter;
+}
+
+.compose {
+    flex-basis: 74px;
+    padding: 12px 24px 0;
+    display: flex;
+    flex-direction: column-reverse;
+    margin-bottom: 12px;
+}
+
+.message-input {
+    background-color: #fff;
+    min-height: 50px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    font-size: 100%;
+}
+
+.message-input:focus {
+    outline: none;
+}
+
+.actions {
+    text-align: right;
+    position: absolute;
+    bottom: 20px;
+    right: 24px;
+}
+
+.send {
+    background: #fff;
+    color: #555;
+    padding: 8px;
+    font-size: 95%;
+    border-bottom-right-radius: 5px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.send:hover {
+    background-color: #eee;
+}
+
+/* Auth Modal */
+
+.auth-modal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #e0e2e6;
+    opacity: 0.9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-modal-wrapper {
+    width: 400px;
+    height: 400px;
+    background: #fff;
+}
+
+.auth-modal-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.auth-modal-header, .auth-modal-body {
+    margin: 24px;
+}
+
+.auth-modal-header {
+    text-align: center;
+    color: #2f3f76;
+}
+
+.auth-modal-header h1 {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    font-size: 32px;
+}
+
+.auth-modal .input-field {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 12px;
+    display: flex;
+}
+
+.auth-modal .input-field > label {
+    display: inline-block;
+    padding: 12px;
+    min-width: 80px;
+}
+
+.auth-modal .input-field > input {
+    border: none;
+    flex-grow: 1;
+    font-size: 16px;
+    padding-left: 12px;
+    border-bottom: 1px solid #fff;
+}
+
+.auth-modal .input-field > input:focus {
+    outline: none;
+    border-bottom-color: #0f1017;
+}
+
+.auth-modal button {
+    display: block;
+    margin: 0 auto;
+    padding: 12px;
+    min-width: 128px;
+    background: #516794;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.auth-modal button:hover {
+    background-color: #2f3f76;
+}
+
+.auth-modal-footer {
+    background: #70707c;
+    height: 60px;
+    color: #fff;
+    text-align: center;
+    line-height: 60px;
+}
+
+.auth-modal-footer a {
+    cursor: pointer;
+}
+
+/* OLD */
+
+.user-status {
+    background-color: #2f3f76;
+}
+
+.online-status {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+}
+
+.online-status.online {
+    background-color: #76cc76;
+}
+
+.online-status.offline {
+    background-color: grey;
+}
+
+/* MISC */
+
+.hidden {
+    display: none !important;
+}

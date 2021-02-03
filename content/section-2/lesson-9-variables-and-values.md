@@ -106,7 +106,7 @@ refer to something else, usually a var. In the REPL session above, `my-name`,
 are names that refer to the var that we have bound. When ClojureScript is
 evaluating our program code and comes across a symbol, it will try to evaluate
 the symbol to whatever it refers to, and if it cannot resolve the symbol to any
-know value, it will display a warning.
+known value, it will display a warning.
 
 ```clojure
 (def x 7)                                         ;; <1>
@@ -170,7 +170,7 @@ Can you use the var that you created to call this function? E.g. `(my-var "incon
 
 While `def` creates a var that is visible to an entire namespace, we sometimes
 want to name and use values that are more temporary or focused in
-scope. ClojureScript uses `let` to create these local bindings. Like vars, let
+scope. ClojureScript uses `let` to create these local bindings. Like vars, `let`
 maps a name to some value, but they do not stick around after the contents of
 the `let` are evaluated. This can be useful for when we want to name things for
 convenience in the middle of a function without polluting the namespace with a
@@ -189,7 +189,7 @@ the entire `let` expression evaluates to the value of the last expression inside
 the body of the `let`. Since only the value of the last expression is
 considered, the other expressions are only used for side effects, such as
 printing to the console or doing DOM manipulation. Here is an example of how we
-might use let in a real application:
+might use `let` in a real application:
 
 ```clojure
 (defn parse-msg [msg-raw]
@@ -214,7 +214,7 @@ clearer and concise code.
 
 ### Quick Review
 
-- What happens when let creates a binding with the same name as a var that is already defined? What will be the output of the following code?
+- What happens when `let` creates a binding with the same name as a var that is already defined? What will be the output of the following code?
 
 ```clojure
 (def name "Napoleon")
@@ -269,7 +269,7 @@ can be done by inserting a `& other` at then end of the binding:
 ;; I'm saving these for later: (salad apples yogurt)
 ```
 
-In addition to destructuring lists and maps, we can also destructure maps by providing
+In addition to destructuring lists and vectors, we can also destructure maps by providing
 a map on the left-hand side of the binding whose keys are the names to which the properties
 should be bound and whose values are the keys in the map on the righthand side to bind:
 
