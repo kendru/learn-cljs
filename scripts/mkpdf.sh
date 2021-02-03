@@ -1,4 +1,9 @@
 #!/bin/bash
+
+## To run on ubuntu:
+## sudo apt-get install pandoc texlive-xetex
+## 
+
 set -e
 set -x
 
