@@ -38,3 +38,4 @@ headless = true
   - [React as a Platform](/section-5/lesson-27-react-as-a-platform/)
   - [Using React via Reagent](/section-5/lesson-28-using-react-via-reagent/)
   - [Separate Concerns](/section-5/lesson-29-separate-concerns/)
+  - [Capstone 5 - Notes](/section-5/lesson-30-capstone-5-notes/)

@@ -1,5 +1,11 @@
 #!/bin/bash
+
+## To run on ubuntu:
+## sudo apt-get install pandoc texlive-xetex
+## 
+
 set -e
+set -x
 
 BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null 2>&1 && pwd )"
 CONTENT_DIR="${BASE_DIR}/content"

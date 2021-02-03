@@ -11,5 +11,7 @@ A print version of the book is scheduled for publication in March of 2020, and i
 ### TODO
 
 - Add diagrams for each new function that is introduced showing its signature.
+- Consider changing section headings to `0` `(inc 0)` `(inc (inc 0))`, `(nth (iterate inc 0) 3)`, etc.
+- Add an afterward
 
-Copyright 2019 Andrew Meredith
+Copyright 2019-2020 Andrew Meredith
