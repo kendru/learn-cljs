@@ -10,11 +10,11 @@
 
 (def keydown-ch (chan))
 (gevent/listen js/document "keydown"
-  #(put! keydown-ch (.-key %)))
+               #(put! keydown-ch (.-key %)))
 
 (def keyup-ch (chan))
 (gevent/listen js/document "keyup"
-  #(put! keyup-ch (.-key %)))
+               #(put! keyup-ch (.-key %)))
 
 (def is-modifier? #{"Control" "Meta" "Alt" "Shift"})
 
@@ -35,15 +35,15 @@
 (defn perform-request [in]
   (let [ch (chan)]
     (js/setTimeout
-      #(put! ch (str "Results for: " in))
-      (* 2000 (js/Math.random)))
+     #(put! ch (str "Results for: " in))
+     (* 2000 (js/Math.random)))
     ch))
 
 (go-loop []
   (let [chord (<! chord-ch)]
     (when (and (= chord ["Control" "r"])
                (= js/document.activeElement query-input))
-      (aset results-display "innerText" "Loading...")
-      (aset results-display "innerText"
-        (<! (perform-request (.-value query-input)))))
+      (set! (.-innerText results-display) "Loading...")
+      (set! (.-innerText results-display)
+            (<! (perform-request (.-value query-input)))))
     (recur)))

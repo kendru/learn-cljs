@@ -10,7 +10,7 @@
 
 (defn now []
   (.floor js/Math
-    (/ (.getTime (js/Date.)) 1000)))
+          (/ (.getTime (js/Date.)) 1000)))
 
 (defn longest-idle-time [events]
   (let [initial-acc {:max-idle 0
@@ -33,4 +33,4 @@
   (gevents/listen js/document "scroll" (debounce #(append-event! :scroll) 500))
   (gevents/listen js/document "keyup" (debounce #(append-event! :typing) 1000)))
 
-(aset js/window "onload" track-events!)
+(set! (.-onload js/window) track-events!)

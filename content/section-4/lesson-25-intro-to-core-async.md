@@ -183,8 +183,8 @@ So far, we have only a single process that is reading from and writing to channe
   (let [chord (<! chord-ch)]                               ;; <3>
     (when (and (= chord ["Control" "r"])
                (= js/document.activeElement query-input))
-      (aset results-display "innerText" "Loading...")
-      (aset results-display "innerText"
+      (set! (.-innerText results-display) "Loading...")
+      (set! (.-innerText results-display)
         (<! (mock-request (.-value query-input)))))        ;; <4>
     (recur)))
 ```
@@ -196,7 +196,7 @@ _Making a Mock Request_
 3. Wait for key chords
 4. Perform a request and wait for the results before updating `results-display`
 
-Here we spin up another process that repeatedly takes key chords from the `chord-ch` channel, and checks to see if we have the correct chord and whether the query input is focused. If both of these conditions are met, then we simulate making a server request, and when the results come back, we update the results area. One thing to note is that `(aset results-display "innerText" (<! (mock-request (.-value query-input))))` will halt its evaluation until we can take a value from the channel returned by `(mock-request (.-value query-input))`. Internally, the `go` macro rewrites our code into a state machine, but all that we need to know is that whenever we need to park a process until a value is ready, any code that depends on that value will be deferred until after the value is delivered.
+Here we spin up another process that repeatedly takes key chords from the `chord-ch` channel, and checks to see if we have the correct chord and whether the query input is focused. If both of these conditions are met, then we simulate making a server request, and when the results come back, we update the results area. One thing to note is that `(set! (-innerText results-display) (<! (mock-request (.-value query-input))))` will halt its evaluation until we can take a value from the channel returned by `(mock-request (.-value query-input))`. Internally, the `go` macro rewrites our code into a state machine, but all that we need to know is that whenever we need to park a process until a value is ready, any code that depends on that value will be deferred until after the value is delivered.
 
 ### Quick Review
 
