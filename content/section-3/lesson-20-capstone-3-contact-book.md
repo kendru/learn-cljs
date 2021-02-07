@@ -439,7 +439,7 @@ and set the `data-idx` attribute on the row).
 ```clojure
 (defn on-open-contact [e state]
   (refresh!
-    (let [idx (int (aget e "currentTarget" "dataset" "idx"))]
+    (let [idx (int (.. e -currentTarget -dataset idx))]
       (assoc state :selected idx
                    :editing? true))))
 
