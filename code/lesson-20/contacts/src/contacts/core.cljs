@@ -165,13 +165,13 @@
 
 (defn on-open-contact [e state]
   (refresh!
-    (let [idx (int (aget e "currentTarget" "dataset" "idx"))]
+    (let [idx (int (.. e -currentTarget -dataset idx))]
       (assoc state :selected idx
                    :editing? true))))
 
 (defn on-delete-contact [e state]
   (.stopPropagation e)
-  (let [idx (int (aget e "currentTarget" "dataset" "idx"))]
+  (let [idx (int (.. e -currentTarget -dataset idx))]
     (refresh! (-> state
                   (update :contacts remove-contact idx)
                   (cond-> (= idx (:selected state))
