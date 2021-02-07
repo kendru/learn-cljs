@@ -16,7 +16,7 @@ structures.
 
 ---
 
-*In this lesson:*
+_In this lesson:_
 
 - Convert between ClojureScript and JavaScript data types
 - Integrate ClojureScript code with an existing JavaScript codebase
@@ -50,10 +50,11 @@ connected to. Open the dev tools and create an object called `testScores` that
 looks something like the following:
 
 ```javascript
-var testScores = [                                         // <1>
-    { id: 1, score: 86, gradeLetter: "B" },                // <2>
-    { id: 2, score: 93, gradeLetter: "A" },
-    { id: 3, score: 78, gradeLetter: "C" }
+var testScores = [
+  // <1>
+  { id: 1, score: 86, gradeLetter: "B" }, // <2>
+  { id: 2, score: 93, gradeLetter: "A" },
+  { id: 3, score: 78, gradeLetter: "C" },
 ];
 ```
 
@@ -114,7 +115,6 @@ _Converting between JavaScript and ClojureScript data_
 2. Create a modified value by appending a new score and verify that the value in the var `cljs-scores` was not changed
 3. Bind the updated scores to the `updated-scores` var
 4. Convert the updated scores back to a JavaScript object and update `testScores` to the new value
-
 
 We can inspect the `testScores` variable in the browser to make sure that it has
 been changed to include the new score.
@@ -194,29 +194,25 @@ pairs of key, value. The literal syntax looks like a ClojureScript map proceeded
 by `#js`. Both of these forms produce identical JavaScript objects, but the
 literal syntax is by far the most common.
 
-We can get and set properties on JavaScript objects with the `aget` and `aset`
-functions. `aget` takes as arguments the object and the property to get:
+We can get properties on JavaScript objects with the property access syntax: `(.-property object)`, and we can use the `set!` function to update a property.
 
 ```clojure
 cljs.user=> (def js-hobbit #js {"name" "Bilbo Baggins", "age" 111})
 #'cljs.user/js-hobbit
-cljs.user=> (aget js-hobbit "age")
+cljs.user=> (.-age js-hobbit)
 111
 ```
 
-The `aget` function also supports accessing properties inside nested objects,
-similar to chaining property lookups on JavaScript objects. For instance, in
-JavaScript, we could do the following (if we were confident that none of the
-intermediate properties were `null`):
+A variant of the property access syntax supports accessing properties inside nested objects, similar to chaining property lookups on JavaScript objects. For instance, in JavaScript, we could do the following (if we were confident that all of the intermediate properties were valid):
 
 ```javascript
 // JavaScript nested lookup
 var settings = {                                           // <1>
-    personal: {
-        address: {
-            street: "123 Rolling Hills Dr"
-        }
-    }
+  personal: {
+    address: {
+      street: "123 Rolling Hills Dr",
+    },
+  },
 };
 
 // Prints "123 Rolling Hills Dr"
@@ -226,23 +222,22 @@ console.log(settings.personal.address.street);             // <2>
 1. A nested JavaScript object
 2. Accessing a nested property
 
-Using `aget` in ClojureScript accomplishes the same task:
+Using property access in ClojureScript accomplishes the same task. The syntax is slightly different from a normal property access: `(.. obj -propOne -propTwo)`.
 
 ```clojure
 (println
-  (aget settings "personal" "address" "street")) ; Prints "123 Rolling Hills Dr"
+  (.. settings -personal -address -street))
+; Prints "123 Rolling Hills Dr"
 ```
 
-Just as `aget` allows us to access properties on a potentially nested object,
-`aset` lets us mutate properties. `aset`, like `aget`, takes a JavaScript object
-and any number of property names, but it also takes some value to set as its
-last argument
+In addition to letting us read properties on a potentially nested object,
+ClojureScript provides the `set!` function to mutate objects. This function takes a property access along with a new value to set, and it mutates the object at the specified property, returning the value that was supplied.
 
 ```clojure
-cljs.user=> (aset js-hobbit "name" "Frodo")                ;; <1>
+cljs.user=> (set! (.-name js-hobbit) "Frodo")              ;; <1>
 "Frodo"
 
-cljs.user=> (aset js-hobbit "age" 33)
+cljs.user=> (set! (.-age js-hobbit) 33)
 33
 
 cljs.user=> js-hobbit                                      ;; <2>
@@ -250,12 +245,12 @@ cljs.user=> js-hobbit                                      ;; <2>
 ```
 
 1. Setting two properties on the `js-hobbit` object
-2. `aset` mutates the object
+2. `set!` mutates the object
 
 #### Experiment
 
-Since the `aget` function supports access of nested properties, it only makes
-sense that the the `aset` function would support setting nested properties. Use
+Since property access supports nested properties, it only makes
+sense that the the `set!` function would support setting nested properties. Use
 the REPL to try to find the correct syntax for setting the following student's
 grade in her Physics class:
 
@@ -267,25 +262,8 @@ grade in her Physics class:
 ```
 
 Unlike the functions that we have seen that operate on ClojureScript data,
-`aset` actually modifies the object in-place. This is because we are working
+`set!` actually modifies the object in-place. This is because we are working
 with mutable JavaScript data.
-
-> *Direct Property Access*
->
-> There is an alternate method for getting and setting properties on JavaScript
-> objects: direct property access. Properties can be accessed with
-> `(.-propertyName obj)` and set with `(set! (.-propertyName obj) value)`. There
-> are 2 major differences between direct access and `aget`/`aset`:
->
-> 1. Under its advanced compilation setting, the ClojureScript compiler will
->    minify the property names. This could potentially break code that interacts
->    with existing JavaScript, since the minified property names will not match
->    the property names in the external code.
-> 2. Direct property access does not directly support nested property access like
->    `aget` does.
->
-> Because of these "gotchas", we will usually want to stick with `aget`/`aset`,
-> even though they are slightly more verbose.
 
 ### Using Arrays
 
@@ -301,8 +279,7 @@ cljs.user=> #js [1 3 5 7 11]
 #js [1 3 5 7 11]
 ```
 
-We can use the same `aget` and `aset` functions to get and set elements at
-a specific index.
+For array access, we can use the `aget` and `aset` functions. `aget` takes a JavaScript array and an index into that array and returns the element at that index. `aset` has an additional parameter, which is the value to set at the specified index. Like `set!`, `aset` mutates the array in place.
 
 ```clojure
 cljs.user=> (def primes #js [1 3 5 7 11])                  ;; <1>
@@ -313,7 +290,7 @@ cljs.user=> (aget primes 2)                                ;; <2>
 
 cljs.user=> (aset primes 5 13)                             ;; <3>
 13
-books
+
 cljs.user=> primes                                         ;; <4>
 #js [1 3 5 7 11 13]
 ```
@@ -325,15 +302,14 @@ _Getting and Setting Array Elements_
 3. Get the element at index `5` to `13`
 4. `aset` has mutated the array
 
-We can also access the JavaScript array methods by using, `(.functionName array
-args*)`. This is the standard syntax for calling a method on a JavaScript
+We can also access the JavaScript array methods by using, `(.functionName array args*)`. This is the standard syntax for calling a method on a JavaScript
 object, which we will explain in much more detail later.
 
 ```clojure
-cljs.user=> (.indexOf primes 11)               <1>
+cljs.user=> (.indexOf primes 11)                           ;; <1>
 4
 
-cljs.user=> (.pop primes)                      <2>
+cljs.user=> (.pop primes)                                  ;; <2>
 13
 
 cljs.user=> primes
@@ -367,8 +343,14 @@ Create the following variable in your browser's dev tools:
 
 ```javascript
 var books = [
-    { title: 'A History of LISP', subjects: ['Common Lisp', 'Scheme', 'Clojure'] },
-    { title: 'All About Animals', subjects: ['Piranhas', 'Tigers', 'Butterflies'] }
+  {
+    title: "A History of LISP",
+    subjects: ["Common Lisp", "Scheme", "Clojure"],
+  },
+  {
+    title: "All About Animals",
+    subjects: ["Piranhas", "Tigers", "Butterflies"],
+  },
 ];
 ```
 

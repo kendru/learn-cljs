@@ -16,7 +16,7 @@ interactive experience.
 
 ---
 
-*In this lesson:*
+_In this lesson:_
 
 - Learn how interactive development is a cornerstone of ClojureScript
 - Use Figwheel to compile and load it into the browser instantly
@@ -101,7 +101,7 @@ the contents of this file at a high level.
 )
 ```
 
-_src/cljs\_weather/core.cljs_
+_src/cljs_weather/core.cljs_
 
 1. Namespace declaration
 2. Allow print statements to go to the JavaScript console
@@ -111,7 +111,6 @@ _src/cljs\_weather/core.cljs_
 
 Let's start by making a minor change to the `hello-world` component. We will add
 a bit of extra text to it just to make sure that our changes are picked up:
-
 
 ```clojure
 (defn hello-world []
@@ -148,7 +147,7 @@ earlier pages.
   and update the call to `reagent/render-component` to use `greeter` instead of
   `hello-world`.
 
-> *Do I need an IDE?*
+> _Do I need an IDE?_
 >
 > You can edit ClojureScript in any editor or IDE that you are comfortable with.
 > Most modern text editors have Clojure/ClojureScript plugins that will provide
@@ -167,7 +166,7 @@ will open the default (empty) stylesheet and add a couple of styles:
 
 ```css
 body {
-  background-color: #02A4FF;
+  background-color: #02a4ff;
   color: #ffffff;
 }
 
@@ -224,7 +223,7 @@ to some other element is not:
   (.appendChild parent child))
 
 (defn set-content [elem content]                           ;; <2>
-  (aset elem "innerHTML" content))
+  (set! (.-innerHTML elem) content))
 ```
 
 1. Non-idempotent function
@@ -240,7 +239,7 @@ idempotent, otherwise [FIXME, TOO]
 #### You Try It
 
 - Write a version of `append-element` that is idempotent and will only append
-the child if it doesn't already exist. A possible solution is given below:
+  the child if it doesn't already exist. A possible solution is given below:
 
 ```clojure
 (defn append-element [parent child]
@@ -315,7 +314,7 @@ new message from displaying it:
 ```clojure
 (defn receive-message [text timestamp]
   (let [node (.createElement js/document "div")]
-    (aset node "innerHTML" (str "[" timestamp "]: " text))
+    (set! (.- innerHTML node) (str "[" timestamp "]: " text))
     (.appendChild messages-feed node)))
 ```
 
@@ -335,10 +334,10 @@ better alternative would be something like the following:
   (swap! messages conj {:text text :timestamp timestamp}))
 
 (defn render-all-messages! [messages]                      ;; <3>
-  (aset messages-feed "innerHTML" "")
+  (set! (.- innerHTML messages-feed) "")
   (doseq [message @messages]
     (let [node (.createElement js/document "div")]
-      (aset node "innerHTML" (str "[" timestamp "]: " text))
+      (set! (.-innerHTML node) (str "[" timestamp "]: " text))
       (.appendChild messages-feed node))))
 
 (render-all-messages!)                                     ;; <4>
