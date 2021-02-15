@@ -30,7 +30,7 @@ The Clojure language comes with a command-line tool that can be used for compili
 
 While there are tools available to create a skeleton project from a template, we will first set up our project manually so that we can better understand what is going on under the hood. First, we will need to create a new directory and enter it.
 
-```bash
+```shell
 $ mkdir my-cljs-project
 $ cd my-cljs-project
 ```
@@ -79,7 +79,7 @@ _index.html_
 
 Now, we will compile our ClojureScript file and load the script in a browser. All of this can be done with one command:
 
-```bash
+```shell
 $ clj -m cljs.main --compile my-cljs-project.core --repl
 ```
 
