@@ -384,6 +384,6 @@ We have now seen ClojureScript's core looping features. While `for` and `while` 
 - Recursion (`loop`/`recur`)
 - Forcing evaluation of side effects (`doseq`)
 
-Even though we may at first find it difficult to solve problems without the traditional imperative loops, we will quickly discover that a "Clojuresque" solution is often simpler. As we get more accustomed to thinking in terms of sequences and recursion, the ClojureScript way will become second nature.
+Even though we may at first find it difficult to solve problems without the traditional imperative loops, we will quickly discover that a "Clojure-esque" solution is often simpler. As we get more accustomed to thinking in terms of sequences and recursion, the ClojureScript way will become second nature.
 
 [^1]: Interestingly, `loop` compiles down to a `while` loop in JavaScript.
