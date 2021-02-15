@@ -26,36 +26,41 @@ _A ClojureScript Single-Page App in Action_
 
 ## Creating an App With Reagent
 
-We have seen how a typical ClojureScript application is laid out, and we have used Leiningen to bootstrap a ClojureScript project. We have also explored the live reloading functionality and REPL that Figwheel provides to quickly iterate on small pieces of code. We will complete this high-level introduction to ClojureScript development by walking through a simple ClojureScript app. We will return to the application that we generated with Leiningen. We will see how quickly we can compose a ClojureScript application. The complete code for this lesson is available at [the book's GitHub repository](https://github.com/kendru/learn-cljs), so feel free to simply pull the code and follow along. The goal here is not to learn the ins and outs of ClojureScript as a language but rather to get a feel for what production ClojureScript looks like.
+We have seen how a typical ClojureScript application is laid out, and we have used clj-new to bootstrap a ClojureScript project. We have also explored the live reloading functionality and REPL that Figwheel provides to quickly iterate on small pieces of code. We will complete this high-level introduction to ClojureScript development by walking through a simple ClojureScript app. We will return to the application that we generated. We will see how quickly we can compose a ClojureScript application. The complete code for this lesson is available at [the book's GitHub repository](https://github.com/kendru/learn-cljs), so feel free to simply pull the code and follow along. The goal here is not to learn the ins and outs of ClojureScript as a language but rather to get a feel for what production ClojureScript looks like.
 
 ### Creating Reagent Components
 
-Before moving on, let's clean up the core namespace so that it just contains a single Reagent component and renders it.
+Let's begin by simplifying the core namespace so that it only contains a single Reagent component and renders it.
 
 ```clojure
-(ns cljs-weather.core                                       ;; <1>
-  (:require [reagent.core :as reagent :refer [atom]]
-            [reagent.dom :as rd]))
+(ns ^:figwheel-hooks learn-cljs.weather                    ;; <1>
+  (:require
+   [goog.dom :as gdom]
+   [reagent.dom :as rdom]
+   [reagent.core :as r]))
 
-(enable-console-print!)                                     ;; <2>
+(defn hello-world []                                       ;; <2>
+  [:div
+   [:h1 {:class "app-title"} "Hello, World"]])
 
-(defn hello-world []                                        ;; <3>
-  [:h1 {:class "app-title"} "Hello, World"])
+(defn mount-app-element []                                 ;; <3>
+  (rdom/render [hello-world] (gdom/getElement "app")))
+(mount-app-element)
 
-(rd/render [hello-world]                                    ;; <4>
-           (. js/document (getElementById "app")))
+(defn ^:after-load on-reload []                            ;; <4>
+  (mount-app-element))
 ```
 
-_src/cljs\_weather/core.cljs_
+_src/learn\_cljs/weather.cljs_
 
 1. Declare the namespace and load the Reagent framework
-2. Let ClojureScript's printing functions like `println` to output to the JavaScript dev console
-3. Declare a simple Reagent component
-4. Render the Reagent component to the DOM
+2. Declare a simple Reagent component
+3. Render the Reagent component to the DOM
+4. Instruct Figwheel to re-mount the app whenever reloading code
 
 Most ClojureScript user interfaces prioritize declarative components. That is, components describe how they should render rather than manipulating the DOM directly. The `hello-world` component in our application looks something like Clojurized HTML. In fact, the syntax of Reagent components is designed to emulate HTML using ClojureScript data structures. Like with other aspects of ClojureScript, Reagent encourages small components that can be combined from small structures into larger, more useful pieces.
 
-This `hello-world` component is simply a function that returns a ClojureScript data structure. Imagining a JavaScript equivalent of this function is fairly straightforward:
+This `hello-world` component is simply a function that returns a ClojureScript data structure. Imagining a JavaScript equivalent of this function is straightforward:
 
 ```javascript
 const helloWorld = () => {
@@ -63,16 +68,30 @@ const helloWorld = () => {
 };
 ```
 
+Before moving on, we should remove the `"test"` directory from the `:watch-dirs` entry in our build configuration:
+
+```clojure
+^{:watch-dirs ["src"] ;; Previously contained "test" as well
+  :css-dirs ["resources/public/css"]
+  :auto-testing true
+   }
+{:main learn-cljs.weather}
+```
+
+_dev.cljs.edn_
+
+We must remove the test directory because the scaffolded test contains a test case for a `multiply` function that we removed from the `learn-cljs.weather` namespace. If we did not remove this watch, Figwheel would not reload our code.
+
 ### Quick Review
 
 - The `hello-world` component now has a class of `app-title`. Add an id attribute to the component as well and use your browser's development tools to verify that the change worked.
 
 ### Managing State in an Atom
 
-Reagent runs this function and turns it into a structure that parallels the structure of the DOM. Any time that the function returns a different value, Reagent re-renders the component. However, in the case of this component, everything is static. For a component to be dynamic, it must render some data that could change. In Reagent, we keep all of the data that we use to render the app inside an atom, which is simply a container for data that might change. We have already seen an atom in use in the boilerplate code that Leiningen scaffolded in lesson 5:
+Reagent runs this function and turns it into a structure that parallels the structure of the DOM. Any time that the function returns a different value, Reagent re-renders the component. However, in the case of this component, everything is static. For a component to be dynamic, it must render some data that could change. In Reagent, we keep all of the data that we use to render the app inside an atom, which is simply a container for data that might change. We have already seen an atom in use in the boilerplate code that we scaffolded in Lesson 5:
 
 ```clojure
-(defonce app-state (atom {:text "Hello world!"}))
+(defonce app-state (r/atom {:text "Hello world!"}))
 ```
 
 Any Clojure data structure can be wrapped in an atom simply by wrapping it with `(atom ...)`. Reagent components that make use of an atom will automatically re-render whenever the data inside the atom changes. This automatic re-rendering process is what enables us to write declarative components without worrying about tedious DOM manipulation.
@@ -82,13 +101,12 @@ For the weather forecasting app, we will keep the entire app state inside an ato
 #### Initial application state
 
 ```clojure
-(defonce app-state (atom {:title "WhichWeather"
-                          :postal-code ""
-                          :data-received? false
-                          :temperatures {:today {:label "Today"
-                                                 :value nil}
-                                         :tomorrow {:label "Tomorrow"
-                                                    :value nil}}}))
+(defonce app-state (r/atom {:title "WhichWeather"
+                            :postal-code ""
+                            :temperatures {:today {:label "Today"
+                                                   :value nil}
+                                           :tomorrow {:label "Tomorrow"
+                                                      :value nil}}}))
 ```
 
 With the basic data structure in place we can identify and define the components that will make up our interface:
@@ -103,7 +121,7 @@ _The Components of Our App_
 (defn title []
   [:h1 (:title @app-state)])
 
-(defn temperature [temp]                          ;; <1>
+(defn temperature [temp]                                   ;; <1>
   [:div {:class "temperature"}
    [:div {:class "value"}
     (:value temp)]
@@ -119,14 +137,14 @@ _The Components of Our App_
 
 (defn app []
   [:div {:class "app"}
-   [title]                                        ;; <2>
+   [title]                                                 ;; <2>
    [:div {:class "temperatures"}
-    (for [temp (vals (:temperatures @app-state))] ;; <3>
+    (for [temp (vals (:temperatures @app-state))]          ;; <3>
       [temperature temp])]
    [postal-code]])
 
-(rd/render [app]                                  ;; <4>
-           (. js/document (getElementById "app")))
+(defn mount-app-element []                                 ;; <4>
+  (rdom/render [app] (gdom/getElement "app")))
 ```
 
 1. A Reagent component that expects `temp` to be passed in
@@ -185,25 +203,26 @@ With the one-way data binding, the model is considered the single source of trut
 In order to verify that the input is actually updating the app state, we can use the REPL to inspect the current value of the app-state. Although the name of the app state variable is `app-state`, the UI components refer to it as `@app-state`. We will explore this operator in great detail later, but for our purposes now, we need to know that it will extract the current value of an atom. We can use this operator from the REPL just as we would from a UI component to view the current app state.
 
 ```clojure
-@cljs-weather.core/app-state
-;; {:title "WhichWeather", :postal-code "81235", :data-received? false,
-;;  :temperatures {:today {:label "Today", :value nil}, :tomorrow {:label "Tomorrow", :value nil}}}
+@learn-cljs.weather/app-state
+;; {:title "WhichWeather", :postal-code "81235", :temperatures
+;;  {:today {:label "Today", :value nil}, :tomorrow {:label "Tomorrow", :value nil}}}
 ```
 
 ## Calling an External API
 
-The final piece of our weather forecast app is getting data from a remote API. While it is entirely possible to make an Ajax request using only the Google Closure libraries that are built in to ClojureScript, using an external library will greatly simplify the process. We simply need to add the `cljs-ajax` library to the `:dependencies` section of `project.clj` and restart Figwheel. At that point, we can require the library in our namespace and start making requests.
+The final piece of our weather forecast app is getting data from a remote API. While it is entirely possible to make an Ajax request using only the Google Closure libraries that are built in to ClojureScript, using an external library will greatly simplify the process. We simply need to add the `cljs-ajax` library to the `:deps` section of `deps.edn` and restart Figwheel. At that point, we can require the library in our namespace and start making requests.
 
 ```clojure
-:dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.clojure/clojurescript "1.7.170"]
-                 [org.clojure/core.async "0.2.374"
-                  :exclusions [org.clojure/tools.reader]]
-                 [reagent "0.5.1"]
-                 [cljs-ajax "0.8.0"]]
+{:deps {org.clojure/clojure {:mvn/version "1.10.0"}
+        org.clojure/clojurescript {:mvn/version "1.10.773"}
+        reagent {:mvn/version "0.10.0" }
+        cljs-ajax {:mvn/version "0.8.1"} ;; Added
+        }
+  ;; ...
+}
 ```
 
-_project.clj_
+_deps.edn_
 
 For the purpose of this application, we will use OpenWeatherMap's forecast data API. Use of the API is free, but [an account is required to obtain an API key](https://home.openweathermap.org/users/sign_up).
 
@@ -211,10 +230,10 @@ With just 2 additional functions, we can enable communication with a remote API 
 
 ```clojure
 (defn handle-response [resp]
-  (let [today (get-in resp ["list" 0 "main" "temp"])                    ;; <1>
+  (let [today (get-in resp ["list" 0 "main" "temp"])       ;; <1>
         tomorrow (get-in resp ["list" 8 "main" "temp"])]
-    (swap! app-state
-        update-in [:temperatures :today :value] (constantly today))     ;; <2>
+    (swap! app-state                                       ;; <2>
+        update-in [:temperatures :today :value] (constantly today))
     (swap! app-state
         update-in [:temperatures :tomorrow :value] (constantly tomorrow))))
 ```
@@ -228,12 +247,12 @@ There are 2 pieces of data that we care about the data that the API provides - t
 
 ```clojure
 (defn get-forecast! []
-  (let [postal-code (:postal-code @app-state)]                        ;; <1>
-    (GET "http://api.openweathermap.org/data/2.5/forecast"
+  (let [postal-code (:postal-code @app-state)]             ;; <1>
+    (ajax/GET "http://api.openweathermap.org/data/2.5/forecast"
          {:params {"q" postal-code
                    "appid" "API_KEY"
                    "units" "imperial"}
-          :handler handle-response})))                                ;; <2>
+          :handler handle-response})))                     ;; <2>
 ```
 
 _Performing a Request_
@@ -250,39 +269,39 @@ In the `get-forecast!` function, we extract the `postal-code` from our app state
 We simply attach the `get-forecast!` function as an event handler on a button, and our work is done. The entire code from this lesson is printed below for reference. In order to correctly communicate with the API, please replace `"API_KEY"` in the listing below with the actual key from your OpenWeatherMap account.
 
 ```clojure
-(ns cljs-weather.core
-  (:require [reagent.core :as reagent :refer [atom]]
-            [reagent.dom :as rd]
-            [ajax.core :refer [GET]]))
+(ns ^:figwheel-hooks learn-cljs.weather
+  (:require
+   [goog.dom :as gdom]
+   [reagent.dom :as rdom]
+   [reagent.core :as r]
+   [ajax.core :as ajax]))
 
-(enable-console-print!)
+(defonce app-state (r/atom {:title "WhichWeather"          ;; <1>
+                            :postal-code ""
+                            :temperatures {:today {:label "Today"
+                                                   :value nil}
+                                           :tomorrow {:label "Tomorrow"
+                                                      :value nil}}}))
 
-(defonce app-state (atom {:title "WhichWeather"                          ;; <1>
-                          :postal-code ""
-                          :data-received? false
-                          :temperatures {:today {:label "Today"
-                                                 :value nil}
-                                         :tomorrow {:label "Tomorrow"
-                                                    :value nil}}}))
 (def api-key "API_KEY")
 
-(defn handle-response [resp]                                             ;; <2>
+(defn handle-response [resp]                               ;; <2>
   (let [today (get-in resp ["list" 0 "main" "temp"])
         tomorrow (get-in resp ["list" 8 "main" "temp"])]
     (swap! app-state
-      update-in [:temperatures :today :value] (constantly today))
+           update-in [:temperatures :today :value] (constantly today))
     (swap! app-state
-      update-in [:temperatures :tomorrow :value] (constantly tomorrow))))
+           update-in [:temperatures :tomorrow :value] (constantly tomorrow))))
 
-(defn get-forecast! []                                                   ;; <3>
+(defn get-forecast! []                                     ;; <3>
   (let [postal-code (:postal-code @app-state)]
-    (GET "http://api.openweathermap.org/data/2.5/forecast"
-         {:params {"q" postal-code
-                   "units" "imperial"                                    ;; alternatively, use "metric"
-                   "appid" api-key}
-          :handler handle-response})))
+    (ajax/GET "http://api.openweathermap.org/data/2.5/forecast"
+      {:params {"q" postal-code
+                "units" "imperial" ;; alternatively, use "metric"
+                "appid" api-key}
+       :handler handle-response})))
 
-(defn title []                                                           ;; <4>
+(defn title []                                             ;; <4>
   [:h1 (:title @app-state)])
 
 (defn temperature [temp]
@@ -292,7 +311,7 @@ We simply attach the `get-forecast!` function as an event handler on a button, a
    [:h2 (:label temp)]])
 
 (defn postal-code []
-  [:div {:class-name "postal-code"}
+  [:div {:class "postal-code"}
    [:h3 "Enter your postal code"]
    [:input {:type "text"
             :placeholder "Postal Code"
@@ -308,7 +327,13 @@ We simply attach the `get-forecast!` function as an event handler on a button, a
       [temperature temp])]
    [postal-code]])
 
-(rd/render [app] (. js/document (getElementById "app")))                 ;; <5>
+(defn mount-app-element []                                 ;; <5>
+  (rdom/render [app] (gdom/getElement "app")))
+
+(mount-app-element)
+
+(defn ^:after-load on-reload []
+  (mount-app-element))
 ```
 
 _Complete Weather Forecasting App_
