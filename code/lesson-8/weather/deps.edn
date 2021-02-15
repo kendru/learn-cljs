@@ -1,0 +1,12 @@
+{:deps {org.clojure/clojure {:mvn/version "1.10.0"}
+        org.clojure/clojurescript {:mvn/version "1.10.773"}
+        reagent {:mvn/version "0.10.0" }
+        cljs-ajax {:mvn/version "0.8.1"}}
+ :paths ["src" "resources"]
+ :aliases {:fig {:extra-deps
+                  {com.bhauman/rebel-readline-cljs {:mvn/version "0.1.4"}
+                   com.bhauman/figwheel-main {:mvn/version "0.2.11"}}
+                 :extra-paths ["target" "test"]}
+           :build {:main-opts ["-m" "figwheel.main" "-b" "dev" "-r"]}
+           :min   {:main-opts ["-m" "figwheel.main" "-O" "advanced" "-bo" "dev"]}
+           :test  {:main-opts ["-m" "figwheel.main" "-co" "test.cljs.edn" "-m" "learn-cljs.test-runner"]}}}
