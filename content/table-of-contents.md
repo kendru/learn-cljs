@@ -30,7 +30,7 @@ date: 2019-09-19T21:43:56-06:00
 ## [Section 1: Tools of the Trade](/section-1/)
 
 - [Lesson 5: Bootstrapping a ClojureScript Project](/section-1/lesson-5-bootstrapping-a-clojurescript-project/)
-  - [Meeting Leiningen](/section-1/lesson-5-bootstrapping-a-clojurescript-project/#meeting-leiningen)
+  - [Meeting clj](/section-1/lesson-5-bootstrapping-a-clojurescript-project/#meeting-clj)
   - [Creating a Project](/section-1/lesson-5-bootstrapping-a-clojurescript-project/#creating-a-project)
   - [Exploring the Project](/section-1/lesson-5-bootstrapping-a-clojurescript-project/#exploring-the-project)
   - [Summary](/section-1/lesson-5-bootstrapping-a-clojurescript-project/#summary)
