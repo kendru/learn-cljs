@@ -1,4 +1,4 @@
-(ns starbase.data)
+(ns learn-cljs.starbase.data)
 
 (def game {:start {:type :start
                    :title "Starbase Lambda"
