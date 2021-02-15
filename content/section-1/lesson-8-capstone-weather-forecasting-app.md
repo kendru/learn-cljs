@@ -344,7 +344,7 @@ _Complete Weather Forecasting App_
 4. Define UI components
 5. Instruct Reagent to render the UI
 
-While this app may not be a shining example of single-page application design, it is representative of the types of apps that we will be creating with ClojureScript. While its design is simple, this app demonstrates the major concerns that we are likely to face in any front-end app: component design, user interaction and communication with a data source. All said and done, we have created a complete weather forecast app in under 60 lines of code, including the pseudo-markup of the Reagent components.
+While this app may not be a shining example of single-page application design, it is representative of the types of apps that we will be creating with ClojureScript. While its design is simple, this app demonstrates the major concerns that we are likely to face in any front-end app: component design, user interaction and communication with a data source. All said and done, we have created a complete weather forecast app in under 70 lines of code, including the pseudo-markup of the Reagent components.
 
 ### You Try
 
