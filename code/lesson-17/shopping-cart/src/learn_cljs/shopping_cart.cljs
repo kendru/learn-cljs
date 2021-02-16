@@ -1,5 +1,6 @@
-(ns shopping-cart.core
-  (:require [goog.dom :as gdom]))
+(ns learn-cljs.shopping-cart
+  (:require
+   [goog.dom :as gdom]))
 
 (def tax-rate 0.079)
 (def cart [{:name "Silicone Pancake Mold" :price 10.49 :taxable? false}
