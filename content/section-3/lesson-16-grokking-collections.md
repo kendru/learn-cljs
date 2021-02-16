@@ -71,7 +71,7 @@ While we can effectively write programs using the arrays and objects that
 JavaScript provides, ClojureScript gives us more focused tools, and - more
 importantly - abstractions. In JavaScript, we can sort or filter a list, and we
 can lookup a property on an object. They are different data types that have
-essentially different behaviours. In ClojureScript, there are multiple
+essentially different behaviors. In ClojureScript, there are multiple
 collection types that all conform to a specific collection protocol. For those
 familiar with the concept of an interface, all ClojureScript collections conform
 to a common interface. That means that any code that is designed to work with a
@@ -102,7 +102,7 @@ function (short for "conjoin"). How that something is added to the collection
 depends on the type of collection. For instance, items are added to the
 beginning of a list but to the end of a vector, and adding an item to a set only
 grows the set if the item does not already exist. We can see an example of the
-behaviour of `conj` on different collections in the REPL.
+behavior of `conj` on different collections in the REPL.
 
 ```clojure
 cljs.user=> (conj '(:lions :tigers) :bears)                ;; <1>
@@ -327,7 +327,7 @@ _Creating Maps_
 2. Maps can also be created with the `hash-map` function, which takes alternating keys and values
 
 When using maps as a collection with `conj` or as a sequence with `first` and
-`rest`, the behaviour may not be intuitive. ClojureScript allows us to treat a
+`rest`, the behavior may not be intuitive. ClojureScript allows us to treat a
 map as a sequence of `[key, value]` pairs, so when we want to add a map entry
 with `conj`, we append it as a vector containing a key and a value.
 
@@ -338,7 +338,7 @@ cljs.user=> (conj {:x 10 :y 12} [:z 7])
 
 Similarly, if we take the `first` of a map, we will get some map entry as a
 `[key, value]` pair, and if we take the `rest`, we will get a sequence of such
-pairs. Knowing about this behaviour will help us in the next lesson when we
+pairs. Knowing about this behavior will help us in the next lesson when we
 discuss the common functions used to operate on sequences.
 
 ```clojure

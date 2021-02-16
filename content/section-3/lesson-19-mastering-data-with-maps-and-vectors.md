@@ -11,7 +11,7 @@ it simple to work with data. ClojureScript places a strong emphasis on relying o
 generic collection types and the standard functions that operate on them rather
 than creating highly specialized functions that only work on a single type of
 object. The object-oriented approach, which most mainstream languages encourage,
-is to create objects that encapsulate both the data and behaviour of a specific
+is to create objects that encapsulate both the data and behavior of a specific
 type of "thing". The practice that ClojureScript encourages, however, is to
 separate functions and data. Data is pure information, and functions are pure
 transformations of data.

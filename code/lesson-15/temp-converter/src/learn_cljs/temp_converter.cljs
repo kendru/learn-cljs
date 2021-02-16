@@ -1,14 +1,6 @@
-(ns temp-converter.core
+(ns learn-cljs.temp-converter
   (:require [goog.dom :as gdom]
             [goog.events :as gevents]))
-
-(enable-console-print!)
-
-(def celsius-radio (gdom/getElement "uom-c"))
-(def fahrenheit-radio (gdom/getElement "uom-f"))
-(def temp-input (gdom/getElement "temp"))
-(def output-target (gdom/getElement "temp-out"))
-(def output-unit-target (gdom/getElement "unit-out"))
 
 (defn f->c [deg-f]
   (/ (- deg-f 32) 1.8))
@@ -16,20 +8,26 @@
 (defn c->f [deg-c]
   (+ (* deg-c 1.8) 32))
 
-(defn get-input-uom []
-  (if (aget celsius-radio "checked")
+(def celsius-radio (gdom/getElement "unit-c"))
+(def fahrenheit-radio (gdom/getElement "unit-f"))
+(def temp-input (gdom/getElement "temp"))
+(def output-target (gdom/getElement "temp-out"))
+(def output-unit-target (gdom/getElement "unit-out"))
+
+(defn get-input-unit []
+  (if (.-checked celsius-radio)
     :celsius
     :fahrenheit))
 
 (defn get-input-temp []
-  (js/parseInt (aget temp-input "value")))
+  (js/parseInt (.-value temp-input)))
 
 (defn set-output-temp [temp]
   (gdom/setTextContent output-target
                        (.toFixed temp 2)))
 
 (defn update-output [_]
-  (if (= :celsius (get-input-uom))
+  (if (= :celsius (get-input-unit))
     (do (set-output-temp (c->f (get-input-temp)))
         (gdom/setTextContent output-unit-target "F"))
     (do (set-output-temp (f->c (get-input-temp)))

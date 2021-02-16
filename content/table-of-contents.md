@@ -118,7 +118,7 @@ date: 2019-09-19T21:43:56-06:00
 ## [Section 4: Idiomatic ClojureScript](/section-4/)
 
 - [Lesson 21: Functional Programming Concepts](/section-4/lesson-21-functional-programming-concepts/)
-  - [Composing Behaviour from Small Pieces](/section-4/lesson-21-functional-programming-concepts/#composing-behaviour-from-small-pieces)
+  - [Composing Behavior from Small Pieces](/section-4/lesson-21-functional-programming-concepts/#composing-behavior-from-small-pieces)
   - [Writing Pure Functions](/section-4/lesson-21-functional-programming-concepts/#writing-pure-functions)
   - [Immutable Data](/section-4/lesson-21-functional-programming-concepts/#immutable-data)
   - [Functional Design Patterns](/section-4/lesson-21-functional-programming-concepts/#functional-design-patterns)

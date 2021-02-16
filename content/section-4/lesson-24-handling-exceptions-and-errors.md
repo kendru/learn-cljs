@@ -397,7 +397,7 @@ _Handling conditions_
 
 1. Signal the `:localstorage-unsupported` condition with `nil`
 2. Provide a default value if the condition is not managed
-3. Provide a "restart" that allows us to proceed with specific behaviour
+3. Provide a "restart" that allows us to proceed with specific behavior
 4. Trigger the `:reparse` restart
 5. Create a managed version of the `get-parsed-data` function with handlers for each condition type
 6. Declare a handler as the condition keyword followed by a function of the condition value to the desired value

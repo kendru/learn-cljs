@@ -28,7 +28,7 @@ we will have a better understanding of what it means to write functional code in
 
 ---
 
-## Composing Behaviour from Small Pieces
+## Composing Behavior from Small Pieces
 
 In imperative programming, we often keep some sort of mutable state and write functions that
 operate on this state. The key insights introduced by object-oriented programing is that
@@ -38,14 +38,14 @@ into methods that have only a single responsibility. While this may sound good o
 it often ends up being both more and less restrictive than we desire. It is more restrictive
 than we would like because it is difficult to share similar logic between multiple objects without
 introducing significant complexity. It is less restrictive than we would like because any of these
-methods may change the state of the object to which they belong such that the future behaviour of
+methods may change the state of the object to which they belong such that the future behavior of
 any method on the object may be altered in a way that the caller does not anticipate.
 
 Like object-oriented programming, functional programming encourages writing functions that do one
 thing, but it does not suffer from the two deficiencies stated above. Instead, functions may operate
 on any data without having to be encapsulated into an object, which leads to simpler code with less
-duplication. Additionally, pure functions by definition do not modify any state, and their behaviour
-cannot be affected by any mutable state, so their behaviour is well-defined in all cases.
+duplication. Additionally, pure functions by definition do not modify any state, and their behavior
+cannot be affected by any mutable state, so their behavior is well-defined in all cases.
 
 When our data is modeled using common data structures (primarily maps and lists), and we do not
 rely on shared mutable state, something very interesting occurs: we can compose a handful of
@@ -59,7 +59,7 @@ make an appearance in every good text on functional programming to further this 
 
 What Perlis means is that when we have 100 functions that operate on the same common data type
 or abstraction, we can compose them to do many more than 100 things. However, if we go the object-oriented
-route and tie methods to specific classes of objects, then the ways in which we compose behaviour is
+route and tie methods to specific classes of objects, then the ways in which we compose behavior is
 much more limited.
 
 As we will be building a group chat application at the end of this section, let's consider a component

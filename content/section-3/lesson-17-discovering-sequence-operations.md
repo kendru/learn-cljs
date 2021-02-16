@@ -67,14 +67,14 @@ developer work in. Whether it is a feed of blog posts, an email inbox,
 or a series of financial transactions, most applications have one or
 more sequences of data at their core. When we approach these types of
 programs from an object-oriented approach, we usually think first
-about the individual objects in the system and what behaviours they
+about the individual objects in the system and what behaviors they
 support. For instance, in the case of an email program, we might be
 inclined to start by creating a `Message` object with messages like
 `markRead()` or `getLabels()`. Once we have modeled these objects, we
 might build some sort of collection object to put them in, or we may
 just use an array and iterate over it. The ClojureScript way is a
 little different (and simpler). Instead of focusing on the individual
-behaviours of each granular object, we begin by thinking about the
+behaviors of each granular object, we begin by thinking about the
 collective properties such as, "Which messages are read?", or "How
 many messages are in the inbox?"
 

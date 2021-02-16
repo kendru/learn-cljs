@@ -2,40 +2,42 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Temp Converter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="https://clojurescript.org/images/cljs-logo-icon-32.png">
   </head>
   <body>
     <div id="app">
       <h1>Temp Converter</h1>
-
+    
       <div class="user-input">
-        <div class="uom-control">
+        <div class="unit-control">
           <p>Convert from</p>
           <div class="radio-option">
-            <input type="radio" id="uom-c" name="uom" value="c" checked="checked" />
-            <label for="uom-c">Celsius</label>
+            <input type="radio" id="unit-c" name="unit" value="c" checked="checked" />
+            <label for="unit-c">Celsius</label>
           </div>
           <div class="radio-option">
-            <input type="radio" id="uom-f" name="uom" value="f" />
-            <label for="uom-f">Fahrenheit</label>
+            <input type="radio" id="unit-f" name="unit" value="f" />
+            <label for="unit-f">Fahrenheit</label>
           </div>
         </div>
-
+    
         <div class="temp-control">
           <label for="temp">Temperature:</label>
           <input type="number" id="temp" name="temp" />
         </div>
       </div>
-
+    
       <div class="converted-output">
         <h3>Converted Value</h3>
-
+    
         <span id="temp-out">-</span>
         <span id="unit-out">F</span>
       </div>
     </div>
-    <script src="js/compiled/temp_converter.js" type="text/javascript"></script>
+    
+    <!-- KEEP THIS SCRIPT TAG : IT LOADS YOUR APPLICATION CODE -->
+    <script src="cljs-out/dev-main.js" type="text/javascript"></script>
   </body>
 </html>
