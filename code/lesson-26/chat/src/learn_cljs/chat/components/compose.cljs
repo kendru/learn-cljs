@@ -1,6 +1,6 @@
-(ns chat.components.compose
-  (:require [chat.components.dom :as dom]
-            [chat.message-bus :as bus]))
+(ns learn-cljs.chat.components.compose
+  (:require [learn-cljs.chat.components.dom :as dom]
+            [learn-cljs.chat.message-bus :as bus]))
 
 (defn init-composer [msg-ch]
   (let [composer-input (dom/textarea "message-input")]

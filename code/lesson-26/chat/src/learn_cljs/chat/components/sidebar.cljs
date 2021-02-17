@@ -1,10 +1,10 @@
-(ns chat.components.sidebar
-  (:require [chat.components.dom :as dom]
-            [chat.components.component :refer [init-component]]
-            [chat.components.render-helpers :as helpers]
-            [chat.message-bus :as bus]
+(ns learn-cljs.chat.components.sidebar
+  (:require [learn-cljs.chat.components.dom :as dom]
+            [learn-cljs.chat.components.component :refer [init-component]]
+            [learn-cljs.chat.components.render-helpers :as helpers]
+            [learn-cljs.chat.message-bus :as bus]
             [goog.events :as gevents]
-            [chat.state :as state]))
+            [learn-cljs.chat.state :as state]))
 
 (defn sidebar-header [title]
   (dom/div "sidebar-header" title))

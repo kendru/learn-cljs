@@ -1,4 +1,4 @@
-(ns chat.state)
+(ns learn-cljs.chat.state)
 
 (def initial-state
   {:rooms []

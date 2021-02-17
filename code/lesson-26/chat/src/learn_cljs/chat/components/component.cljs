@@ -1,5 +1,5 @@
-(ns chat.components.component
-  (:require [chat.state :as state]))
+(ns learn-cljs.chat.components.component
+  (:require [learn-cljs.chat.state :as state]))
 
 (defn init-component
   "Initialize a component.

@@ -7,13 +7,7 @@ opengraphImage: "https://www.learn-clojurescript.com/img/lesson26/cljs-chat-scre
 
 # Lesson 26: Capstone 4 - Group Chat
 
-Congratulations! At this point, we have learned enough ClojureScript to write pretty
-much any sort of app that we would like. Sure, over the coming chapters, we will pick
-up some tools and techniques that will make us more productive, but nothing is
-stopping us from writing complete, production-quality apps with what we have learned
-so far. For this capstone, we will be writing a realtime group chat application -
-similar to a very slimmed-down version of Slack. You can connect to a live instance of
-this application at https://chat.learn-cljs.com/.
+Congratulations! At this point, we have learned enough ClojureScript to write pretty much any sort of app that we would like. Sure, over the coming chapters, we will pick up some tools and techniques that will make us more productive, but nothing is stopping us from writing complete, production-quality apps with what we have learned so far. For this capstone, we will be writing a realtime group chat application - similar to a very slimmed-down version of Slack. You can connect to a live instance of this application at https://chat.learn-cljs.com/.
 
 ---
 
@@ -31,22 +25,11 @@ _Screenshot of ClojureScript Chat_
 
 ## Thinking About Interactions
 
-There are many ways to start building an application, and no one way is necessarily best.
-However, for ClojureScript, a natural place to start is by thinking about the state and
-how we want the user to interact with that state. At a high level, we will
-have 2 types of data that we want to keep track of: _application data_ and _UI state_.
-Application data is any data that we receive from the server that powers the application
-UI state, on the other hand, is made up of pieces of data that are never persisted but are
-useful for determining what state various components are in.
+There are many ways to start building an application, and no one way is necessarily best. However, for ClojureScript, a natural place to start is by thinking about the state and how we want the user to interact with that state. At a high level, we will have 2 types of data that we want to keep track of: _application data_ and _UI state_. Application data is any data that we receive from the server that powers the application UI state, on the other hand, is made up of pieces of data that are never persisted but are useful for determining what state various components are in.
 
 ### Application Data
 
-For our chat application, we will keep a vector of `rooms` that we can join, a vector of
-`people` that we can enter into conversations with, and a vector of `messages` that we
-can read in the current room or conversation. We will also want to keep track of the
-current user for a couple of reasons: first, we will display the user's name in the
-upper right-hand corner of the screen, and second, if there is no user, we will display
-a modal so that the user can sign up or sign in.
+For our chat application, we will keep a vector of `rooms` that we can join, a vector of `people` that we can enter into conversations with, and a vector of `messages` that we can read in the current room or conversation. We will also want to keep track of the current user for a couple of reasons: first, we will display the user's name in the upper right-hand corner of the screen, and second, if there is no user, we will display a modal so that the user can sign up or sign in.
 
 ```clojure
 (ns chat.state)
@@ -65,12 +48,7 @@ _state.cljs_
 1. Define the initial application state as an immutable map
 2. Define the app state as an atom whose starting value is the same as `initial-state`
 
-We will next add functions to transform the application data such
-that our UI components can easily consume it. We will also provide functions that
-transition the app state as well. In the interest of writing pure and testable code wherever
-possible, our functions that update the app state will take in an immutable `state` and
-return a new state (rather than mutating the `app-state` atom directly). These functions
-will be invoked when we receive a response from the API.
+We will next add functions to transform the application data such that our UI components can easily consume it. We will also provide functions that transition the app state as well. In the interest of writing pure and testable code wherever possible, our functions that update the app state will take in an immutable `state` and return a new state (rather than mutating the `app-state` atom directly). These functions will be invoked when we receive a response from the API.
 
 ```clojure
 ;; Application data queries
@@ -127,16 +105,7 @@ will be invoked when we receive a response from the API.
   (assoc state :messages []))
 ```
 
-Without going into too much detail, the query functions allow us to look up a user by
-username or a room by ID. The transition functions handle most of the responses that we
-can expect from the API. One interesting piece of logic is the `person-joined` function,
-which either marks a previously seen user as "online" or adds a brand new user to the
-user list. Additionally, the `messages-cleared` function is one that will be invoked by
-our UI (rather than the API) whenever the user switches between rooms or conversations
-so that we do not see messages from the previous room/conversation while we wait for the
-server to send us a new message list. In roughly 40 lines of code we have defined the
-interface for interacting with application data.
-
+Without going into too much detail, the query functions allow us to look up a user by username or a room by ID. The transition functions handle most of the responses that we can expect from the API. One interesting piece of logic is the `person-joined` function, which either marks a previously seen user as "online" or adds a brand new user to the user list. Additionally, the `messages-cleared` function is one that will be invoked by our UI (rather than the API) whenever the user switches between rooms or conversations so that we do not see messages from the previous room/conversation while we wait for the server to send us a new message list. In roughly 40 lines of code we have defined the interface for interacting with application data.
 
 ### UI State
 
@@ -146,9 +115,7 @@ Since this is a simple application, we only need to keep a few pieces of applica
 - A toggle determining whether to display the "Sign In" or "Sign Up" modal before the user has authenticated
 - A flag indicating whether the "Create Room" input is open
 
-Many applications keep input data in the UI state, but until we start building on top of React,
-this would introduce too much complexity to justify it. For this project, we will simply
-query the DOM to get the values of user input fields.
+Many applications keep input data in the UI state, but until we start building on top of React, this would introduce too much complexity to justify it. For this project, we will simply query the DOM to get the values of user input fields.
 
 First, we will add these fields to the application state:
 
@@ -166,8 +133,7 @@ First, we will add these fields to the application state:
    :create-room-input-open? false})
 ```
 
-Next, we will add query and state transition functions, just like we did for the application
-data:
+Next, we will add query and state transition functions, just like we did for the application data:
 
 ```clojure
 ;; UI state queries
@@ -225,17 +191,11 @@ data:
 
 1. Use a map itself as a function that maps the current auth model state to the next state
 
-With our entire state interface defined, let's move on to the mechanism through which
-our components and API will interact with our state: the message bus.
+With our entire state interface defined, let's move on to the mechanism through which our components and API will interact with our state: the message bus.
 
 ### Message Bus Pattern
 
-Rather than mutating the application state directly from our components or the API, we
-will introduce a messaging layer that will allow us to more easily test our components and
-will give us the ability for one component to potentially react to a message from another.
-Building on the knowledge of `core.async` from the previous lesson, we will create a very simple
-messaging system. This messaging system will allow us to dispatch messages with a given type
-from anywhere in our app and subscribe functions to handle messages of a given type.
+Rather than mutating the application state directly from our components or the API, we will introduce a messaging layer that will allow us to more easily test our components and will give us the ability for one component to potentially react to a message from another. Building on the knowledge of `core.async` from the previous lesson, we will create a very simple messaging system. This messaging system will allow us to dispatch messages with a given type from anywhere in our app and subscribe functions to handle messages of a given type.
 
 ```clojure
 (ns chat.message-bus
@@ -258,7 +218,7 @@ from anywhere in our app and subscribe functions to handle messages of a given t
       (recur))))
 ```
 
-_message\_bus.cljs_
+_learn\_cljs/chat/message\_bus.cljs_
 
 1. Channel on which messages will be dispatched
 2. Publication that will allow consumers to receive messages from `msg-ch`
@@ -269,11 +229,7 @@ _message\_bus.cljs_
 
 _Architecture of the Messaging Layer_
 
-This simple messaging layer provides pub/sub capability where we can use `dispatch!` to
-emit messages onto the `msg-ch` channel and `handle!` to subscribe a callback to be called
-whenever messages of a given type are dispatched. While we could have hard-coded
-`dispatch!` to put messages on `msg-ch` and `handle!` to subscribe to `msg-bus`, but once
-again, this would make our code much more difficult to test and much less modular.
+This simple messaging layer provides pub/sub capability where we can use `dispatch!` to emit messages onto the `msg-ch` channel and `handle!` to subscribe a callback to be called whenever messages of a given type are dispatched. While we could have hard-coded `dispatch!` to put messages on `msg-ch` and `handle!` to subscribe to `msg-bus`, but once again, this would make our code much more difficult to test and much less modular.
 
 ## Building Components
 
@@ -285,17 +241,13 @@ Our application is fairly simple, but it consists of several distinct layout com
 - message composer
 - authorization modal
 
-We will break out each of these high-level layout components into a namespace, and we will also
-include a top-level "app" component that initializes the rest of the layout.
+We will break out each of these high-level layout components into a namespace, and we will also include a top-level "app" component that initializes the rest of the layout.
 
 ![Diagram of High-Level Component Layout](/img/lesson26/app-layout.png)
 
 _Application Layout_
 
-Most of our components will follow the same pattern: they will mount into a parent DOM node,
-watch a portion of the application state (or some value computed from the state) for change,
-and re-render themselves the a change occurs. Let's go ahead and create a function that will
-allow us to initialize a component that follows this pattern:
+Most of our components will follow the same pattern: they will mount into a parent DOM node, watch a portion of the application state (or some value computed from the state) for change, and re-render themselves the a change occurs. Let's go ahead and create a function that will allow us to initialize a component that follows this pattern:
 
 ```clojure
 (ns chat.components.component
@@ -330,15 +282,11 @@ _components/component.cljs_
 4. Perform an initial render
 5. Return the parent component
 
-The use of this utility function will become clear as we start building components in
-the next section.
+The use of this utility function will become clear as we start building components in the next section.
 
 ### Application Chrome
 
-We will build the UI for this application in a top-down fashion, starting with the
-application container, followed by the "chrome" components - that is the header and
-sidebar - before moving on to lower level pieces. For the moment, let's create an
-app container that simply loads the header and renders it into the DOM:
+We will build the UI for this application in a top-down fashion, starting with the application container, followed by the "chrome" components - that is the header and sidebar - before moving on to lower level pieces. For the moment, let's create an app container that simply loads the header and renders it into the DOM:
 
 ```clojure
 (ns chat.components.app
@@ -360,11 +308,7 @@ app container that simply loads the header and renders it into the DOM:
 _components/app.cljs_
 
 
-This application container code is fairly straightforward: we create a basic shell
-with a couple of DOM nodes then call `render-header` to create and return the DOM
-necessary for the header. Before this code does anything useful, we will need to
-create a `chat.components.header` namespace that exposes the `init-header`
-function. We'll do that now:
+This application container code is fairly straightforward: we create a basic shell with a couple of DOM nodes then call `render-header` to create and return the DOM necessary for the header. Before this code does anything useful, we will need to create a `chat.components.header` namespace that exposes the `init-header` function. We'll do that now:
 
 ```clojure
 (ns chat.components.header
@@ -427,19 +371,9 @@ _components/header.cljs_
 5. Render function that updates the `header` element based on app state
 6. Create the header component and return its DOME element
 
-Here we see the `init-component` function in action: within `init-header`, we create
-an element to render the header content into, and we pass that element, along with
-an accessor function that computes component state from application state and a
-render function that will update our header whenever the component state changes.
-One nice feature of the way that we designed our `init-component` helper is that
-the render function will only be called if the app state changes in a way that
-affects how the header renders. When we get to the next section, we will rely on
-React to optimize the rendering cycle for us, but it is instructive to see how easily
-we can build a UI without any framework.
+Here we see the `init-component` function in action: within `init-header`, we create an element to render the header content into, and we pass that element, along with an accessor function that computes component state from application state and a render function that will update our header whenever the component state changes. One nice feature of the way that we designed our `init-component` helper is that the render function will only be called if the app state changes in a way that affects how the header renders. When we get to the next section, we will rely on React to optimize the rendering cycle for us, but it is instructive to see how easily we can build a UI without any framework.
 
-Before moving on, let's clean things up a bit. First, the `display-name` function
-will be useful for rendering user names in several places, so we can go ahead and refactor
-that function into a `render-helpers` namespace:
+Before moving on, let's clean things up a bit. First, the `display-name` function will be useful for rendering user names in several places, so we can go ahead and refactor that function into a `render-helpers` namespace:
 
 ```clojure
 ;; components/render_helpers.cljs
@@ -461,8 +395,7 @@ that function into a `render-helpers` namespace:
 )
 ```
 
-Additionally, the syntax for the `goog.dom` library can be a bit verbose, so we will
-create another `dom` helper namespace that will allow us to write code like this:
+Additionally, the syntax for the `goog.dom` library can be a bit verbose, so we will create another `dom` helper namespace that will allow us to write code like this:
 
 ```clojure
 (dom/h1 "title" "Hello world!")
@@ -500,8 +433,7 @@ _components/dom.cljs_
 2. Define a function for each DOM element that we will use. Most of the elements have been omitted for brevity.
 3. Define another helper that cleans up repeated use of `.appendChild`
 
-Then, back in `header.cljs`, we can update our render and initialization functions to use
-this new DOM utility:
+Then, back in `header.cljs`, we can update our render and initialization functions to use this new DOM utility:
 
 ```clojure
 (ns chat.components.header                                 ;; <1>
@@ -525,20 +457,9 @@ this new DOM utility:
 
 1. Remove require of `[goog.dom :as gdom]` and import of `[goog.dom TagName]`
 
-Now that we have refactored our code to make it more readable and concise, let's move on
-to the sidebar. The sidebar will display a list of rooms, a list of users that we can
-converse with, and a control for creating a new room. Clicking on either a room name or a
-user's name should switch to that room or conversation respectively. Unlike the header, the
-sidebar contains elements that the user should be able to interact with in order to update
-the application state. For this reason, we will pass the message channel down through the
-component hierarchy to all components that need it, and we will call the
-`chat.message-bus/dispatch!` function to send off our messages. The messages will be
-processed by any handler that we have registered, and eventually, some of them will trigger
-API requests.
+Now that we have refactored our code to make it more readable and concise, let's move on to the sidebar. The sidebar will display a list of rooms, a list of users that we can converse with, and a control for creating a new room. Clicking on either a room name or a user's name should switch to that room or conversation respectively. Unlike the header, the sidebar contains elements that the user should be able to interact with in order to update the application state. For this reason, we will pass the message channel down through the component hierarchy to all components that need it, and we will call the `chat.message-bus/dispatch!` function to send off our messages. The messages will be processed by any handler that we have registered, and eventually, some of them will trigger API requests.
 
-There is not anything that is novel in this code: we initialize components that receive
-application state, manage their own portion of the DOM, and add event listeners.  Without
-further ado, the entire code for the sidebar is listed below:
+There is not anything that is novel in this code: we initialize components that receive application state, manage their own portion of the DOM, and add event listeners.  Without further ado, the entire code for the sidebar is listed below:
 
 ```clojure
 (ns chat.components.sidebar
@@ -640,7 +561,8 @@ We need to initialize this sidebar in `components/app.cljs` as well:
 ```clojure
 (ns chat.components.app
   (:require ;; ...
-            [chat.components.sidebar :refer [init-sidebar]])) ;; <1>
+            [chat.components.sidebar                       ;; <1>
+             :refer [init-sidebar]]))
 
 (defn init-app [el msg-ch]
   (let [wrapper (dom/div "app-wrapper"                     ;; <2>
@@ -655,8 +577,7 @@ We need to initialize this sidebar in `components/app.cljs` as well:
 2. Refactor `app.cljs` to use our DOM helpers as well
 3. `init-sidebar` will render the sidebar inside the app wrapper
 
-Finally, we will create a `chat.core` namespace that will load the DOM elements for both
-the header and the sidebar into the page itself:
+Finally, we will create a `chat.core` namespace that will load the DOM elements for both the header and the sidebar into the page itself:
 
 ```clojure
 (ns chat.core
@@ -681,30 +602,13 @@ _core.cljs_
 2. Require the `chat.handlers` function for the side effect of registering message handlers
 3. Initialize the UI
 
-We will continue to fill out this `chat.core` namespace as we continue with this project,
-but one thing to notice is that it will be less pure and functional than most of the rest
-of our code. This is because, at some point, we need to actually load things for side effects,
-call stateful functions, make assumptions about the DOM on the page, or load global objects,
-such as the `msg-ch` channel. Rather than polluting our entire code base with this impurity,
-we will do as many impure operations in the core namespace as possible in the interest of making
-the _interesting_ part of our code more modular.
+We will continue to fill out this `chat.core` namespace as we continue with this project, but one thing to notice is that it will be less pure and functional than most of the rest of our code. This is because, at some point, we need to actually load things for side effects, call stateful functions, make assumptions about the DOM on the page, or load global objects, such as the `msg-ch` channel. Rather than polluting our entire code base with this impurity, we will do as many impure operations in the core namespace as possible in the interest of making the _interesting_ part of our code more modular.
 
-One area in which we have not maintained functional purity in this application is in allowing
-UI components to access `chat.state/app-state` directly, rather than constructing it in
-`chat.core` and passing it down to each component explicitly. This is the sort of pragmatic
-trade-off that can sometimes be made to make the code easier to work with at the expense of
-testability and modularity. In a production application, we would usually be better served by
-a more constrained and explicit approach to accessing the state.
+One area in which we have not maintained functional purity in this application is in allowing UI components to access `chat.state/app-state` directly, rather than constructing it in `chat.core` and passing it down to each component explicitly. This is the sort of pragmatic trade-off that can sometimes be made to make the code easier to work with at the expense of testability and modularity. In a production application, we would usually be better served by a more constrained and explicit approach to accessing the state.
 
 ### Message List
 
-Now that we have the basic "shell" of the application in place, let's move on to the meat of
-the application: the message list. Even though the message feed is the core of our application,
-it is implemented as a single component. The state accessor takes the `:messages` collection off
-of the application, does a simple lookup in the `:users` collection to get the author of each
-message, and applies some formatting. The renderer simply creates some DOM for each of these
-messages. Since there is nothing in the message list that needs to respond to user input, we do
-not have to deal with attaching any event handlers.
+Now that we have the basic "shell" of the application in place, let's move on to the meat of the application: the message list. Even though the message feed is the core of our application, it is implemented as a single component. The state accessor takes the `:messages` collection off of the application, does a simple lookup in the `:users` collection to get the author of each message, and applies some formatting. The renderer simply creates some DOM for each of these messages. Since there is nothing in the message list that needs to respond to user input, we do not have to deal with attaching any event handlers.
 
 ```clojure
 (ns chat.components.messages
@@ -756,8 +660,7 @@ _components/messages.cljs_
 
 1. We use a [Mutation Observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) to set the viewport to the bottom of the message list any time the message list changes. This way, the user always sees the most recent messages.
 
-Since the message list will be rendered as a top-level component, we will need to initialize
-it within `components/app.cljs`:
+Since the message list will be rendered as a top-level component, we will need to initialize it within `components/app.cljs`:
 
 ```clojure
 (ns chat.components.app
@@ -775,9 +678,7 @@ With the message list done, let's move on to the message composer.
 
 ### Message Composer
 
-The composer will be the simplest component that we have seen yet. It is simply a textarea
-with an event listener that will dispatch a message and clear its content whenever the user
-hits the `Enter`/`Return` key:
+The composer will be the simplest component that we have seen yet. It is simply a textarea with an event listener that will dispatch a message and clear its content whenever the user hits the `Enter`/`Return` key:
 
 ```clojure
 (ns chat.components.compose
@@ -798,15 +699,9 @@ hits the `Enter`/`Return` key:
 
 _components/compose.cljs_
 
-One thing to note before we move on is that we do not keep track of the message that the
-user is composing outside of the DOM itself. This means that in addition to our
-application state, we are relying on the DOM to hold some of our state. When we start
-building applications on top of React and Reagent, we will want to avoid this in favor of
-keeping all of our state in immutable data structures so that rendering is a simple,
-deterministic process of taking our app state and converting it to (virtual) DOM.
+One thing to note before we move on is that we do not keep track of the message that the user is composing outside of the DOM itself. This means that in addition to our application state, we are relying on the DOM to hold some of our state. When we start building applications on top of React and Reagent, we will want to avoid this in favor of keeping all of our state in immutable data structures so that rendering is a simple, deterministic process of taking our app state and converting it to (virtual) DOM.
 
-Like the message list, the composer will need to be mounted into the app and initialized
-within the main content area:
+Like the message list, the composer will need to be mounted into the app and initialized within the main content area:
 
 ```clojure
 (ns chat.components.app
@@ -822,11 +717,7 @@ within the main content area:
 
 ### Authentication Modal
 
-Since this is a multi-user chat application, we need to have some concept of users. We should
-then implement at least a simple sign up / sign in process so that users do not have to enter
-a first name, last name, and username every time they load the app. Additionally, we do not
-want users to impersonate each other. Below is the entire code listing for the authentication
-modal. We will walk through each section afterwards.
+Since this is a multi-user chat application, we need to have some concept of users. We should then implement at least a simple sign up / sign in process so that users do not have to enter a first name, last name, and username every time they load the app. Additionally, we do not want users to impersonate each other. Below is the entire code listing for the authentication modal. We will walk through each section afterwards.
 
 ```clojure
 (ns chat.components.auth
@@ -925,37 +816,13 @@ modal. We will walk through each section afterwards.
 _components/auth.cljs_
 
 
-Right at the top of the file, we run into a ClojureScript feature that we have not yet
-encountered: the `declare` macro. As the name suggests, this macro declares vars
-that are not bound to any value yet. This allows us to refer to functions and
-other values within the namespace before they are physically defined in the source of the
-file. In our case, we declare these vars for convenience so that we can list the
-high-level functions first and the functions that implement the lower-level details later
-in the code. This is not very idiomatic ClojureScript, but it is useful for the purpose
-of walking through the code.
+Right at the top of the file, we run into a ClojureScript feature that we have not yet encountered: the `declare` macro. As the name suggests, this macro declares vars that are not bound to any value yet. This allows us to refer to functions and other values within the namespace before they are physically defined in the source of the file. In our case, we declare these vars for convenience so that we can list the high-level functions first and the functions that implement the lower-level details later in the code. This is not very idiomatic ClojureScript, but it is useful for the purpose of walking through the code.
 
-Next, we define our component that will manage the auth modal using the `init-component`
-helper that we created earlier. In order to render the authentication modal, we need to
-know only 2 things about the application state: whether there is an authenticated user,
-and which state the modal (if displayed) should be in - sign in or sign up. Before
-returning a render function for this component, we perform the side effect of adding or
-removing a "hidden" class from the parent component.
+Next, we define our component that will manage the auth modal using the `init-component` helper that we created earlier. In order to render the authentication modal, we need to know only 2 things about the application state: whether there is an authenticated user, and which state the modal (if displayed) should be in - sign in or sign up. Before returning a render function for this component, we perform the side effect of adding or removing a "hidden" class from the parent component.
 
-Next, we define both the "Sign In" and "Sign Up" states of the modal. For each state, We
-need to know what to display in the header and footer, what form fields to display, and
-what message to dispatch when the form is submitted. Since there are just a few things
-that vary between each modal state, we factor out the common code to the `auth-modal`
-function, which `sign-in-modal` and `sign-up-modal` call with different data.
+Next, we define both the "Sign In" and "Sign Up" states of the modal. For each state, We need to know what to display in the header and footer, what form fields to display, and what message to dispatch when the form is submitted. Since there are just a few things that vary between each modal state, we factor out the common code to the `auth-modal` function, which `sign-in-modal` and `sign-up-modal` call with different data.
 
-The `auth-modal` function in turn uses a couple of additional lower-level functions for
-its implementation. First, we have `auth-form`, which creates a `form` element with all
-of the input elements specified within `form-fields`. It then attaches a `submit` event
-handler that queries each of the elements in the form and wraps them into a map of the field
-name to the field value. It then emits the appropriate message type with the field/value map
-as the payload. Second, we have `footer-link`, which displays a toggle link to switch
-between the two states of the modal. Since the form and the footer link both need to emit
-messages that the application should respond to, we pass the `msg-ch` down the component
-hierarchy to each of these lower-level components.
+The `auth-modal` function in turn uses a couple of additional lower-level functions for its implementation. First, we have `auth-form`, which creates a `form` element with all of the input elements specified within `form-fields`. It then attaches a `submit` event handler that queries each of the elements in the form and wraps them into a map of the field name to the field value. It then emits the appropriate message type with the field/value map as the payload. Second, we have `footer-link`, which displays a toggle link to switch between the two states of the modal. Since the form and the footer link both need to emit messages that the application should respond to, we pass the `msg-ch` down the component hierarchy to each of these lower-level components.
 
 Finally, as before, we need to initialize the modal in `components/app.cljs`:
 
@@ -977,16 +844,7 @@ With the UI complete, let's briefly look at how to hook up a WebSocket API.
 
 ## Realtime Communication
 
-Since our application is highly dynamic, and we want to send and receive messages in
-near-realtime, we will use a WebSocket API. The code for this ClojureScript Node.js API is
-beyond the scope of this book to cover, but it is available within
-[the Learn ClojureScript GitHub repo](https://github.com/kendru/learn-cljs/tree/master/code/lesson-26/chat-backend).
-Since we already have the ability to handle messages within the application, and since we
-talk with the API in terms of messages, there is surprisingly little that needs to be
-done. The API should expose a function for sending messages to the API, and it should also
-emit messages from the API back to our application. One interesting thing to note is that
-we do not have the concept of a request/response flow, only asynchronous messages that
-flow within the UI as well as between the UI and the API:
+Since our application is highly dynamic, and we want to send and receive messages in near-realtime, we will use a WebSocket API. The code for this ClojureScript Node.js API is beyond the scope of this book to cover, but it is available within [the Learn ClojureScript GitHub repo](https://github.com/kendru/learn-cljs/tree/master/code/lesson-26/chat-backend). Since we already have the ability to handle messages within the application, and since we talk with the API in terms of messages, there is surprisingly little that needs to be done. The API should expose a function for sending messages to the API, and it should also emit messages from the API back to our application. One interesting thing to note is that we do not have the concept of a request/response flow, only asynchronous messages that flow within the UI as well as between the UI and the API:
 
 ```clojure
 (ns chat.api
@@ -1021,12 +879,7 @@ _api.cljs_
 3. `read-string` de-serializes Clojure(Script) data
 4. Prefix all API events with `api/` to distinguish them from UI events
 
-In this API namespace, we define an extremely simple messaging protocol. Both the UI and
-the API emit messages to each other that are serialized ClojureScript data structures.
-The first element is a keyword identifying the message type, and the second element can
-be an optional payload of arbitrary type. We use the `pr-str` and `read-string` functions
-in the standard library to serialize/deserialize data structures using the Clojure-native
-EDN format[^1].
+In this API namespace, we define an extremely simple messaging protocol. Both the UI and the API emit messages to each other that are serialized ClojureScript data structures. The first element is a keyword identifying the message type, and the second element can be an optional payload of arbitrary type. We use the `pr-str` and `read-string` functions in the standard library to serialize/deserialize data structures using the Clojure-native EDN format[^1].
 
 We will first initialize the API within our core namespace:
 
@@ -1044,10 +897,7 @@ We will first initialize the API within our core namespace:
 
 1. Read a global WS_API_URL from the page to determine the API url. This can be set within a build script.
 
-Next, we will update our `handlers` namespace to both emit API messages in response to
-certain UI messages as well as handle the messages that come directly from the API. First
-of all, we will send the API notifications when the user activates a specific room or
-conversation so that it can send message updates that are relevant for that specific location:
+Next, we will update our `handlers` namespace to both emit API messages in response to certain UI messages as well as handle the messages that come directly from the API. First of all, we will send the API notifications when the user activates a specific room or conversation so that it can send message updates that are relevant for that specific location:
 
 ```clojure
 (ns chat.handlers
@@ -1069,9 +919,7 @@ conversation so that it can send message updates that are relevant for that spec
   ))
 ```
 
-Naturally, we will want to notify the server when we have sent a message. Since the server
-keeps track of what room or conversation we are currently in, all we need to send is the
-message itself.
+Naturally, we will want to notify the server when we have sent a message. Since the server keeps track of what room or conversation we are currently in, all we need to send is the message itself.
 
 ```clojure
 (bus/handle! bus/msg-bus :add-message
@@ -1099,11 +947,7 @@ The auth modal emits events that should be used to sign in or sign up, so let's 
     (api/send! :sign-up data)))
 ```
 
-That takes care of all of the messages that need to be sent _to_ the API based on user
-interaction. Now, let's handle the messages from the API to which the UI needs to
-react. First, let's handle authentication. Whenever a user successfully logs in or signs
-up, the API will send an `authenticated` message with user details. We should set this
-as the current user in the application state then request user and room lists to populate the sidebar:
+That takes care of all of the messages that need to be sent _to_ the API based on user interaction. Now, let's handle the messages from the API to which the UI needs to react. First, let's handle authentication. Whenever a user successfully logs in or signs up, the API will send an `authenticated` message with user details. We should set this as the current user in the application state then request user and room lists to populate the sidebar:
 
 ```clojure
 (bus/handle! bus/msg-bus :api/authenticated
@@ -1113,8 +957,7 @@ as the current user in the application state then request user and room lists to
     (api/send! :list-rooms)))
 ```
 
-Once we have received the rooms list from the server, we should set the rooms list in
-the application state and switch to the first room in the list as the initial room.
+Once we have received the rooms list from the server, we should set the rooms list in the application state and switch to the first room in the list as the initial room.
 
 ```clojure
 (bus/handle! bus/msg-bus :api/rooms-listed
@@ -1125,9 +968,7 @@ the application state and switch to the first room in the list as the initial ro
         {:id (:id first-room)}))))
 ```
 
-Next, let's handle the messages for when we receive the list of users, when a user joins,
-and when a user leaves. These handlers are simple because they simply pass the data from
-the API through to a state transition function that we write earlier.
+Next, let's handle the messages for when we receive the list of users, when a user joins, and when a user leaves. These handlers are simple because they simply pass the data from the API through to a state transition function that we write earlier.
 
 ```clojure
 (bus/handle! bus/msg-bus :api/people-listed
@@ -1143,12 +984,7 @@ the API through to a state transition function that we write earlier.
     (swap! state/app-state state/person-left username)))
 ```
 
-Next, we will write handlers for receiving a single message as well as a list of
-messages - which will occur when the user switches rooms or conversations. Also,
-we will create a `should-set-message?` function that we can use to determine
-whether the message or messages from the API are still relevant for display. This
-will prevent us from accidentally posting a message from the previous room when
-the user switches to a new room before the API is aware of the switch.
+Next, we will write handlers for receiving a single message as well as a list of messages - which will occur when the user switches rooms or conversations. Also, we will create a `should-set-message?` function that we can use to determine whether the message or messages from the API are still relevant for display. This will prevent us from accidentally posting a message from the previous room when the user switches to a new room before the API is aware of the switch.
 
 ```clojure
 (defn should-set-message? [username room]
@@ -1187,8 +1023,7 @@ With that handler complete, we have a fully functional chat application!
 
 ### Challenge
 
-While this application is quite capable considering how few lines of code it contains,
-there are still many improvements that could be made. Try one or two of the following:
+While this application is quite capable considering how few lines of code it contains, there are still many improvements that could be made. Try one or two of the following:
 
 - Only render a certain number of messages at a time, rendering more only when the user scrolls to the point where they will be needed
 - Display error messages from the server. Errors will follow the format: `[:error {:message "Some message"}]`
@@ -1196,12 +1031,6 @@ there are still many improvements that could be made. Try one or two of the foll
 
 ## Summary
 
-If you have reached this point, congratulations on creating a non-trivial application in
-ClojureScript! At this point, we have learned all of the core language features and idioms,
-and we have put them to practice in creating an interesting, useable chat app. While we ended
-up with a fully-functional app, we had to resort to some imperative code and manual DOM
-manipulation, similar to what we would do in JavaScript if we were not using a framework. In
-the next section, we will see how React's virtual DOM and Clojure Script's preference for
-immutability form a perfect marriage that will allow us to write declarative application UIs.
+If you have reached this point, congratulations on creating a non-trivial application in ClojureScript! At this point, we have learned all of the core language features and idioms, and we have put them to practice in creating an interesting, useable chat app. While we ended up with a fully-functional app, we had to resort to some imperative code and manual DOM manipulation, similar to what we would do in JavaScript if we were not using a framework. In the next section, we will see how React's virtual DOM and Clojure Script's preference for immutability form a perfect marriage that will allow us to write declarative application UIs.
 
 [^1]: https://github.com/edn-format/edn

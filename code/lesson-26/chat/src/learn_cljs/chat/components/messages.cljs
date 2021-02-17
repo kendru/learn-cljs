@@ -1,8 +1,8 @@
-(ns chat.components.messages
-  (:require [chat.components.dom :as dom]
-            [chat.components.component :refer [init-component]]
-            [chat.components.render-helpers :as helpers]
-            [chat.state :as state]))
+(ns learn-cljs.chat.components.messages
+  (:require [learn-cljs.chat.components.dom :as dom]
+            [learn-cljs.chat.components.component :refer [init-component]]
+            [learn-cljs.chat.components.render-helpers :as helpers]
+            [learn-cljs.chat.state :as state]))
 
 (defn message-state-accessor [app message]
   (let [sender (state/person-by-username app (:sender message))

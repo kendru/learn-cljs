@@ -1,8 +1,8 @@
-(ns chat.components.header
-  (:require [chat.components.dom :as dom]
-            [chat.components.component :refer [init-component]]
-            [chat.components.render-helpers :refer [display-name]]
-            [chat.state :as state]))
+(ns learn-cljs.chat.components.header
+  (:require [learn-cljs.chat.components.dom :as dom]
+            [learn-cljs.chat.components.component :refer [init-component]]
+            [learn-cljs.chat.components.render-helpers :refer [display-name]]
+            [learn-cljs.chat.state :as state]))
 
 (defn accessor [app]
   (cond

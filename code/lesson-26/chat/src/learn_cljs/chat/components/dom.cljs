@@ -1,4 +1,4 @@
-(ns chat.components.dom
+(ns learn-cljs.chat.components.dom
   (:require [goog.dom :as gdom])
   (:import [goog.dom TagName]))
 

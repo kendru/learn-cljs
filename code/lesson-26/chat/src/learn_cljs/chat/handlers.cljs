@@ -1,7 +1,7 @@
-(ns chat.handlers
-  (:require [chat.message-bus :as bus]
-            [chat.api :as api]
-            [chat.state :as state]))
+(ns learn-cljs.chat.handlers
+  (:require [learn-cljs.chat.message-bus :as bus]
+            [learn-cljs.chat.api :as api]
+            [learn-cljs.chat.state :as state]))
 
 (defn should-set-message? [username room]
   (let [app @state/app-state]

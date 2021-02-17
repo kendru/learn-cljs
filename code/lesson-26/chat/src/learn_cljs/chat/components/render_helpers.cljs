@@ -1,4 +1,4 @@
-(ns chat.components.render-helpers
+(ns learn-cljs.chat.components.render-helpers
   (:require [clojure.string :as s]))
 
 (defn display-name [person]

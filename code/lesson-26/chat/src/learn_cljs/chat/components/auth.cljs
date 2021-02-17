@@ -1,10 +1,8 @@
-(ns chat.components.auth
-  (:require [chat.components.dom :as dom]
+(ns learn-cljs.chat.components.auth
+  (:require [learn-cljs.chat.components.dom :as dom]
             [goog.dom.classes :as gdom-classes]
-            [chat.components.component :refer [init-component]]
-            [chat.components.render-helpers :as helpers]
-            [chat.message-bus :as bus]
-            [chat.state :as state]))
+            [learn-cljs.chat.components.component :refer [init-component]]
+            [learn-cljs.chat.message-bus :as bus]))
 
 (declare accessor get-render sign-in-modal sign-up-modal
          auth-modal auth-form footer-link)

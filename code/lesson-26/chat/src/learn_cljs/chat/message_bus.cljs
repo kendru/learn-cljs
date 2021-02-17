@@ -1,4 +1,4 @@
-(ns chat.message-bus
+(ns learn-cljs.chat.message-bus
   (:require [cljs.core.async :refer [go-loop pub sub chan <! put!]]))
 
 (def msg-ch (chan 1))

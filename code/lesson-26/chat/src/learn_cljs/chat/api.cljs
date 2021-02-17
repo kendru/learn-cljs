@@ -1,5 +1,5 @@
-(ns chat.api
-  (:require [chat.message-bus :as bus]
+(ns learn-cljs.chat.api
+  (:require [learn-cljs.chat.message-bus :as bus]
             [cljs.reader :refer [read-string]]))
 
 (defonce api (atom nil))
