@@ -22,25 +22,21 @@ _In this lesson:_
 
 ## Reactive Data
 
-In the last lesson, we mentioned that React follows a reactive programming model. This is true of Reagent's state management as well. Reagent provides a specialized atom called a _reactive atom_ that can keep track of when it is dereferenced (i.e, when `@atom` or `(deref atom)` is called). If it is dereferenced inside a Reagent component, it will signal to Reagent to re-render the component. To see how values can reactively flow through a system, we can create the spreadsheet cell example from the last chapter using some of Reagent's reactive primitives. First, we'll initialize a new figwheel project:
+In the last lesson, we mentioned that React follows a reactive programming model. This is true of Reagent's state management as well. Reagent provides a specialized atom called a _reactive atom_ that can keep track of when it is dereferenced (i.e, when `@atom` or `(deref atom)` is called). If it is dereferenced inside a Reagent component, it will signal to Reagent to re-render the component. To see how values can reactively flow through a system, we can create the spreadsheet cell example from the last chapter using some of Reagent's reactive primitives. First, we'll initialize a new Figwheel project:
 
 ```shell
-lein new figwheel reagent-test
-cd reagent-test
-npm install
+$ clj -X:new :template figwheel-main :name learn-cljs/reagent-test :args '["+deps"]'
+$ cd reagent-test
 ```
 
-Next, we need to add reagent as a dependency in `project.clj`:
+Next, we need to add reagent as a dependency in `deps.edn`:
 
 ```clojure
-;; ...
-:dependencies [[reagent "1.0.0-alpha2"]
-               ;; ...
-              ]
-;; ...
+:deps {;; Other deps...
+       reagent/reagent {:mvn/version "1.0.0"}}
 ```
 
-Now we can replace the body of the default HTML file that figwheel generates with our HTML that contains a few inputs cells for the world's simplest spreadsheet:
+Now we can replace the body of the default HTML file that Figwheel generates with our HTML that contains a few inputs cells for the world's simplest spreadsheet:
 
 ```html
 <h1>Reactive Cells</h1>
@@ -60,10 +56,10 @@ Now we can replace the body of the default HTML file that figwheel generates wit
 
 _resources/public/index.html_
 
-Now we are ready to hook this page up to Reagent for state management. In the `reagent-test.core` namespace, we will create 2 reactive atoms to represent the `A` and `B` cells and a `reaction` that represents the `C` cell, whose value will be updated whenever one of the other cells changes.
+Now we are ready to hook this page up to Reagent for state management. In the `learn-cljs.reagent-test` namespace, we will create 2 reactive atoms to represent the `A` and `B` cells and a `reaction` that represents the `C` cell, whose value will be updated whenever one of the other cells changes.
 
 ```clojure
-(ns reagent-test.core
+(ns learn-cljs.reagent-test
     (:require [reagent.core :as r]                         ;; <1>
               [reagent.ratom :as ratom]                    ;; <2>
               [goog.dom :as gdom]
@@ -102,7 +98,7 @@ _src/reagent_test/core.cljs_
 
 If we run this example, we will see a page with 3 inputs labeled `A`, `B`, and `C`. `A` and `B` are normal number inputs, and `C` is a read-only input that displays the result of adding `A` and `B` together. We create reactive atoms for the `A` and `B` cells using `reagent.core/atom`, which act like regular atoms that can propagate changes to other computations the rely upon them. We then create the `C` cell as a _reaction_ to the other 2 cells. Since we dereference the `a-cell` and `b-cell` atoms within this reaction, Reagent creates a dependency relationship between Both `A -> C` and `B -> C` such that the value of `C` is updated reactively upon any change to `A` or `B`. As a reaction, `C` itself acts as a read-only reactive atom, and it could be used inside another reaction, which could be used inside another reaction, etc. A whole system of reactive atoms and reactions form a directed acyclic graph (DAG) such that any "upstream" changes automatically propagate "downstream" as far as they are able.
 
-<img src="/img/lesson28/dag.png" alt="A Directed Acyclic Graph" class="image-med" />
+![A Directed Acyclic Graph](/img/lesson28/dag.png)
 
 _A Directed Acyclic Graph_
 
@@ -121,16 +117,16 @@ That's it. That is our first Reagent component that defines a single element. An
 
 We have a component, so now what? We need some way to render this component to the actual DOM. We can do this with the `reagent-dom.render` function, which takes just 2 arguments: a Reagent component and a DOM node to render it to. First, let's create a new Reagent project that we will use for the rest of this lesson. This will be a very simple app that allows us to enter how many minutes we exercised on a given day, and it will chart our exercise over time.
 
+
 ```shell
-lein new figwheel exercise-tracker
-cd exercise-tracker
-npm i
+$ clj -X:new :template figwheel-main :name learn-cljs/exercise-tracker :args '["+deps"]'
+$ cd exercise-tracker
 ```
 
-Next, we'll add Reagent as a dependency just like we did in the previous section (not shown). Now, let's update the `exercise-tracker.core` namespace with the `hello` component, and we will also render this component to the DOM.
+Next, we'll add Reagent as a dependency just like we did in the previous section (not shown). Now, let's update the `learn-cljs.exercise-tracker` namespace with the `hello` component, and we will also render this component to the DOM.
 
 ```clojure
-(ns exercise-tracker.core
+(ns learn-cljs.exercise-tracker
   (:require [reagent.dom :as rdom]
             [goog.dom :as gdom]))
 
@@ -147,7 +143,7 @@ _src/exercise_tracker/core.cljs_
 1. Component to render
 2. DOM node to mount our component into
 
-If we run `lein figwheel`, we can see the Hello World printed to the screen:
+If we run `clj -A:fig:build`, we can see the Hello World printed to the screen:
 
 ![Reagent Hello World](/img/lesson28/hello-world.png)
 
@@ -363,7 +359,8 @@ Here we update the `chart` component to use the more advanced form of Reagent co
 
 Now the app is fully functional, and if we add an entry using the form, the changes will propagate through the `entries` cursor, into the `chart-data` reaction, and finally into the render function of the `chart` component. We can think of these reactions as live queries into state. We set them up once, and they will provide a flow of data into our components automatically. This data-centric approach that Reagent encourages is a perfect fit with idiomatic ClojureScript.
 
-<div class="centered"><img src="/img/lesson28/app-screenshot.png" alt="Screenshot of the Exercise Tracker App" class="image-med" /></div>
+
+![Screenshot of the Exercise Tracker App](/img/lesson28/app-screenshot.png)
 
 _The Exercise Tracker App_
 

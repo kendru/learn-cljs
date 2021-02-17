@@ -1,14 +1,14 @@
-(ns reagent-test.core
-    (:require [reagent.core :as r]
-              [reagent.ratom :as ratom]
-              [goog.dom :as gdom]
-              [goog.events :as gevents]))
+(ns learn-cljs.reagent-test
+  (:require [reagent.core :as r]
+            [reagent.ratom :as ratom]
+            [goog.dom :as gdom]
+            [goog.events :as gevents]))
 
 (def a-cell (r/atom 0))
 (def b-cell (r/atom 0))
 (def c-cell
   (ratom/make-reaction
-    #(+ @a-cell @b-cell)))
+   #(+ @a-cell @b-cell)))
 
 (def a (gdom/getElement "cell-a"))
 (def b (gdom/getElement "cell-b"))
@@ -23,4 +23,4 @@
 (gevents/listen b "change" (update-cell b-cell))
 
 (ratom/run!
-  (set! (.-value c) @c-cell))
+ (set! (.-value c) @c-cell))
