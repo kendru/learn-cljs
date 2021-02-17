@@ -218,7 +218,7 @@ Rather than mutating the application state directly from our components or the A
       (recur))))
 ```
 
-_learn\_cljs/chat/message\_bus.cljs_
+_chat/message\_bus.cljs_
 
 1. Channel on which messages will be dispatched
 2. Publication that will allow consumers to receive messages from `msg-ch`
@@ -274,7 +274,7 @@ Most of our components will follow the same pattern: they will mount into a pare
   el)                                                      ;; <5>
 ```
 
-_learn\_cljs/chat/components/component.cljs_
+_chat/components/component.cljs_
 
 1. Watch the app state for all changes
 2. Use the supplied `accessor` function to compute the old and new app state
@@ -305,7 +305,7 @@ We will build the UI for this application in a top-down fashion, starting with t
     (.appendChild el wrapper)))
 ```
 
-_learn\_cljs/chat/components/app.cljs_
+_chat/components/app.cljs_
 
 
 This application container code is fairly straightforward: we create a basic shell with a couple of DOM nodes then call `render-header` to create and return the DOM necessary for the header. Before this code does anything useful, we will need to create a `learn-cljs.chat.components.header` namespace that exposes the `init-header` function. We'll do that now:
@@ -362,7 +362,7 @@ This application container code is fairly straightforward: we create a basic she
     :header accessor render))
 ```
 
-_learn\_cljs/state/components/header.cljs_
+_state/components/header.cljs_
 
 1. Helper function for displaying a formatted version of a user's name
 2. Accessor function that takes the app state and computes our component state
@@ -427,7 +427,7 @@ We will create this helper namespace as `learn-cljs.chat.components.dom`.
   el)
 ```
 
-_learn\_cljs/chat/components/dom.cljs_
+_chat/components/dom.cljs_
 
 1. Higher-order function returning a function that creates a DOM element
 2. Define a function for each DOM element that we will use. Most of the elements have been omitted for brevity.
@@ -548,7 +548,7 @@ There is not anything that is novel in this code: we initialize components that 
     (sidebar-people msg-ch)))
 ```
 
-_learn\_cljs/chat/components/sidebar.cljs_
+_chat/components/sidebar.cljs_
 
 1. Require the UI helpers that we just factored out of the header code
 2. Add an event listener to each room in the list that we render
@@ -595,7 +595,7 @@ Finally, we will create a `learn-cljs.chat` namespace that will load the DOM ele
     true))
 ```
 
-_learn\_cljs/chat.cljs_
+_chat.cljs_
 
 1. Require the function that initializes the entire application UI
 2. Require the `learn-cljs.chat.handlers` namespace for the side effect of registering message handlers
@@ -655,7 +655,7 @@ Now that we have the basic "shell" of the application in place, let's move on to
       (init-component :messages accessor render))))
 ```
 
-_learn\_cljs/chat/components/messages.cljs_
+_chat/components/messages.cljs_
 
 1. We use a [Mutation Observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) to set the viewport to the bottom of the message list any time the message list changes. This way, the user always sees the most recent messages.
 
@@ -696,7 +696,7 @@ The composer will be the simplest component that we have seen yet. It is simply 
     (dom/div "compose" composer-input)))
 ```
 
-_learn\_cljs/chat/components/compose.cljs_
+_chat/components/compose.cljs_
 
 One thing to note before we move on is that we do not keep track of the message that the user is composing outside of the DOM itself. This means that in addition to our application state, we are relying on the DOM to hold some of our state. When we start building applications on top of React and Reagent, we will want to avoid this in favor of keeping all of our state in immutable data structures so that rendering is a simple, deterministic process of taking our app state and converting it to (virtual) DOM.
 
@@ -812,7 +812,7 @@ Since this is a multi-user chat application, we need to have some concept of use
         (bus/dispatch! msg-ch :toggle-auth-modal)))))
 ```
 
-_learn\_cljs/chat/components/auth.cljs_
+_chat/components/auth.cljs_
 
 
 Right at the top of the file, we run into a ClojureScript feature that we have not yet encountered: the `declare` macro. As the name suggests, this macro declares vars that are not bound to any value yet. This allows us to refer to functions and other values within the namespace before they are physically defined in the source of the file. In our case, we declare these vars for convenience so that we can list the high-level functions first and the functions that implement the lower-level details later in the code. This is not very idiomatic ClojureScript, but it is useful for the purpose of walking through the code.
