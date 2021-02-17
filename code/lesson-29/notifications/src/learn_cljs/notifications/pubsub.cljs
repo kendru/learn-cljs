@@ -1,27 +1,15 @@
-(ns notifications.command-event
+(ns learn-cljs.notifications.pubsub
   (:require [reagent.core :as r]
             [cljs.core.async :refer [go-loop pub sub chan <! put!]]))
 
-(defonce evt-ch (chan 1))
-(defonce evt-bus (pub evt-ch ::type))
+(defonce msg-ch (chan 1))
+(defonce msg-bus (pub msg-ch ::type))
 
-(defn emit!
- ([type] (emit! type nil))
+(defn dispatch!
+ ([type] (dispatch! type nil))
  ([type payload]
-  (put! evt-ch {::type type
+  (put! msg-ch {::type type
                 ::payload payload})))
-
-;; ... Other handlers
-
-(defn handle-user-form-submit! [form-data]
-  (let [{:keys [first-name last-name]} form-data]
-    ;; ... emit other events
-    (emit! :notification/added (str "Welcome, " first-name " " last-name))))
-
-(defn dispatch! [command payload]
- (case command
-   ;; ... handle other commands
-   :user-form/submit! (handle-user-form-submit! payload)))
 
 (def initial-state
   {:messages []
@@ -40,7 +28,7 @@
 
 (defn listen-for-added! [state]
   (let [added (chan)]
-    (sub evt-bus :notification/added added)
+    (sub msg-bus ::add-notification added)
     (go-loop []
       (let [text (::payload (<! added))
             id (:next-id @state)]
@@ -67,7 +55,9 @@
   (swap! form-state assoc field (.. e -target -value)))
 
 (defn submit-input []
-  (dispatch! :user-form/submit! @form-state)
+  (let [{:keys [first-name last-name]} @form-state]
+    (dispatch! ::add-notification
+      (str "Welcome, " first-name " " last-name)))
   (swap! form-state assoc :first-name ""
                           :last-name ""))
 

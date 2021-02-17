@@ -25,7 +25,7 @@ ClojureScript provides us with all of the mechanisms that we need for quick and 
 First, we will use a similar message bus pattern to what we used in Lesson 26 to enable components to be able to publish and subscribe to a single common message bus:
 
 ```clojure
-(ns notifications.core
+(ns learn-cljs.notifications
     (:require [cljs.core.async :refer [go-loop pub sub chan <! put!]]))
 
 (defonce msg-ch (chan 1))
@@ -40,7 +40,7 @@ First, we will use a similar message bus pattern to what we used in Lesson 26 to
 
 > **NOTE: Namespaced Keywords**
 >
-> Standard ClojureScript keywords start with a single colon followed by one or more characters that are valid in an identifier, e.g. `:i-am-a-keyword`. However, keywords may also contain a namespace to distinguish them from other keywords that may have the same name. For example, `:genre/rock` and `:terrain/rock` have the same name - `"rock"` - but different namespaces. There are two ways to create a namespaced keyword: by prefixing the keyword name with the namespace followed by a forward slash or starting the keyword with a double-colon. The double-colon version uses the current ClojureScript namespace as the keyword namespace, so a keyword that is referenced as `::type` within a namespace called `notifications.pubsub` could also be referenced as `:notifications.pubsub/type`. Namespaced keywords are especially common in larger projects with multiple contributors.
+> Standard ClojureScript keywords start with a single colon followed by one or more characters that are valid in an identifier, e.g. `:i-am-a-keyword`. However, keywords may also contain a namespace to distinguish them from other keywords that may have the same name. For example, `:genre/rock` and `:terrain/rock` have the same name - `"rock"` - but different namespaces. There are two ways to create a namespaced keyword: by prefixing the keyword name with the namespace followed by a forward slash or starting the keyword with a double-colon. The double-colon version uses the current ClojureScript namespace as the keyword namespace, so a keyword that is referenced as `::type` within a namespace called `learn-cljs.notifications.pubsub` could also be referenced as `:learn-cljs.notifications.pubsub/type`. Namespaced keywords are especially common in larger projects with multiple contributors.
 
 Unlike the message bus that we used in Lesson 26, we hard-code the `dispatch!` function to emit to the `msg-ch` channel. Similarly, our components will rely on the `msg-bus` being in scope. Now we can write our notification component:
 

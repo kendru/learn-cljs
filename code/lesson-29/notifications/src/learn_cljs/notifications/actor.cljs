@@ -1,6 +1,6 @@
-(ns notifications.actor
+(ns learn-cljs.notifications.actor
   (:require [reagent.core :as r]
-            [cljs.core.async :refer [go-loop pub sub chan <! >! put! timeout]]))
+            [cljs.core.async :refer [go-loop chan <! put!]]))
 
 (defn actor-system []
   (atom {}))
