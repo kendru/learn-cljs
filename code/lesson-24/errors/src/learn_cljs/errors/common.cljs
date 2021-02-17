@@ -1,4 +1,4 @@
-(ns errors.common)
+(ns learn-cljs.errors.common)
 
 ;; These functions are stubs to make the example work
 

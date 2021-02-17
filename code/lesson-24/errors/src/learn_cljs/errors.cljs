@@ -1,6 +1,6 @@
-(ns errors.core
-    (:require [errors.exceptions :as exceptions]
-              [errors.conditions :as conditions]))
+(ns learn-cljs.errors
+  (:require [learn-cljs.errors.exceptions :as exceptions]
+            [learn-cljs.errors.conditions :as conditions]))
 
 (enable-console-print!)
 

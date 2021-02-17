@@ -1,6 +1,6 @@
-(ns errors.conditions
+(ns learn-cljs.errors.conditions
   (:require [special.core :refer [condition manage]]
-            [errors.common :refer [display-error display-message initialize-user]]))
+            [learn-cljs.errors.common :refer [display-error display-message initialize-user]]))
 
 (defn get-localstorage [key]
   (try

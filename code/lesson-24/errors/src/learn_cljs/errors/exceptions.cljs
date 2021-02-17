@@ -1,5 +1,5 @@
-(ns errors.exceptions
-  (:require [errors.common :refer [display-error log-error update-field-errors]]))
+(ns learn-cljs.errors.exceptions
+  (:require [learn-cljs.errors.common :refer [display-error log-error update-field-errors]]))
 
 (def required-attrs [:id :email])
 (def allowed-attrs [:id :email :first-name :last-name])

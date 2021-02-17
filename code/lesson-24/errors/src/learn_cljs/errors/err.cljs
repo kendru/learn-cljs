@@ -1,4 +1,4 @@
-(ns errors.err
+(ns learn-cljs.errors.err
     (:refer-clojure :exclude [map]))
 
 (defn ok [val]
