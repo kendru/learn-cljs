@@ -1,4 +1,4 @@
-(ns import-fns.ui
+(ns learn-cljs.import-fns.ui
   (:require [goog.dom :as gdom]))
 
 (defn append-list-item [list text]

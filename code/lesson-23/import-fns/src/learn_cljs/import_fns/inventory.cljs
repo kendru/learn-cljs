@@ -1,4 +1,4 @@
-(ns import-fns.inventory)
+(ns learn-cljs.import-fns.inventory)
 
 (defn make-inventory []
   {:items {}})

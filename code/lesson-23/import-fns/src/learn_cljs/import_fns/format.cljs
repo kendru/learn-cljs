@@ -1,10 +1,10 @@
-(ns import-fns.format
+(ns learn-cljs.import-fns.format
   (:require [clojure.string :as s]))
 
 (defn ends-with-any? [word suffixes]
   (some (fn [suffix]
-          (s/ends-with? word suffix)
-         suffixes)))
+          (s/ends-with? word suffix))
+        suffixes))
 
 (defn replace-suffix [word old-suffix new-suffix]
   (let [prefix-len (- (count word)
