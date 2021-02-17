@@ -170,7 +170,7 @@ _Example game state_
 
 When the user is in this state, we will print the title and dialog to the screen and prompt them for input. If they type "yes", we'll advance to the `:embarked` state; otherwise, we'll move on to the `:lost-game` state.
 
-Instead of walking through scaffolding a new project, we can checkout a skeleton project from the book's github repo, which already has the necessary dependencies configured in `project.clj` as well as some basic markup and styles. See _Appendix B_ for information on checking out the correct version of code for this lesson. We will be working from tag `lesson10.1`.
+Instead of walking through scaffolding a new project, we can checkout a skeleton project from the book's github repo, which already has the necessary dependencies configured in `deps.edn` as well as some basic markup and styles. See _Appendix B_ for information on checking out the correct version of code for this lesson. We will be working from tag `lesson10.1`.
 
 ### Prompting for Input
 
