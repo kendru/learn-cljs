@@ -32,7 +32,7 @@ There are many ways to start building an application, and no one way is necessar
 For our chat application, we will keep a vector of `rooms` that we can join, a vector of `people` that we can enter into conversations with, and a vector of `messages` that we can read in the current room or conversation. We will also want to keep track of the current user for a couple of reasons: first, we will display the user's name in the upper right-hand corner of the screen, and second, if there is no user, we will display a modal so that the user can sign up or sign in.
 
 ```clojure
-(ns chat.state)
+(ns learn-cljs.chat.state)
 
 (def initial-state                                         ;; <1>
   {:rooms []
@@ -43,7 +43,7 @@ For our chat application, we will keep a vector of `rooms` that we can join, a v
 (defonce app-state (atom initial-state))                   ;; <2>
 ```
 
-_state.cljs_
+_learn\_clj/chat/state.cljs_
 
 1. Define the initial application state as an immutable map
 2. Define the app state as an atom whose starting value is the same as `initial-state`
@@ -198,7 +198,7 @@ With our entire state interface defined, let's move on to the mechanism through 
 Rather than mutating the application state directly from our components or the API, we will introduce a messaging layer that will allow us to more easily test our components and will give us the ability for one component to potentially react to a message from another. Building on the knowledge of `core.async` from the previous lesson, we will create a very simple messaging system. This messaging system will allow us to dispatch messages with a given type from anywhere in our app and subscribe functions to handle messages of a given type.
 
 ```clojure
-(ns chat.message-bus
+(ns learn-cljs.chat.message-bus
   (:require [cljs.core.async :refer [go-loop pub sub chan <! put!]]))
 
 (def msg-ch (chan 1))                                      ;; <1>
@@ -250,8 +250,8 @@ _Application Layout_
 Most of our components will follow the same pattern: they will mount into a parent DOM node, watch a portion of the application state (or some value computed from the state) for change, and re-render themselves the a change occurs. Let's go ahead and create a function that will allow us to initialize a component that follows this pattern:
 
 ```clojure
-(ns chat.components.component
-  (:require [chat.state :as state]))
+(ns learn-cljs.chat.components.component
+  (:require [learn-cljs.chat.state :as state]))
 
 (defn init-component
   "Initialize a component.
@@ -274,7 +274,7 @@ Most of our components will follow the same pattern: they will mount into a pare
   el)                                                      ;; <5>
 ```
 
-_components/component.cljs_
+_learn\_cljs/chat/components/component.cljs_
 
 1. Watch the app state for all changes
 2. Use the supplied `accessor` function to compute the old and new app state
@@ -289,8 +289,8 @@ The use of this utility function will become clear as we start building componen
 We will build the UI for this application in a top-down fashion, starting with the application container, followed by the "chrome" components - that is the header and sidebar - before moving on to lower level pieces. For the moment, let's create an app container that simply loads the header and renders it into the DOM:
 
 ```clojure
-(ns chat.components.app
-  (:require [chat.components.header :refer [init-header]]
+(ns learn-cljs.chat.components.app
+  (:require [learn-cljs.chat.components.header :refer [init-header]]
             [goog.dom :as gdom])
   (:import [goog.dom TagName]))
 
@@ -305,16 +305,16 @@ We will build the UI for this application in a top-down fashion, starting with t
     (.appendChild el wrapper)))
 ```
 
-_components/app.cljs_
+_learn\_cljs/chat/components/app.cljs_
 
 
-This application container code is fairly straightforward: we create a basic shell with a couple of DOM nodes then call `render-header` to create and return the DOM necessary for the header. Before this code does anything useful, we will need to create a `chat.components.header` namespace that exposes the `init-header` function. We'll do that now:
+This application container code is fairly straightforward: we create a basic shell with a couple of DOM nodes then call `render-header` to create and return the DOM necessary for the header. Before this code does anything useful, we will need to create a `learn-cljs.chat.components.header` namespace that exposes the `init-header` function. We'll do that now:
 
 ```clojure
-(ns chat.components.header
+(ns learn-cljs.chat.components.header
   (:require [goog.dom :as gdom]
-            [chat.components.component :refer [init-component]]
-            [chat.state :as state])
+            [learn-cljs.chat.components.component :refer [init-component]]
+            [learn-cljs.chat.state :as state])
   (:import [goog.dom TagName]))
 
 (defn display-name [person]                                ;; <1>
@@ -362,11 +362,11 @@ This application container code is fairly straightforward: we create a basic she
     :header accessor render))
 ```
 
-_components/header.cljs_
+_learn\_cljs/state/components/header.cljs_
 
 1. Helper function for displaying a formatted version of a user's name
 2. Accessor function that takes the app state and computes our component state
-3. Use the functions that we wrote in `chat.state` to access the relevant data
+3. Use the functions that we wrote in `learn-cljs.chat.state` to access the relevant data
 4. Provide a fallback if the user is not in a chat room or a conversation
 5. Render function that updates the `header` element based on app state
 6. Create the header component and return its DOME element
@@ -376,7 +376,7 @@ Here we see the `init-component` function in action: within `init-header`, we cr
 Before moving on, let's clean things up a bit. First, the `display-name` function will be useful for rendering user names in several places, so we can go ahead and refactor that function into a `render-helpers` namespace:
 
 ```clojure
-;; components/render_helpers.cljs
+;; learn_cljs/chat/components/render_helpers.cljs
 (ns chat.components.render-helpers
   (:require [clojure.string :as s]))
 
@@ -387,7 +387,7 @@ Before moving on, let's clean things up a bit. First, the `display-name` functio
         (s/join " "))
     "REMOVED"))
 
-;; components/header.cljs
+;; learn_cljs/chat/components/header.cljs
 (ns chat.components.header
   (:require ; ...
             [chat.components.render-helpers :refer [display-name]])
@@ -407,10 +407,10 @@ instead of this:
 (gdom/createDom TagName.H1 "title" "Hello world!")
 ```
 
-We will create this helper namespace as `chat.components.dom`.
+We will create this helper namespace as `learn-cljs.chat.components.dom`.
 
 ```clojure
-(ns chat.components.dom
+(ns learn-cljs.chat.components.dom
   (:require [goog.dom :as gdom])
   (:import [goog.dom TagName]))
 
@@ -427,7 +427,7 @@ We will create this helper namespace as `chat.components.dom`.
   el)
 ```
 
-_components/dom.cljs_
+_learn\_cljs/chat/components/dom.cljs_
 
 1. Higher-order function returning a function that creates a DOM element
 2. Define a function for each DOM element that we will use. Most of the elements have been omitted for brevity.
@@ -436,9 +436,9 @@ _components/dom.cljs_
 Then, back in `header.cljs`, we can update our render and initialization functions to use this new DOM utility:
 
 ```clojure
-(ns chat.components.header                                 ;; <1>
+(ns learn-cljs.chat.components.header                                 ;; <1>
   (:require ; ...
-            [chat.components.dom :as dom]))
+            [learn-cljs.chat.components.dom :as dom]))
 
 ;; ...
 
@@ -457,18 +457,18 @@ Then, back in `header.cljs`, we can update our render and initialization functio
 
 1. Remove require of `[goog.dom :as gdom]` and import of `[goog.dom TagName]`
 
-Now that we have refactored our code to make it more readable and concise, let's move on to the sidebar. The sidebar will display a list of rooms, a list of users that we can converse with, and a control for creating a new room. Clicking on either a room name or a user's name should switch to that room or conversation respectively. Unlike the header, the sidebar contains elements that the user should be able to interact with in order to update the application state. For this reason, we will pass the message channel down through the component hierarchy to all components that need it, and we will call the `chat.message-bus/dispatch!` function to send off our messages. The messages will be processed by any handler that we have registered, and eventually, some of them will trigger API requests.
+Now that we have refactored our code to make it more readable and concise, let's move on to the sidebar. The sidebar will display a list of rooms, a list of users that we can converse with, and a control for creating a new room. Clicking on either a room name or a user's name should switch to that room or conversation respectively. Unlike the header, the sidebar contains elements that the user should be able to interact with in order to update the application state. For this reason, we will pass the message channel down through the component hierarchy to all components that need it, and we will call the `learn-cljs.chat.message-bus/dispatch!` function to send off our messages. The messages will be processed by any handler that we have registered, and eventually, some of them will trigger API requests.
 
 There is not anything that is novel in this code: we initialize components that receive application state, manage their own portion of the DOM, and add event listeners.  Without further ado, the entire code for the sidebar is listed below:
 
 ```clojure
-(ns chat.components.sidebar
-  (:require [chat.components.dom :as dom]                  ;; <1>
-            [chat.components.component :refer [init-component]]
-            [chat.components.render-helpers :as helpers]
-            [chat.message-bus :as bus]
+(ns learn-cljs.chat.components.sidebar
+  (:require [learn-cljs.chat.components.dom :as dom]       ;; <1>
+            [learn-cljs.chat.components.component :refer [init-component]]
+            [learn-cljs.chat.components.render-helpers :as helpers]
+            [learn-cljs.chat.message-bus :as bus]
             [goog.events :as gevents]
-            [chat.state :as state]))
+            [learn-cljs.chat.state :as state]))
 
 (defn sidebar-header [title]
   (dom/div "sidebar-header" title))
@@ -548,7 +548,7 @@ There is not anything that is novel in this code: we initialize components that 
     (sidebar-people msg-ch)))
 ```
 
-_chat/components/sidebar.cljs_
+_learn\_cljs/chat/components/sidebar.cljs_
 
 1. Require the UI helpers that we just factored out of the header code
 2. Add an event listener to each room in the list that we render
@@ -559,9 +559,9 @@ _chat/components/sidebar.cljs_
 We need to initialize this sidebar in `components/app.cljs` as well:
 
 ```clojure
-(ns chat.components.app
+(ns learn-cljs.chat.components.app
   (:require ;; ...
-            [chat.components.sidebar                       ;; <1>
+            [learn-cljs.chat.components.sidebar            ;; <1>
              :refer [init-sidebar]]))
 
 (defn init-app [el msg-ch]
@@ -577,16 +577,15 @@ We need to initialize this sidebar in `components/app.cljs` as well:
 2. Refactor `app.cljs` to use our DOM helpers as well
 3. `init-sidebar` will render the sidebar inside the app wrapper
 
-Finally, we will create a `chat.core` namespace that will load the DOM elements for both the header and the sidebar into the page itself:
+Finally, we will create a `learn-cljs.chat` namespace that will load the DOM elements for both the header and the sidebar into the page itself:
 
 ```clojure
-(ns chat.core
-    (:require [chat.message-bus :as bus]
-              [chat.components.app :refer [init-app]]      ;; <1>
-              [chat.handlers]                              ;; <2>
+(ns learn-cljs.chat
+    (:require [learn-cljs.chat.message-bus :as bus]
+              [learn-cljs.chat.components.app              ;; <1>
+               :refer [init-app]]
+              [learn-cljs.chat.handlers]                   ;; <2>
               [goog.dom :as gdom]))
-
-(enable-console-print!)
 
 (defonce initialized?
   (do
@@ -596,26 +595,26 @@ Finally, we will create a `chat.core` namespace that will load the DOM elements 
     true))
 ```
 
-_core.cljs_
+_learn\_cljs/chat.cljs_
 
 1. Require the function that initializes the entire application UI
-2. Require the `chat.handlers` function for the side effect of registering message handlers
+2. Require the `learn-cljs.chat.handlers` namespace for the side effect of registering message handlers
 3. Initialize the UI
 
-We will continue to fill out this `chat.core` namespace as we continue with this project, but one thing to notice is that it will be less pure and functional than most of the rest of our code. This is because, at some point, we need to actually load things for side effects, call stateful functions, make assumptions about the DOM on the page, or load global objects, such as the `msg-ch` channel. Rather than polluting our entire code base with this impurity, we will do as many impure operations in the core namespace as possible in the interest of making the _interesting_ part of our code more modular.
+We will continue to fill out this `learn-cljs.chat` namespace as we continue with this project, but one thing to notice is that it will be less pure and functional than most of the rest of our code. This is because, at some point, we need to actually load things for side effects, call stateful functions, make assumptions about the DOM on the page, or load global objects, such as the `msg-ch` channel. Rather than polluting our entire code base with this impurity, we will do as many impure operations in the core namespace as possible in the interest of making the _interesting_ part of our code more modular.
 
-One area in which we have not maintained functional purity in this application is in allowing UI components to access `chat.state/app-state` directly, rather than constructing it in `chat.core` and passing it down to each component explicitly. This is the sort of pragmatic trade-off that can sometimes be made to make the code easier to work with at the expense of testability and modularity. In a production application, we would usually be better served by a more constrained and explicit approach to accessing the state.
+One area in which we have not maintained functional purity in this application is in allowing UI components to access `learn-cljs.chat.state/app-state` directly, rather than constructing it in `learn-cljs.chat` and passing it down to each component explicitly. This is the sort of pragmatic trade-off that can sometimes be made to make the code easier to work with at the expense of testability and modularity. In a production application, we would usually be better served by a more constrained and explicit approach to accessing the state.
 
 ### Message List
 
 Now that we have the basic "shell" of the application in place, let's move on to the meat of the application: the message list. Even though the message feed is the core of our application, it is implemented as a single component. The state accessor takes the `:messages` collection off of the application, does a simple lookup in the `:users` collection to get the author of each message, and applies some formatting. The renderer simply creates some DOM for each of these messages. Since there is nothing in the message list that needs to respond to user input, we do not have to deal with attaching any event handlers.
 
 ```clojure
-(ns chat.components.messages
-  (:require [chat.components.dom :as dom]
-            [chat.components.component :refer [init-component]]
-            [chat.components.render-helpers :as helpers]
-            [chat.state :as state]))
+(ns learn-cljs.chat.components.messages
+  (:require [learn-cljs.chat.components.dom :as dom]
+            [learn-cljs.chat.components.component :refer [init-component]]
+            [learn-cljs.chat.components.render-helpers :as helpers]
+            [learn-cljs.chat.state :as state]))
 
 (defn message-state-accessor [app message]
   (let [sender (state/person-by-username app (:sender message))
@@ -656,16 +655,16 @@ Now that we have the basic "shell" of the application in place, let's move on to
       (init-component :messages accessor render))))
 ```
 
-_components/messages.cljs_
+_learn\_cljs/chat/components/messages.cljs_
 
 1. We use a [Mutation Observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) to set the viewport to the bottom of the message list any time the message list changes. This way, the user always sees the most recent messages.
 
 Since the message list will be rendered as a top-level component, we will need to initialize it within `components/app.cljs`:
 
 ```clojure
-(ns chat.components.app
+(ns learn-cljs.chat.components.app
   (:require ;; ...
-            [chat.components.messages :refer [init-messages]]))
+            [learn-cljs.chat.components.messages :refer [init-messages]]))
 
 (defn init-main [msg-ch]
   (dom/section "content-main"
@@ -681,9 +680,9 @@ With the message list done, let's move on to the message composer.
 The composer will be the simplest component that we have seen yet. It is simply a textarea with an event listener that will dispatch a message and clear its content whenever the user hits the `Enter`/`Return` key:
 
 ```clojure
-(ns chat.components.compose
-  (:require [chat.components.dom :as dom]
-            [chat.message-bus :as bus]))
+(ns learn-cljs.chat.components.compose
+  (:require [learn-cljs.chat.components.dom :as dom]
+            [learn-cljs.chat.message-bus :as bus]))
 
 (defn init-composer [msg-ch]
   (let [composer-input (dom/textarea "message-input")]
@@ -697,16 +696,16 @@ The composer will be the simplest component that we have seen yet. It is simply 
     (dom/div "compose" composer-input)))
 ```
 
-_components/compose.cljs_
+_learn\_cljs/chat/components/compose.cljs_
 
 One thing to note before we move on is that we do not keep track of the message that the user is composing outside of the DOM itself. This means that in addition to our application state, we are relying on the DOM to hold some of our state. When we start building applications on top of React and Reagent, we will want to avoid this in favor of keeping all of our state in immutable data structures so that rendering is a simple, deterministic process of taking our app state and converting it to (virtual) DOM.
 
 Like the message list, the composer will need to be mounted into the app and initialized within the main content area:
 
 ```clojure
-(ns chat.components.app
+(ns learn-cljs.chat.components.app
   (:require ;; ...
-            [chat.components.compose :refer [init-composer]]))
+            [learn-cljs.chat.components.compose :refer [init-composer]]))
 
 (defn init-main [msg-ch]
   (dom/section "content-main"
@@ -720,13 +719,13 @@ Like the message list, the composer will need to be mounted into the app and ini
 Since this is a multi-user chat application, we need to have some concept of users. We should then implement at least a simple sign up / sign in process so that users do not have to enter a first name, last name, and username every time they load the app. Additionally, we do not want users to impersonate each other. Below is the entire code listing for the authentication modal. We will walk through each section afterwards.
 
 ```clojure
-(ns chat.components.auth
-  (:require [chat.components.dom :as dom]
+(ns learn-cljs.chat.components.auth
+  (:require [learn-cljs.chat.components.dom :as dom]
             [goog.dom.classes :as gdom-classes]
-            [chat.components.component :refer [init-component]]
-            [chat.components.render-helpers :as helpers]
-            [chat.message-bus :as bus]
-            [chat.state :as state]))
+            [learn-cljs.chat.components.component :refer [init-component]]
+            [learn-cljs.chat.components.render-helpers :as helpers]
+            [learn-cljs.chat.message-bus :as bus]
+            [learn-cljs.chat.state :as state]))
 
 (declare accessor get-render sign-in-modal sign-up-modal
          auth-modal auth-form footer-link)
@@ -813,7 +812,7 @@ Since this is a multi-user chat application, we need to have some concept of use
         (bus/dispatch! msg-ch :toggle-auth-modal)))))
 ```
 
-_components/auth.cljs_
+_learn\_cljs/chat/components/auth.cljs_
 
 
 Right at the top of the file, we run into a ClojureScript feature that we have not yet encountered: the `declare` macro. As the name suggests, this macro declares vars that are not bound to any value yet. This allows us to refer to functions and other values within the namespace before they are physically defined in the source of the file. In our case, we declare these vars for convenience so that we can list the high-level functions first and the functions that implement the lower-level details later in the code. This is not very idiomatic ClojureScript, but it is useful for the purpose of walking through the code.
@@ -827,9 +826,9 @@ The `auth-modal` function in turn uses a couple of additional lower-level functi
 Finally, as before, we need to initialize the modal in `components/app.cljs`:
 
 ```clojure
-(ns chat.components.app
+(ns learn-cljs.chat.components.app
   (:require ;; ...
-            [chat.components.auth :refer [init-auth]]))
+            [learn-cljs.chat.components.auth :refer [init-auth]]))
 
 (defn init-app [el msg-ch]
   (let [wrapper (dom/div "app-wrapper"
@@ -847,8 +846,8 @@ With the UI complete, let's briefly look at how to hook up a WebSocket API.
 Since our application is highly dynamic, and we want to send and receive messages in near-realtime, we will use a WebSocket API. The code for this ClojureScript Node.js API is beyond the scope of this book to cover, but it is available within [the Learn ClojureScript GitHub repo](https://github.com/kendru/learn-cljs/tree/master/code/lesson-26/chat-backend). Since we already have the ability to handle messages within the application, and since we talk with the API in terms of messages, there is surprisingly little that needs to be done. The API should expose a function for sending messages to the API, and it should also emit messages from the API back to our application. One interesting thing to note is that we do not have the concept of a request/response flow, only asynchronous messages that flow within the UI as well as between the UI and the API:
 
 ```clojure
-(ns chat.api
-  (:require [chat.message-bus :as bus]
+(ns learn-cljs.chat.api
+  (:require [learn-cljs.chat.message-bus :as bus]
             [cljs.reader :refer [read-string]]))
 
 (defonce api (atom nil))                                   ;; <1>
@@ -884,9 +883,9 @@ In this API namespace, we define an extremely simple messaging protocol. Both th
 We will first initialize the API within our core namespace:
 
 ```clojure
-(ns chat.core
+(ns learn-cljs.chat.core
   (:require ;; ...
-            [chat.api :as api]))
+            [learn-cljs.chat.api :as api]))
 
 (defonce initialized?
   (do
@@ -900,7 +899,7 @@ We will first initialize the API within our core namespace:
 Next, we will update our `handlers` namespace to both emit API messages in response to certain UI messages as well as handle the messages that come directly from the API. First of all, we will send the API notifications when the user activates a specific room or conversation so that it can send message updates that are relevant for that specific location:
 
 ```clojure
-(ns chat.handlers
+(ns learn-cljs.chat.handlers
   (:require ;; ...
             [chat.api :as api]))
 
