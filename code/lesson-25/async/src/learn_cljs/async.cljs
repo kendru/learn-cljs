@@ -1,9 +1,7 @@
-(ns async.core
+(ns learn-cljs.async
   (:require [goog.dom :as gdom]
             [goog.events :as gevent]
-            [cljs.core.async :refer [go go-loop chan <! >! put! timeout dropping-buffer]]))
-
-(enable-console-print!)
+            [cljs.core.async :refer [go-loop chan <! >! put! alts!]]))
 
 (def query-input (gdom/getElement "query-input"))
 (def results-display (gdom/getElement "query-results"))

@@ -43,6 +43,13 @@ _Synchronization with Channels_
 
 With this understanding of how processes and channels work, we are ready to dig in to an example. Let's say that we are building an SQL query editor, and whenever the user is focused in the query input and presses <kbd>Ctrl</kbd> + <kbd>Enter</kbd>, we send off the query to a server and wait for a response. We will have one process that watches keystrokes, and another process that coordinates user input and performing a server request when necessary.
 
+Since `core.async` is exposed as an official library rather than part of the core library, we need to add a dependency to `deps.edn` for any project in which we would like to use it:
+
+```clojure
+:deps {;; Other deps}
+       org.clojure/core.async {:mvn/version "1.3.610"}}
+```
+
 ## Go Blocks as Lightweight Processes
 
 In ClojureScript, we create a process using the `go` macro containing the block of code to execute. A simple `go` block could look like the following:
