@@ -6,7 +6,7 @@ type: docs
 
 # Lesson 22: Managing State
 
-This lesson has been a long time coming, and it is a critical one. By this point, we have seen that it is possible to write whole applications without using any mutable data, but for most cases, it is inconvenient to say the least. As we learned in the last lesson, ClojureScript encourages writing programs as a purely functional core surrounded by effectful code, and this incudes code that updates state. Being a pragmatic language, ClojureScript gives us several constructs for dealing with values that change over time.
+This lesson has been a long time coming, and it is a critical one. By this point, we have seen that it is possible to write whole applications without using any mutable data, but for most cases, it is inconvenient to say the least. As we learned in the last lesson, ClojureScript encourages writing programs as a purely functional core surrounded by side-effecting code, and this incudes code that updates state. Being a pragmatic language, ClojureScript gives us several constructs for dealing with values that change over time.
 
 ---
 
@@ -134,7 +134,7 @@ The `reset!` function is useful especially when we have some known initial state
 
 One of the most useful features of atoms is the ability to be notified whenever their state changes. This is accomplished with the `add-watch` function. This function takes 3 arguments: the atom to watch, a keyword that uniquely identifies the watcher, and a watch function. The watch function itself takes the keyword that was passed to `add-watch`, the atom itself, the atom's old state, and its new state. In most cases, the old and new state are the only things that we are interested in. To get our feet wet, let's implement a simple counter with buttons that can be used to add or subtract from its value.
 
-![Watching a Counter Atom](/img/lesson22/counter-swap.png?foo=123)
+![Watching a Counter Atom](/img/lesson22/counter-swap.png)
 
 _Watching a Counter Atom_
 
@@ -182,8 +182,7 @@ In this example, we use `add-watch` to observe changes to the state of the `app-
 
 #### Challenge
 
-Take the Contact Book app from [Lesson 20](/section-3/lesson-20-capstone-3-contact-book/) and
-refactor it to keep the state in an atom.
+Take the Contact Book app from [Lesson 20](/section-3/lesson-20-capstone-3-contact-book/) and refactor it to keep the state in an atom.
 
 ## Transients
 
