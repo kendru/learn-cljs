@@ -196,7 +196,7 @@ Another useful pattern for using defonce is to protect initialization code from 
 ```clojure
 (defonce is-initialized?
   (do                                                      ;; <1>
-    (.setItem js/localStorage "init-at" (.now Date))
+    (.setItem js/localStorage "init-at" (.now js/Date))
     (js/alert "Welcome!")
     true))                                                 ;; <2>
 ```
