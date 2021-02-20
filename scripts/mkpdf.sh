@@ -11,7 +11,7 @@ BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null 2>&1 && pwd )"
 CONTENT_DIR="${BASE_DIR}/content"
 RESOURCE_DIR="${BASE_DIR}/static"
 TMP_DIR="$(mktemp -d)"
-OUT_FILE="${1:-${RESOURCE_DIR}/pdf/learn-clojurescript_$(date +%Y-%-m-%d).pdf}"
+OUT_FILE="${1:-${RESOURCE_DIR}/pdf/learn-clojurescript_$(date +%Y-%-m-%d).tex}"
 
 cleanup() {
     rm -rf "$TMP_DIR"
@@ -73,5 +73,4 @@ find $TMP_DIR -type f -print \
         --include-in-header="${TMP_DIR}/fontoptions.tex" \
         --resource-path "$RESOURCE_DIR" \
         -t latex \
-        --pdf-engine=xelatex \
         -o "$OUT_FILE"

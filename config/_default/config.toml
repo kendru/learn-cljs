@@ -9,3 +9,6 @@ pygmentsCodeFences = true
 [params]
 BookMenuBundle = "/menu"
 BookSearch = false
+
+[markup.goldmark.renderer]
+unsafe= true

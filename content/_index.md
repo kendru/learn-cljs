@@ -4,7 +4,7 @@ type: docs
 ---
 
 <div style="text-align:center;">
-    <img src="/img/learn-clojurescript-cover.jpg" alt="Learn ClojureScript Cover Image" title="Learn ClojureScript Cover Image" />
+    <img src="/img/learn-clojurescript-cover.jpg" alt="Learn ClojureScript Cover Image" title="Learn ClojureScript Cover Image" style="max-width:400px" />
 </div>
 
 # Learn ClojureScript
