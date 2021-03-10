@@ -1,5 +1,5 @@
 ---
-title: "Capstone 5 Agile Estimates | Lesson 30"
+title: "Capstone 5 - Notes | Lesson 30"
 date: 2020-06-27T11:59:16-06:00
 type: "docs"
 ---

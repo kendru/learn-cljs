@@ -24,10 +24,6 @@ By the end of the book, you will have created:
 - A personal contact manager
 - A text-based adventure game
 
-<script src="https://gumroad.com/js/gumroad.js"></script>
-
-<a class="gumroad-button" href="https://gum.co/learn-cljs" target="_blank">Pre-order Today</a>
-
 {{< columns >}}
 
 ## About the author
@@ -69,14 +65,7 @@ Andrew has been writing Clojure code both personally and professionally since 20
 ---
 
 <footer class="attribution">
-{{< columns >}}
 
 Copyright 2021 Andrew Meredith
-
-<--->
-
-Cover image based on https://pixabay.com/images/id-3045402/ by [monicore](https://pixabay.com/users/monicore-1499084/)
-
-{{< /columns >}}
 
 </footer>

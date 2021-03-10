@@ -1,16 +1,5 @@
 <meta property="og:title" content="{{ .Site.Title }}" />
 <meta property="og:type" content="book" />
-<meta property="og:image" content="{{ if .Params.opengraphImage }}{{ .Params.opengraphImage }}{{ else }}{{ .Site.BaseURL }}img/learn-clojurescript-share.jpg?v=20190925.003{{ end }}" />
-
-{{- with .Site.Params.QuantumMetricScript -}}
-    <script type="text/javascript">
-    (function() {
-        var qtm = document.createElement('script'); qtm.type = 'text/javascript'; qtm.defer = 1;
-        qtm.src = '{{ . }}';
-        var d = document.getElementsByTagName('script')[0];
-        !window.QuantumMetricAPI && d.parentNode.insertBefore(qtm, d);
-    })();
-    </script>
-{{- end -}}
+<meta property="og:image" content="{{ if .Params.opengraphImage }}{{ .Params.opengraphImage }}{{ else }}{{ .Site.BaseURL }}img/learn-clojurescript-share.jpg?v=20210310.001{{ end }}" />
 
 <script src="https://kit.fontawesome.com/398903e299.js"></script>
