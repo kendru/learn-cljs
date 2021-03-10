@@ -22,7 +22,7 @@ ClojureScript takes what we think we know about variables and turns it on its he
 
 A var is very similar to a JavaScript variable. It is a mutable reference to some value. The fact that it is mutable means that we can have it refer to one value initially and later refer to someone else.
 
-Imagine going to a party where every person is a stranger to everyone else. When you walk in the door, you are given a name tag on which to write your name. Chances are, the name that you write on your name tag will be the name that the other partygoers will use to address you. Now imagine that you swap name tags with another attendee who had a different name. You as a person will remain unchanged. Receiving a new name tag does not change your identity, only the name that others will use to refer to you. Additionally, people are now using the name from your original name tag to refer to someone else. Just because the name tag does not belong to you anymore does not mean that it is invalid.
+Imagine going to a party where every person is a stranger to everyone else. When you walk in the door, you are given a name tag on which to write your name. Chances are, the name that you write on your name tag will be the name that the other party-goers will use to address you. Now imagine that you swap name tags with another attendee who had a different name. You as a person will remain unchanged. Receiving a new name tag does not change your identity, only the name that others will use to refer to you. Additionally, people are now using the name from your original name tag to refer to someone else. Just because the name tag does not belong to you anymore does not mean that it is invalid.
 
 ![Binding a Var to a Value](/img/lesson9/binding-var.png)
 
@@ -41,25 +41,25 @@ my-name
   (def i-am-global value))
 ;; #'cljs.user/mk-global
 
-mk-global                                         ;; <2>
+mk-global                                                  ;; <2>
 ;; #object[ ... ]
 
 (mk-global [4 8 15 16 23 42])
 ;; #'cljs.user/i-am-global
 
-i-am-global                                       ;; <3>
+i-am-global                                                ;; <3>
 ;; [4 8 15 16 23 42]
 
 (def ten 10)
 ;; #'cljs.user/ten
 
-(def twenty (* ten 2))                            ;; <4>
+(def twenty (* ten 2))                                     ;; <4>
 ;; #'cljs.user/twenty
 
 twenty
 ;; 20
 
-ten                                               ;; <5>
+ten                                                        ;; <5>
 ;; 10
 ```
 
@@ -76,22 +76,22 @@ _Defining vars_
 In lesson 3, we looked very briefly at symbols, which are essentially names that refer to something else, usually a var. In the REPL session above, `my-name`, `mk-global`, `i-am-global`, `ten`, and `twenty` are all symbols. That is, they are names that refer to the var that we have bound. When ClojureScript is evaluating our program code and comes across a symbol, it will try to evaluate the symbol to whatever it refers to, and if it cannot resolve the symbol to any known value, it will display a warning.
 
 ```clojure
-(def x 7)                                         ;; <1>
+(def x 7)                                                  ;; <1>
 ;; #'cljs.user/x
 
-x                                                 ;; <2>
+x                                                          ;; <2>
 ;; 7
 
-'x                                                ;; <3>
+'x                                                         ;; <3>
 ;; x
 
-(defn doubler [x] (* 2 x))                        ;; <4>
+(defn doubler [x] (* 2 x))                                 ;; <4>
 ;; #'cljs.user/doubler
 
 (doubler 3)
 ;; 6
 
-y                                                 ;; <5>
+y                                                          ;; <5>
 ;; WARNING: Use of undeclared Var cljs.user/y at line 1 <cljs repl>
 ;; nil
 ```
@@ -251,4 +251,4 @@ We have now gone over the two primary means of naming things in ClojureScript `d
 - Destructure sequences and maps
 
 [^1]: The official [Destructuring in Clojure guide](https://clojure.org/guides/destructuring) is an excellent reference
-[^2]: This is a tongue in cheek reference to Phil Karlton's famous quote, "There are only two hard things in Computer Science: cache invalidation and naming things."
+[^2]: Did you catch the reference to Phil Karlton's famous quote, "There are only two hard things in Computer Science: cache invalidation and naming things."

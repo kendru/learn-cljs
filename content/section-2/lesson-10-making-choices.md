@@ -122,10 +122,10 @@ When the test expression is true, the entire expression evaluates to the value g
 The two common use cases for `when` are to transform a value only when it is non-nil and to perform some side effect when a certain condition holds true. For the first case, we often see code like the following:
 
 ```clojure
-(defn conversion-rate [sessions]              ;; <1>
+(defn conversion-rate [sessions]                           ;; <1>
   (let [users (user-count sessions)
         purchases (purchase-count sessions)]
-    (when (> users 0)                         ;; <2>
+    (when (> users 0)                                      ;; <2>
       (/ purchases users))))
 ```
 
@@ -196,10 +196,10 @@ Furthermore, we want to use a different message depending on whether the user ha
 
 ```clojure
 (io/println term
-            (if (= :win type) "You've Won!" "Game Over"))  ;; <1>
+            (if (= :win type) "You've Won!" "Game Over"))
 ```
 
-1. The `if` expression will evaluate to either "You've Won!" or "Game Over" depending on the value of `type`
+The `if` expression will evaluate to either "You've Won!" or "Game Over" depending on the value of `type`
 
 Putting these pieces together with the printing of the title and dialog gives us something like this:
 
@@ -278,7 +278,7 @@ Before continuing, let's take a brief step back to talk about the concept of tru
 
 Unlike JavaScript, which has a number of special cases that it considers to be falsey, ClojureScript follows a very simple rule: `false` and `nil` are falsy, and _everything else_ is truthy.
 
-> *ClojureSctipt's Truthiness Rule*
+> *ClojureScript's Truthiness Rule*
 >
 > `false` and `nil` are falsy, and all other values are truthy.
 
@@ -348,7 +348,7 @@ For every test expression/result pair, it applies the predicate to the test expr
 ```
 
 1. Use the `=` predicate function to test each option
-2. Pass `answer` as the righthand side in every test
+2. Pass `answer` as the right-hand side in every test
 3. Each clause will be tested as `(= "restart" answer)`
 4. Provide a default expression if every prior test fails
 

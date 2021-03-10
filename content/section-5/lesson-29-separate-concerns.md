@@ -220,7 +220,7 @@ Before we wrap up, it is worth looking at one more messaging pattern that is bor
     (go-loop []
       (let [[type & payload] (<! in-ch)]
         (when-let [handler (get handlers type)]
-          (apply handler state payload))                   ;; <5>
+          (apply handler state payload))                   ;; <4>
         (recur)))
     state))
 ```

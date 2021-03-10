@@ -255,7 +255,7 @@ Because `loop` only works with tail recursion, we need to be careful that no eva
        fact 1]
   (if (= i 1)
     fact
-    (* i (recur (dec i) (* i fact)))))      ;; <2>
+    (* i (recur (dec i) (* i fact)))))                     ;; <2>
 ;; ----  Could not Analyze  <cljs form>   line:5  column:22  ----
 ;;
 ;;   Can't recur here at line 5 <cljs repl>

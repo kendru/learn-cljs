@@ -376,7 +376,7 @@ Here we see the `init-component` function in action: within `init-header`, we cr
 Before moving on, let's clean things up a bit. First, the `display-name` function will be useful for rendering user names in several places, so we can go ahead and refactor that function into a `render-helpers` namespace:
 
 ```clojure
-;; learn_cljs/chat/components/render_helpers.cljs
+;; chat/components/render_helpers.cljs
 (ns chat.components.render-helpers
   (:require [clojure.string :as s]))
 
@@ -387,7 +387,7 @@ Before moving on, let's clean things up a bit. First, the `display-name` functio
         (s/join " "))
     "REMOVED"))
 
-;; learn_cljs/chat/components/header.cljs
+;; chat/components/header.cljs
 (ns chat.components.header
   (:require ; ...
             [chat.components.render-helpers :refer [display-name]])
@@ -967,7 +967,7 @@ Once we have received the rooms list from the server, we should set the rooms li
         {:id (:id first-room)}))))
 ```
 
-Next, let's handle the messages for when we receive the list of users, when a user joins, and when a user leaves. These handlers are simple because they simply pass the data from the API through to a state transition function that we write earlier.
+Next, let's handle the messages for when we receive the list of users, when a user joins, and when a user leaves. These handlers are simple because they simply pass the data from the API through to a state transition function that we wrote earlier.
 
 ```clojure
 (bus/handle! bus/msg-bus :api/people-listed

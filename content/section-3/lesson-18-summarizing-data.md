@@ -146,7 +146,7 @@ Our task is to figure out the longest interval during which the user was idle. T
 
 In this case, we want to know the longest interval between events in seconds, but we also need to keep track of when the previous event occurred so that we can calculate the new interval time. Using a map as the accumulator allows us to keep track of as many pieces of state as we need, and as a final step we get only the specific value that we are interested in, discarding the intermediate results that we no longer need.
 
-### Try This
+### You Try It
 
 - Write a function that returns how many times the user clicked something.
 - Write a function that takes a sequence of events and tells us how many times the user double-clicked, where a double-click is defined as two clicks within the same timestamp. You may assume that the list of events is ordered by timestamp ascending.

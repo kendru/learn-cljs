@@ -169,7 +169,7 @@ An idempotent function is a function that will have the same effect whether it i
 1. Non-idempotent function
 2. Idempotent function
 
-The `append-element` function is definitely not idempotent because the effect will be different when we call it 100 times than when we call it once. The `set-content` function, on the other hand, is idempotent - no matter how many times we call it, the result is going to be the same. When working with live reloading, we should make sure that any function that is called on reload is idempotent, otherwise [FIXME, TOO]
+The `append-element` function is definitely not idempotent because the effect will be different when we call it 100 times than when we call it once. The `set-content` function, on the other hand, is idempotent - no matter how many times we call it, the result is going to be the same. When working with live reloading, we should make sure that any function that is called on reload is idempotent, otherwise the side effects of that code will be run many times, leading to undesirable results.
 
 #### You Try It
 

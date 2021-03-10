@@ -94,7 +94,7 @@ ClojureScript uses JavaScript's Number primitive, so it can support exactly the 
 
 1. Decimal integer
 2. Octal integer starts with a leading zero
-3. Hexidecimal integer starts with leading `0x`
+3. Hexadecimal integer starts with leading `0x`
 4. Float
 5. Float with an exponent
 6. Float with a sign and exponent with a sign

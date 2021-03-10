@@ -173,13 +173,13 @@ we will look at `learn-cljs.import-fns.inventory`:
   (get-in inventory [:items item :qty] 0))
 ```
 
-_src/learn\_cljs/import\_fns/inventory.cljs_
+_learn\_cljs/import\_fns/inventory.cljs_
 
 1. All functions in this file will be part of the `import-fns.inventory` namespace
 2. Declare a public function named `make-inventory`
 3. Use `defn-` to declare a private function
 
-As the name suggests, this namespace contains all of the code relating to creating and managing an inventory. It has no formatting or display logic. We expose `make-inventory` for constructing a new inventory, `add-items` for adding some quantity of a specific item, `list-items` for getting the distinct items in the inventory, and `item-qty` for getting the quantity of a particular item. We make the `add-quantity` function private by declaring it with `defn-` because it exists solely as an implementation detail of `add-items` and serves little value outside this context. Next, let's look at the `import-fns.format` namespace:
+As the name suggests, this namespace contains all of the code relating to creating and managing an inventory. It has no formatting or display logic. We expose `make-inventory` for constructing a new inventory, `add-items` for adding some quantity of a specific item, `list-items` for getting the distinct items in the inventory, and `item-qty` for getting the quantity of a particular item. We make the `add-quantity` function private by declaring it with `defn-` because it exists solely as an implementation detail of `add-items` and serves little value outside this context. Next, let's look at the `learn-cljs.import-fns.format` namespace:
 
 ```clojure
 (ns learn-cljs.import-fns.format
@@ -213,7 +213,7 @@ As the name suggests, this namespace contains all of the code relating to creati
     :else (str word "s")))
 ```
 
-_src/learn\_cljs/import\_fns/format.cljs_
+_learn\_cljs/import\_fns/format.cljs_
 
 Again, this namespace contains all of the string formatting functions that we need for the app. Even though we only require `pluralize` in our main namespace, we make all of the functions public since they all contain reusable logic. Additionally, when we expose every function, we make it possible to test every function in isolation. Note that all of these function are general functions that will work with any string. If we had code that was specific to inventories, we would put it in the `inventory` namespace. So what should we do if we have a set of functions that are formatting functions specific to inventories? One common practice is to create a new namespace called something like `learn-cljs.import-fns.format-inventory`, and this namespace could require functions and data from both formatting and inventory namespaces to perform its specialized work. When we do not have to squeeze the architecture of our code into a class hierarchy, it gives us a great deal of flexibility. Finally, for the sake of completeness, let's look at the `learn-cljs.import-fns.ui` namespace:
 
@@ -235,7 +235,7 @@ Again, this namespace contains all of the string formatting functions that we ne
     (gdom/appendChild elem ul)))
 ```
 
-_src/learn\_cljs/import\_fns/ui.cljs_
+_learn\_cljs/import\_fns/ui.cljs_
 
 There is not much that is novel to note about this namespace, except that its API is formed around rendering text rather than an inventory specifically. The "glue code" that ties inventories and rendering together is all in our core namespace.
 

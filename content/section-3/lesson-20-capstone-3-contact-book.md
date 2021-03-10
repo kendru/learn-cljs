@@ -21,6 +21,14 @@ Over the past few lessons, we have learned the core tools for working with data 
 
 _Screenshot of ClojureScript Contacts_
 
+While we will not be printing the code for this capstone in its entirety, the completed project code may be found at the book's GitHub repository. As we have done previously, we will create a new Figwheel project:
+
+```shell
+$ clj -X:new :template figwheel-main :name learn-cljs/contacts :args '["+deps"]'
+$ cd contacts
+$ clj -A:fig:build
+```
+
 ## Data Modeling
 
 In this lesson, we will use the techniques and patterns from the previous chapter to model the data for our contact book. The goal will be to practice what we have learned rather than to introduce much new material. We will primarily model our data using maps and vectors, and we will implement the constructor function pattern for creating new contacts. We will also implement the operations that the UI will need to update the contact list using simple functions to transform our data. With that, let's dig in to the data model!
@@ -76,6 +84,8 @@ This new version of `make-contact` introduces one expression that we have not se
 ```
 
 _`if-let` Transformation_
+
+We will soon make use of a similar macro, `when-let`. Like `if-let`, it allows a binding to be provided, and like `when`, it only handles the case when the bound value is non-nil.
 
 However, we can make the `make-contact` function a bit more concise and easier to read using one of ClojureScript's _threading macros_, `->` (pronounced "thread first"). This macro allows us to take what would otherwise be a deeply nested expression and write it more sequentially. It takes a value and any number of function calls and injects the value as the first argument to each of these function calls. Seeing this transformation in action should make its functionality more intuitive:
 
@@ -189,6 +199,13 @@ Since there are a couple of new functions here that we have not seen yet, let's 
 
 Next, we have `concat`. This function takes a number of sequences and creates a new lazy[^2] `seq` that is the concatenation of all of the elements of its arguments. Because the result is a `seq`, we use the `vec` function to coerce the result back into a vector. Since much of ClojureScript's standard library operates on the sequence abstraction, we will find that we often need to convert the result back into a more specific type of collection.
 
+Finally, when we update a contact, we want to replace the previous version. This can be done by using `assoc` to put the updated contact in the same index of `contact-list` that was occupied by the old version:
+
+```clojure
+(defn replace-contact [contact-list idx input]
+  (assoc contact-list idx (make-contact input)))
+```
+
 ### Quick Review
 
 - We mentioned that `vec` converts a sequence into a vector. Given what we learned about the sequence abstraction, what will happen if you pass `vec` a map? What about a set?
@@ -204,17 +221,17 @@ We will use the [hiccups](https://github.com/teropa/hiccups) library to transfor
        hiccups/hiccups {:mvn/version "0.3.0"}}
 ```
 
-_`project.clj`_
+_deps.edn_
 
 Then, we need to import this library into our `core` namespace. Note that since we are using a macro from this library, the syntax is a little different:
 
 ```clojure
-(ns contacts.core
+(ns learn-cljs.contacts
   (:require-macros [hiccups.core :as hiccups])
   (:require [hiccups.runtime]))
 ```
 
-_`core.cljs`_
+_learn\_cljs/contacts.cljs_
 
 The translation between ClojureScript data structures and HTML is very simple:
 
@@ -253,7 +270,7 @@ Let's take a quick step back and think about the additional state that we need f
    :editing? false})
 ```
 
-We will also define a `refresh!` function that is responsible for rendering the entire application and attaching event handlers every time our state changes:
+We will also define a `refresh!` function that is responsible for rendering the entire application and attaching event handlers every time our state changes. We must re-attach event handlers because we are replacing the DOM tree that contains our app, and our handlers remain attached to the DOM nodes that are discarded.
 
 ```clojure
 (defn attach-event-handlers! [state])                      ;; <1>
@@ -280,7 +297,7 @@ We will also define a `refresh!` function that is responsible for rendering the 
 
 ### Rendering Contacts
 
-Let's start with the component that displays the contact summary in the list. We will be using the Bulma CSS framework to help with styling, so most of the markup that we are generating is for the purpose of styling the page.
+Let's start with the component that displays the contact summary in the list. We will be using the Bulma CSS framework to help with styling[^3], so most of the markup that we are generating is for the purpose of styling the page. Additionally, we will be using the [Microns](https://www.s-ings.com/projects/microns-icon-font/) icon font, which uses `mu-ICON` class names. 
 
 ```clojure
 (defn format-name [contact]                                ;; <1>
@@ -346,10 +363,12 @@ Let's now think about the interactions that we want to enable on the contact sum
 
 (defn attach-event-handlers! [state]
   ;; ...
-  (doseq [el (array-seq (gdom/getElementsByClass "contact-summary"))]
-    (gevents/listen el "click"
+  (doseq [elem (array-seq (gdom/getElementsByClass "contact-summary"))]
+    (gevents/listen elem "click"
       (fn [e] (on-open-contact e state)))))
 ```
+
+We should be familiar with the use of `doseq` to eagerly iterate over a sequence, but this is the first time we have seen `array-seq`. This function takes a JavaScript array and transforms it into a ClojureScript seq that can be used with any sequence operation - in this case, `doseq`.
 
 Now that we can render a single contact list item, let's create the list that will display each list item:
 
@@ -381,14 +400,14 @@ Finally, we will briefly cover rendering the contact details form and adding/upd
         [:div {:class "columns"}
           (render-contact-list state)
           [:div {:class "contact-details column is-8"}
-            (page-header (:editing? state))
+            (section-header (:editing? state))
             [:div {:class "hero is-fullheight"}
               (if (:editing? state)
                 (render-contact-details (get-in state [:contacts (:selected state)] {}))
                 [:p {:class "notice"} "No contact selected"])]]]])))
 ```
 
-We have already seen the `render-contact-list` function, but we still need to define `page-header`, which will display the buttons for adding or saving a contact, and `render-contact-details`, which will render the edit form. Let's start with `render-contact-details`:
+We have already seen the `render-contact-list` function, but we still need to define `section-header`, which will display the buttons for adding or saving a contact, and `render-contact-details`, which will render the edit form. Let's start with `render-contact-details`:
 
 ```clojure
 (defn form-field                                           ;; <1>
@@ -469,8 +488,8 @@ Now, we will finally implement the page header with its actions to create and sa
 (def cancel-button (action-button "cancel-edit" "Cancel" "mu-cancel"))
 (def add-button (action-button "add-contact" "Add" "mu-plus"))
 
-(defn page-header [editing?]
-  [:div {:class "page-header"}
+(defn section-header [editing?]
+  [:div {:class "section-header"}
     [:div {:class "level"}
       [:div {:class "level-left"}
         [:div {:class "level-item"}
@@ -486,6 +505,9 @@ Now, we will finally implement the page header with its actions to create and sa
   (refresh! (-> state
                 (assoc :editing? true)
                 (dissoc :selected))))
+
+(defn replace-contact [contact-list idx input]
+  (assoc contact-list idx (make-contact input)))
 
 (defn on-save-contact [state]
   (refresh!
@@ -522,7 +544,8 @@ By now, this sort of code should be no problem to read and understand. In the in
 
 ## Summary
 
-While this application is not a shining example of modern web development (don't worry - we will get to that in Section 5), it showed us how to build a data-driven application using the techniques that we have been learning in this section. While this is not a large application, is is a non-trivial project that should have helped us get more familiar with transforming data using ClojureScript. Still, much of our ClojureScript code still looks a lot like vanilla JavaScript with a funky syntax. In the next section, we will start to dig in to writing more natural, idiomatic ClojureScript.
+While this application is not a shining example of modern web development (don't worry - we will get to that in Section 5), it showed us how to build a data-driven application using the techniques that we have been learning in this section. While this is not a large application, it is a non-trivial project that should have helped us get more familiar with transforming data using ClojureScript. Still, much of our ClojureScript code still looks a lot like vanilla JavaScript with a funky syntax. In the next section, we will start to dig in to writing more natural, idiomatic ClojureScript.
 
 [^1]: The actual implementation of the `if-let` macro is slightly more complex, but the effect is the same.
 [^2]: Lazy evaluation was covered in [Lesson 11](/section-2/lesson-11-looping/#looping-for-side-effects).
+[^3]: Bulma's styles can be found in `bulma.min.css` in the corresponding lesson of this book's GitHub repository.

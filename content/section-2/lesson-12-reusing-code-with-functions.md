@@ -117,7 +117,7 @@ This example illustrates the basic form of `fn` where there is a parameter vecto
 
 There is another even terser syntax for anonymous functions that saves a few keystrokes
 by omitting the `fn` and the named argument list. In the next example, we use this
-abbreviated syntax for
+abbreviated syntax.
 
 ```clojure
 #(let [xs-set (into #{} %1)]
@@ -244,7 +244,7 @@ A vector of pre- and post-conditions may be specified in a map immediately follo
 1. A single pre-condition is specified, ensuring that the `denom` is never zero
 2. Two post-conditions are specified, ensuring that the result is a positive number that is less than or equal to `1`.
 
-### You Try it
+### You Try It
 
 - In the REPL, define a function that takes 1 argument, then call it with 2 arguments. What happens?
 - Try enclosing the parameter list and function body of a single-arity function in a list. Is this valid?

@@ -26,19 +26,19 @@ _Functions and Data_
 
 Say that we have been tasked with creating an analytics app. Before we get started, we want to model the type of objects that we will be working with. If we were using a statically typed language, we would probably start by writing type definitions. Even if we were working in JavaScript, we would likely define "classes" for the objects that we will be working with. As we define these objects, we would have to think about both the data that they contain and the operations that they support. For example, if we have a `User` and a `ClickEvent`, we might need the operation, `User.prototype.clickEvent()`.
 
-![Our analytics domain deals users and their actions](/img/lesson19/analytics-domain.png)
+![Analytics domain: users and their actions](/img/lesson19/analytics-domain.png)
 
-_Our analytics domain deals users and their actions_
+_Analytics domain: users and their actions_
 
 With ClojureScript, we will consider data and functions separately. This approach ends up being flexible, as we will see that most of the operations that we want to perform on the data are simple and re-usable. In fact, it is common to find that the exact operation that you need is already part of the standard library. Ultimately, the combination of the concision of code and the richness of the standard library means that we write fewer lines of code than we would in JavaScript, which leads to more robust and maintainable applications.
 
 ## Domain Modeling with Maps and Vectors
 
-We are now quite familiar with maps and vectors as well as some of the collection and sequence operations that can be used on them. Now we can put them in practice in a real domain: an analytics dashboard. The main concepts that we need to model are _user_, _session_, _pageview_, and _event_, and the relationships between these models are as follows:
+We are now quite familiar with maps and vectors as well as some of the collection and sequence operations that can be used on them. Now we can put them in practice in a real domain: an analytics dashboard. The main concepts that we need to model are _user_, _session_, _page-view_, and _event_, and the relationships between these models are as follows:
 
 - A user has one or more sessions
-- A session has one or more pageviews and may belong to a user or be anonymous
-- A pageview has zero or more events
+- A session has one or more page-views and may belong to a user or be anonymous
+- A page-view has zero or more events
 
 We now know enough to create some sample data. Let's start at the "bottom" with the simplest models and work our way up to the higher-level models. Since an _event_ does not depend on any other model, it is a good place to start.
 
@@ -118,26 +118,25 @@ We are representing coordinates on a page with a 2-element vector containing, `[
 >
 > We have been talking about the concept of _constructors_ in ClojureScript. Unlike JavaScript, constructors in ClojureScript are just plain functions that return data. There is no special treatment of constructor functions in the language - they are merely a convenience for us developers to easily create new data while consolidating the creation code in one place.
 
-### Modeling Pageviews
+### Modeling page-views
 
-With events done, we can now model pageviews. We will go ahead and define a constructor for pageviews:
+With events done, we can now model page-views. We will go ahead and define a constructor for page-views:
 
 ```clojure
-cljs.user=> (defn pageview
-              ([url] (pageview url (.now js/Date) []))     ;; <1>
-              ([url loaded] (pageview url loaded []))
+cljs.user=> (defn page-view
+              ([url] (page-view url (.now js/Date) []))    ;; <1>
+              ([url loaded] (page-view url loaded []))
               ([url loaded events]
                 {:url url
                  :loaded loaded
                  :events events}))
-3
 
-cljs.user=> (pageview "some.example.com/url")              ;; <2>
+cljs.user=> (page-view "some.example.com/url")             ;; <2>
 {:url "some.example.com/url",
  :loaded 1464612010514,
  :events []}
 
-cljs.user=> (pageview "http://www.example.com"             ;; <3>
+cljs.user=> (page-view "http://www.example.com"            ;; <3>
                       1464611888074
                       [(click [100 200] ".logo")])
 {:url "http://www.example.com",
@@ -148,30 +147,30 @@ cljs.user=> (pageview "http://www.example.com"             ;; <3>
            :target ".logo"}]}
 ```
 
-_Modeling a Pageview_
+_Modeling a page-view_
 
-1. Define `pageview` with 3 arities
-2. `pageview` can be called with just a URL
+1. Define `page-view` with 3 arities
+2. `page-view` can be called with just a URL
 3. ...or with a URL, loaded timestamp, and vector of events
 
-Just as we did with events, we created a constructor to manage the details of assembling a map that fits our definition of what a _Pageview_ is. One different aspect of this code is that we are using a multiple-arity function as the constructor and providing default values for the `loaded` and `events` values when they are not supplied. This is a common pattern in ClojureScript for dealing with default values for arguments.
+Just as we did with events, we created a constructor to manage the details of assembling a map that fits our definition of what a _page-view_ is. One different aspect of this code is that we are using a multiple-arity function as the constructor and providing default values for the `loaded` and `events` values when they are not supplied. This is a common pattern in ClojureScript for dealing with default values for arguments.
 
 ### Modeling Sessions
 
-Moving up the hierarchy of our data model, we now come to the _Session_. Remember that a session represents one or more consecutive pageviews from the same user. If a user leaves the site and comes back later, we would create a new session. So the session needs to have a collection of pageviews as well as identifying information about the user's browser, location, etc.
+Moving up the hierarchy of our data model, we now come to the _Session_. Remember that a session represents one or more consecutive page-views from the same user. If a user leaves the site and comes back later, we would create a new session. So the session needs to have a collection of page-views as well as identifying information about the user's browser, location, etc.
 
 ```clojure
 cljs.user=> (defn session
               ([start is-active? ip user-agent] (session start is-active? ip user-agent []))
-              ([start is-active? ip user-agent pageviews]
+              ([start is-active? ip user-agent page-views]
                 {:start start
                  :is-active? is-active?
                  :ip ip
                  :user-agent user-agent
-                 :pageviews pageviews}))
-5
+                 :page-views page-views}))
+
 cljs.user=> (session 1464613203797 true "192.168.10.4" "Some UA")
-{:start 1464613203797, :is-active? true, :ip "192.168.10.4", :user-agent "Some UA", :pageviews []}
+{:start 1464613203797, :is-active? true, :ip "192.168.10.4", :user-agent "Some UA", :page-views []}
 ```
 
 _Modeling a Session_
@@ -180,7 +179,7 @@ There is nothing new here. We are simply enriching our domain with more types th
 
 ### You Try It
 
-Now that we have walked through the definition of _events_, _pageviews_, and _sessions_, you have all of the tools that you need to define a data type for users.
+Now that we have walked through the definition of _events_, _page-views_, and _sessions_, you have all of the tools that you need to define a data type for users.
 
 - Define the "shape" of a user. It should include at least the following: `:id`, `:name`, `:sessions`.
 - Create a constructor function that can create a user with or without a collection of sessions
@@ -199,7 +198,7 @@ We now have a fairly complete domain defined for our analytics application. Next
     :is-active? true
     :ip 127.0.0.1
     :user-agent "some-user-agent"
-    :pageviews [
+    :page-views [
 
       ;; Pageview
       {:url "some-url"
@@ -284,18 +283,18 @@ cljs.user=> (with-duration my-session (.now js/Date))
  :is-active? true,
  :ip "127.0.0.1",
  :user-agent "Some UA",
- :pageviews [],
+ :page-views [],
  :duration 14}
 ```
 
-#### Quick Review: assoc
+#### Quick Review: `assoc`
 
 - Is there a difference between `(assoc some-map key val)` and `(conj some-map [key val])`?
 - Does assoc mutate (change) the map that is passed in?
 
-### Removing Values With dissoc
+### Removing Values With `dissoc`
 
-Now imagine that we have added a setting where users can request that we not track their IP or user agent, so we will need to remove this data from the map before we send it off to the server. This is exactly the functionality that `dissoc` gives us: it takes a map and any number of keys to remove from the map, and it returns a new map without the keys we specified. Let's create a function, `untracked`, that returns a session without these entries:
+Now imagine that we have added a setting where users can request that we not track their IP or user agent, so we will need to remove this data from the map before we send it off to the server. This is exactly the functionality that `dissoc` gives us: it takes a map and any number of keys to remove from the map, and it returns a new map without the keys we specified. Let's create a function, `untrack`, that returns a session without these entries:
 
 ```clojure
 cljs.user=> (defn untrack [session]
@@ -303,10 +302,10 @@ cljs.user=> (defn untrack [session]
 #'cljs.user/untrack
 
 cljs.user=> (untrack my-session)
-{:start 1464641029299, :is-active? true, :pageviews []}
+{:start 1464641029299, :is-active? true, :page-views []}
 ```
 
-#### Quick Review: dissoc
+#### Quick Review: `dissoc`
 
 - Use `dissoc` to remove the `:region` key from this map: `{:landmark "Uncompahgre", :region "San Juan Mountains"}`
 - What happens when the map does not contain one or more of the keys that we pass to `dissoc`, e.g. `(dissoc {:temp 212} :color :material :mass)`?
@@ -314,13 +313,13 @@ cljs.user=> (untrack my-session)
 
 ### Refining a Selection With select-keys
 
-Another handy function to have in our toolbox when working with maps is `select-keys`. It takes a map and a collection of keys to retain, and it returns a new map with only the keys that were passed in. If we had some portion of the application that was only interested in when a session started, whether it was active, and its pageviews, we could use `select-keys` to narrow down the data to only what we are interested in:
+Another handy function to have in our toolbox when working with maps is `select-keys`. It takes a map and a collection of keys to retain, and it returns a new map with only the keys that were passed in. If we had some portion of the application that was only interested in when a session started, whether it was active, and its page-views, we could use `select-keys` to narrow down the data to only what we are interested in:
 
 ```clojure
-cljs.user=> (select-keys my-session [:start :is-active? :pageviews])
+cljs.user=> (select-keys my-session [:start :is-active? :page-views])
 {:start 1464641029299,
  :is-active? true,
- :pageviews []}
+ :page-views []}
 ```
 
 ### You Try It
@@ -339,19 +338,19 @@ true
 
 ## Working With Nested Data
 
-In any but the simplest of programs, we will need to work with nested data at some point. The analytics application that we are considering in this chapter is a good example, since we have events nested inside pageviews, which are in turn nested inside sessions, which themselves are nested inside users. Using only the functions we have seen so far would be intractable at best. We will now turn our attention to several functions that allow us to work with nested data.
+In any but the simplest of programs, we will need to work with nested data at some point. The analytics application that we are considering in this chapter is a good example, since we have events nested inside page-views, which are in turn nested inside sessions, which themselves are nested inside users. Using only the functions we have seen so far would be intractable at best. We will now turn our attention to several functions that allow us to work with nested data.
 
-### Drilling Down With get-in
+### Drilling Down With `get-in`
 
-We have seen the `get` function a number of times for accessing a specific element in a map or a vector. It has a cousin, `get-in`, that is used for setting values that are nested deeper inside a data structure. Instead of supplying a single key for the value to get out, we supply a sequence of keys that will be looked up in turn. We can think of this sequence as a _path_ to the data that we are interested in. It is like a road map for the computer to follow to locate the data to retrieve. For instance, to get the first pageview of the first session of some user, we could use something like the following:
+We have seen the `get` function a number of times for accessing a specific element in a map or a vector. It has a cousin, `get-in`, that is used for setting values that are nested deeper inside a data structure. Instead of supplying a single key for the value to get out, we supply a sequence of keys that will be looked up in turn. We can think of this sequence as a _path_ to the data that we are interested in. It is like a road map for the computer to follow to locate the data to retrieve. For instance, to get the first page-view of the first session of some user, we could use something like the following:
 
 ```clojure
-(get-in user [:sessions 0 :pageviews 0])
+(get-in user [:sessions 0 :page-views 0])
 ```
 
 _Getting Nested Data_
 
-This will first look up the `:sessions` key on the `user` that we passed in. Next, it will get the first session (at index 0), then it will get the `:pageviews` key on this session. Finally, it will get the first of the pageviews. Notice that the get-in is really just a convenience for repeated calls to `get`:
+This will first look up the `:sessions` key on the `user` that we passed in. Next, it will get the first session (at index 0), then it will get the `:page-views` key on this session. Finally, it will get the first of the page-views. Notice that the get-in is really just a convenience for repeated calls to `get`:
 
 ```clojure
 (get
@@ -359,19 +358,19 @@ This will first look up the `:sessions` key on the `user` that we passed in. Nex
     (get
       (get user :sessions)                                 ;; <1>
      0)                                                    ;; <2>
-   :pageviews)                                             ;; <3>
+   :page-views)                                            ;; <3>
   0)                                                       ;; <4>
 ```
 
 1. Get the user's sessions
 2. Get the first
-3. Get the pageviews
+3. Get the page-views
 4. Get the first
 
 This concept of a _path_ is used commonly in ClojureScript to describe how to "get to" some specific piece of data. An analogy in the JavaScript world would be chained property access on some specific object:
 
 ```javascript
-user.sessions[0].pageviews[0];
+user.sessions[0].pageViews[0];
 ```
 
 _Getting Nested Data With JavaScript_
@@ -382,14 +381,14 @@ At first glance, the JavaScript version looks at least as clear as the ClojureSc
 user &&                                                    // <1>
     user.sessions &&
     user.sessions[0] &&
-    user.sessions[0].pageviews &&
-    user.sessions[0].pageviews[0];                         // <2>
+    user.sessions[0].pageViews &&
+    user.sessions[0].pageViews[0];                         // <2>
 ```
 
 1. Check every intermediate step that may be undefined
 2. Only get the nested data if every step in the path to it is defined
 
-#### Quick Review: get-in
+#### Quick Review: `get-in`
 
 - Fill in the blank to make this expression true
 
@@ -409,20 +408,20 @@ user &&                                                    // <1>
 (get-in {} [:does :not :exist])
 ```
 
-### Setting With assoc-in
+### Setting With `assoc-in`
 
 Just as `get-in` is a variation of `get` that allows for nested data access, `assoc-in` is a variation of `assoc` that allows for the setting of nested data. Calling `assoc-in` is very similar to calling `assoc` - the difference is that instead of supplying a simple key, we pass in a path to the data that we want to set.
 
 ```clojure
 (assoc-in user
-          [:sessions 0 :pageviews]                         ;; <1>
-          [(pageview "www.learn-cljs.com" 123456 [])])     ;; <2>
+          [:sessions 0 :page-views]                        ;; <1>
+          [(page-view "www.learn-cljs.com" 123456 [])])    ;; <2>
 ```
 
 1. Path to the data to update
 2. Value to associate
 
-#### Quick Review: assoc-in
+#### Quick Review: `assoc-in`
 
 - What is the result of the following:
 
@@ -442,7 +441,7 @@ Just as `get-in` is a variation of `get` that allows for nested data access, `as
 (assoc-in {} [:foo :bar :baz] "quux")
 ```
 
-### Updating With update-in
+### Updating With `update-in`
 
 Now that we have seen how `get-in` and `assoc-in` work, it is time to complete our trio of functions for working with nested data with `update-in`. Like `assoc-in`, it takes a data structure and a path, but instead of taking a simple value to put into the data structure, it takes a function to apply to the existing item that it finds at the specified path. The entry at this path is then replaced with whatever the function returns. Let's consider a simple example:
 
@@ -460,7 +459,7 @@ In this case, we specified that we wanted to operate on the element located at t
 
 When we start building single-page apps with Reagent, we will constantly be making use of `update-in`, so it is important to make sure that we are comfortable with how to use it.
 
-#### Quick Review: update-in
+#### Quick Review: `update-in`
 
 - What is the result of `(update-in {} [:foo :bar] inc)`?
 - Does update-in work with both maps and vectors? Why or why not?
@@ -475,4 +474,4 @@ We covered a lot of ground in this chapter, and we are now able to do quite a bi
 
 Between the sequence operations that we covered in the last lesson and the additional operations that we just learned, we can write quite intricate, data-driven programs. Next up, we'll put together all that we have learned about collections and sequences to build a contact list application that keeps its data in `localStorage`.
 
-[^1]: JavaScript's new optional chaining feature would simplify this expression as `user?.sessions?[0]?.pageviews?[0]`
+[^1]: JavaScript's new optional chaining feature would simplify this expression as `user?.sessions?[0]?.pageViews?[0]`

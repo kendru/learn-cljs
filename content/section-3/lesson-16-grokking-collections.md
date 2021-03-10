@@ -45,7 +45,7 @@ const contactBook = [                                      // <1>
 ];
 ```
 
-_Modeling an Contact Book in JavaScript_
+_Modeling a Contact Book in JavaScript_
 
 1. Outer structure is an array for organizing a list of contacts
 2. Inner structure is an object for describing a contact by a specific set of properties
@@ -188,7 +188,7 @@ cljs.user=> (["Athos" "Porthos" "Aramis"] 1)               ;; <4>
 "Porthos"
 ```
 
-_Working with Vectors_
+_Working with vectors_
 
 1. `conj` adds to the end of a vector
 2. `rest` always returns a sequence

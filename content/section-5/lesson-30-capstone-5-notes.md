@@ -433,7 +433,6 @@ First, we will add the "New Note" button to the header. In the header component,
 (ns learn-cljs.notes.ui.header
   (require [learn-cljs.notes.ui.common :refer [button]]))
 
-
 (defn header []
   [:header.page-header
    [button "+ New Note"
@@ -455,7 +454,7 @@ Like most single-page applications, we will use URL routing to determine which v
 
 _Routing Flow_
 
-We will now create a router and hook it up to the relevant pieces of the application. Let's start by creating a _routes` namespace that contains the router and related code.
+We will now create a router and hook it up to the relevant pieces of the application. Let's start by creating a `routes` namespace that contains the router and related code.
 
 ```clojure
 (ns learn-cljs.notes.routes
@@ -687,7 +686,6 @@ Since nothing in this file is particularly novel, let's return to the button com
 
 ```clojure
 ;; ...
-
 (defn handle-dispatch [command-data]
   (fn [e]
     (.preventDefault e)
@@ -1022,7 +1020,7 @@ Next, let's add the pieces that we need in the API and command dispatcher. First
                (with-error-handling #(emit! :note/received %))))
 ```
 
-_api.cljs_
+_notes/api.cljs_
 
 ...then the dispatcher:
 

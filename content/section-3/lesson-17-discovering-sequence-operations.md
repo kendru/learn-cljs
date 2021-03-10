@@ -60,7 +60,7 @@ In general, `map` takes some function, `f`, and some sequence and returns a new 
 
 ![Map example - general](/img/lesson17/map-general-example.png)
 
-### Quick review
+### Quick Review
 
 Take a look at the following code snippet:
 

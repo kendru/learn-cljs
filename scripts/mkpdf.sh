@@ -46,6 +46,12 @@ cat <<HERE > "${TMP_DIR}/fontoptions.tex"
     ItalicFont = PTSerif-Italic,
     BoldItalicFont = PTSerif-BoldItalic
 ]{PTSerif-Regular}
+\setsansfont[
+    Path = ${RESOURCE_DIR}/fonts/Oswald/,
+    BoldFont = Oswald-Bold,
+    ItalicFont = Oswald-Light,% not actual italic font
+    BoldItalicFont = Oswald-SemiBold% not actual italic font
+]{Oswald-Regular}
 \setmonofont[
     Path = ${RESOURCE_DIR}/fonts/Fira_Code/,
     Scale = 0.7,

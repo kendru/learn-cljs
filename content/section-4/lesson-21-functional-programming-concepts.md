@@ -433,7 +433,7 @@ This works well for a while, but now we need to add logging around each request 
     res))
 ```
 
-Even with 2 hooks that we want to add to the request/response, the code is starting to get a bit unwieldy. With the middleware pattern, we can extract each hook into a function that "wraps" the handler function. A middleware is simply a function that takes a handler and returns a new handler. If we think of a `handler` in general as any function from `Request -> Response`, then a middleware is a function from `(Request -> Response) -> (Request -> Response)`. One nice feature of middleware is that since they have the same input and output types, they can be combined in any order using ordinary function composition!
+Even with 2 hooks that we want to add to the request/response, the code is starting to get unwieldy. With the middleware pattern, we can extract each hook into a function that "wraps" the handler function. A middleware is simply a function that takes a handler and returns a new handler. If we think of a `handler` in general as any function from `Request -> Response`, then a middleware is a function from `(Request -> Response) -> (Request -> Response)`. One nice feature of middleware is that since they have the same input and output types, they can be combined in any order using ordinary function composition!
 
 ![Middleware Pattern](/img/lesson21/middleware.png)
 

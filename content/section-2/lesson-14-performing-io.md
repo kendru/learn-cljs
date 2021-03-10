@@ -206,12 +206,12 @@ Closely related to getting user inputs is the issue of handling events. We need 
 cljs.user=> (require '[goog.events :as gevents])
 nil
 
-cljs.user=> (defn update-target [evt]                      ;; <2>
+cljs.user=> (defn update-target [evt]                      ;; <1>
               (gdom/setTextContent target
                 (.. evt -currentTarget -value)))
 #'cljs.user/update-target
 
-cljs.user=> (gevents/listen input                          ;; <3>
+cljs.user=> (gevents/listen input                          ;; <2>
                             "keyup"
                             update-target)
 #object[Object [object Object]]
@@ -219,9 +219,8 @@ cljs.user=> (gevents/listen input                          ;; <3>
 
 _Using Events to Trigger Updates_
 
-1. The `import` form is used to import classes from the Google Closure library
-2. Define a callback function that will be called on every event
-3. Bind our event handler to the `keyup` event on the input
+1. Define a callback function that will be called on every event
+2. Bind our event handler to the `keyup` event on the input
 
 Once more, let's take a moment to walk through this code to make sure we can clearly grasp what is going on.
 

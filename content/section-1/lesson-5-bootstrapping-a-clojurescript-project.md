@@ -35,7 +35,7 @@ $ mkdir my-cljs-project
 $ cd my-cljs-project
 ```
 
-Next, we will need a `deps.edn` file in this directory. This file is the equivalent of a `package.json` in the JavaScript tooling community, and it specifies the list of the dependencies that our project requires as well as the location of our source code and script aliases. The `.edn` extension indicates that the file uses _Extensible Data Notation_ - a file format containing ClojureScript data structures. Let's create a barebones deps file now:
+Next, we will need a `deps.edn` file in this directory. This file is the equivalent of a `package.json` in the JavaScript tooling community, and it specifies the list of the dependencies that our project requires as well as the location of our source code and script aliases. The `.edn` extension indicates that the file uses _Extensible Data Notation_ - a file format containing ClojureScript data structures. Let's create a bare-bones deps file now:
 
 ```clojure
 {:deps {org.clojure/clojurescript {:mvn/version "1.10.773"}}

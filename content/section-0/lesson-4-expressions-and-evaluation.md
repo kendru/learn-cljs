@@ -62,7 +62,7 @@ _S-Expressions_
 3. An empty s-expression
 4. An s-expression consisting of other simple s-expressions
 5. S-expressions can be nested
-6. Just because an s-expression is syntactically valid does not guarantee that it will run.
+6. Just because an s-expression is syntactically valid does not guarantee that it will run
 
 At this point, we can begin to see that all of the parentheses serve a purpose after all (even this author had his doubts at first). They provide a consistent and explicit structure for evaluating any code. While other programming languages generally have separate syntax for function calls, math and logic operations, conditionals, method calls, etc., there is only one syntactic construct in ClojureScript, with clearly defined rules for evaluation. We will walk through the rules for how an s-expression is evaluated, but first, we will take a brief detour to discuss the emphasis on _evaluation of expressions_ rather than _execution of statements_.
 
@@ -102,10 +102,10 @@ In ClojureScript, on the other hand, there are no statements, only expressions, 
 
 ```clojure
 (def x 5)
-;; #'user/x                                                   <1>
+;; #'user/x                                                ;; <1>
 
 (if (even? 10) "Even" "Odd")
-;; "Even"                                                     <2>
+;; "Even"                                                  ;; <2>
 
 (doseq [i (range 5)]
   (println "Looping!"))
@@ -114,7 +114,7 @@ In ClojureScript, on the other hand, there are no statements, only expressions, 
 ;; Looping!
 ;; Looping!
 ;; Looping!
-;; nil                                                        <3>
+;; nil                                                     ;; <3>
 ```
 
 _ClojureScript Expressions_

@@ -5,8 +5,6 @@
             [goog.events :as gevents]
             [clojure.string :as str]))
 
-(enable-console-print!)
-
 ;; Models and State
 
 (def contact-list [])
@@ -57,8 +55,8 @@
 (def cancel-button (action-button "cancel-edit" "Cancel" "mu-cancel"))
 (def add-button (action-button "add-contact" "Add" "mu-plus"))
 
-(defn page-header [editing?]
-  [:div {:class "page-header"}
+(defn section-header [editing?]
+  [:div {:class "section-header"}
    [:div {:class "level"}
     [:div {:class "level-left"}
      [:div {:class "level-item"}
@@ -190,12 +188,12 @@
     (gevents/listen cancel-button "click"
                     (fn [_] (on-cancel-edit state))))
 
-  (doseq [el (array-seq (gdom/getElementsByClass "contact-summary"))]
-    (gevents/listen el "click"
+  (doseq [elem (array-seq (gdom/getElementsByClass "contact-summary"))]
+    (gevents/listen elem "click"
                     (fn [e] (on-open-contact e state))))
 
-  (doseq [el (array-seq (gdom/getElementsByClass "delete-icon"))]
-    (gevents/listen el "click"
+  (doseq [elem (array-seq (gdom/getElementsByClass "delete-icon"))]
+    (gevents/listen elem "click"
                     (fn [e] (on-delete-contact e state)))))
 
 (defn render-app! [state]
@@ -206,7 +204,7 @@
      [:div {:class "columns"}
       (render-contact-list state)
       [:div {:class "contact-details column is-8"}
-       (page-header (:editing? state))
+       (section-header (:editing? state))
        [:div {:class "hero is-fullheight"}
         (if (:editing? state)
           (render-contact-details (get-in state [:contacts (:selected state)] {}))
