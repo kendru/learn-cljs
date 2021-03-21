@@ -79,6 +79,7 @@ func (s *HTTPServer) newRouter(staticFileDir string) chi.Router {
 	)
 
 	r.Post("/tenant", s.handleGenerateTenant)
+	r.Post("/accounts", s.handleGenerateTenant)
 	r.Route("/notes", func(r chi.Router) {
 		r.Use(s.tenantCtx) // Add tenantID based on header
 		r.Post("/", s.handleCreateNote)

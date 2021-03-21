@@ -1,0 +1,8 @@
+notes/.cpcache
+notes/target
+notes/test
+
+notes-backend/static
+notes-backend/db-data
+notes-backend/config.dev.toml
+notes-backend/gin-bin

@@ -801,7 +801,7 @@ Since we need to read a couple of global variables, let's open `index.html` and 
 <script type="text/javascript">
   window.API_URL = "https://notes-api.learn-cljs.com";
   window.API_TOKEN =
-    "Get an API token with: curl -X POST https://notes-api.learn-cljs.com/tenant";
+    "Get an API token with: curl -X POST https://notes-api.learn-cljs.com/accounts";
 </script>
 <!-- ... -->
 ```
