@@ -90,7 +90,7 @@ Now that we have an application running with Figwheel reloading code on any chan
 )
 ```
 
-_src/cljs_weather/core.cljs_
+_src/learn_cljs/weather.cljs_
 
 1. Namespace declaration
 2. Data structure to hold all UI state
@@ -210,8 +210,8 @@ In this case, we defined a var called `is-initialized?` that is only evaluated o
 
 ### Quick Review
 
-- While Figwheel is running, find the line in `core.cljs` that contains `(defonce app-state ...)`, change the text, and save the file. Does the page update? Why or why not?
-- Find the line in `core.cljs` that contains `[:h1 (:text @app-state)]` and change the `h1` to `p`. Does the page update? Why is this behavior different from changing the definition of `app-state`?
+- While Figwheel is running, find the line in `weather.cljs` that contains `(defonce app-state ...)`, change the text, and save the file. Does the page update? Why or why not?
+- Find the line in `weather.cljs` that contains `[:h1 (:text @app-state)]` and change the `h1` to `p`. Does the page update? Why is this behavior different from changing the definition of `app-state`?
 
 ### Display/Business Logic Separation
 
