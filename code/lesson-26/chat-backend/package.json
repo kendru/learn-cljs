@@ -5,7 +5,7 @@
     "db-migrate-pg": "^1.0.0",
     "nodemon": "^2.0.3",
     "pg": "^7.18.2",
-    "ws": "^7.2.3"
+    "ws": "^7.4.6"
   },
   "scripts": {
     "migrations:create": "db-migrate create --config config/db.json",
