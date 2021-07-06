@@ -168,7 +168,7 @@ One common use case is to implement a timeout by alternating between a channel t
 
 ```clojure
 (go
-  (let [[val ch] (alts! long-task-ch (timeout 5000))]
+  (let [[val ch] (alts! [long-task-ch (timeout 5000)])]
     (if (= ch long-task-ch)
       (println "Task completed!" val)
       (println "Oh oh! Task timed out!"))))
