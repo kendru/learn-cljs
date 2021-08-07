@@ -54,7 +54,7 @@ Andrew has been writing Clojure code both personally and professionally since 20
         </a>
     </div>
     <div>
-        <a href="https://twitter.com/asmeredith" title="Follow on Twitter">
+        <a href="https://twitter.com/a4w_m6h" title="Follow on Twitter">
             <i class="fab fa-twitter" aria-hidden="true"></i>
         </a>
     </div>
