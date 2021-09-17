@@ -162,7 +162,7 @@ first                                                       ;; <2>
 1. Symbol referring to a user-defined variable
 2. Symbol referring to a built-in function
 
-Of ClojureScript's data types, symbols are probably the most difficult to comprehend. They have a very meta quality about them, and they do not directly correspond to another familiar concept. Since they are not used very commonly in application code, we will not revisit symbols to the depth that we will with the other data types.
+Of ClojureScript's data types, symbols are probably the most difficult to comprehend. They have a very meta quality about them, and they do not directly correspond to another familiar concept. When ClojureScript code is evaluated, it will try to resolve a symbol to the thing that it names. Sometimes, we want to refer to a symbol itself rather than the thing that it names, in which case we can place a single quote in front of the symbol to "quote" it, instructing the ClojureScript reader to not evaluate it. Since they are not used very commonly in application code, we will not revisit symbols to the depth that we will with the other data types.
 
 ### Lists
 

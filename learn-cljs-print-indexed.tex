@@ -1653,7 +1653,8 @@ first                                                       %\circled{2}%
 
 Of ClojureScript's data types, symbols are probably the most difficult
 to comprehend. They have a very meta quality about them, and they do not
-directly correspond to another familiar concept. Since they are not used
+directly correspond to another familiar concept. When ClojureScript code is evaluated, it will try to resolve a symbol to the thing that it names. Sometimes, we want to refer to a symbol itself rather than the thing that it names, in which case we can place a single quote in front of the symbol to "quote" it, instructing the ClojureScript reader to not evaluate it.
+Since they are not used
 very commonly in application code, we will not revisit symbols to the
 depth that we will with the other data types.
 
@@ -3407,8 +3408,8 @@ In order to change to a different namespace, we can use the
 \texttt{in-ns} function. This function takes as an argument a
 \emph{symbol} with the name of the namespace to enter and changes the
 REPL's environment to that namespace. For example, to change into the
-main namespace of our application, we can simply enter,
-\texttt{(in-ns\ \textquotesingle{}learn-cljs.weather)}. To draw an
+main namespace of our application, we can simply enter
+\texttt{(in-ns\ \textquotesingle{}learn-cljs.weather)}. \footnote{Recall from Lesson 3 that a symbol must be quoted if we do not want ClojureScript to interpret it as a name for some var.} To draw an
 analogy to a filesystem, a namespace is like a directory, defining a var
 with \texttt{def} or \texttt{defn} is like creating a new file, and
 \texttt{in-ns} is like using \texttt{cd} to change into a new directory.

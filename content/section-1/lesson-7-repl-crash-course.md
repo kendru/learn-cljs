@@ -75,7 +75,7 @@ nil
   </pre>
 </aside>
 
-In order to change to a different namespace, we can use the `in-ns` function. This function takes as an argument a _symbol_ with the name of the namespace to enter and changes the REPL's environment to that namespace. For example, to change into the main namespace of our application, we can simply enter, `(in-ns 'learn-cljs.weather)`. To draw an analogy to a filesystem, a namespace is like a directory, defining a var with `def` or `defn` is like creating a new file, and `in-ns` is like using `cd` to change into a new directory. Once in the new namespace, we have access to all the vars defined in it, and any new vars that we define will be defined in that namespace.
+In order to change to a different namespace, we can use the `in-ns` function. This function takes as an argument a _symbol_ with the name of the namespace to enter and changes the REPL's environment to that namespace. For example, to change into the main namespace of our application, we can simply enter `(in-ns 'learn-cljs.weather)`.[^1] To draw an analogy to a filesystem, a namespace is like a directory, defining a var with `def` or `defn` is like creating a new file, and `in-ns` is like using `cd` to change into a new directory. Once in the new namespace, we have access to all the vars defined in it, and any new vars that we define will be defined in that namespace.
 
 #### You Try It
 
@@ -159,3 +159,5 @@ In this lesson, we explored how to use the REPL to interact with a web page. We 
 - Start a Figwheel REPL from the command line
 - Understand how code entered in the REPL gets evaluated
 - Write and refactor code in the REPL before committing it to our project
+
+[^1]: Recall from [Lesson 3](/section-0/lesson-3-building-blocks/#symbols) that a symbol must be quoted if we do not want ClojureScript to interpret it as a name for some var.
