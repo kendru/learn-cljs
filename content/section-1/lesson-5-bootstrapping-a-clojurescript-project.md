@@ -86,7 +86,7 @@ $ clj -m cljs.main --compile my-cljs-project.core --repl
 When you run this command, you should be greeted by an empty page that pops up a "Hello World" alert! Let's break this down so that we understand what this command is doing.
 
 - `clj` This invokes the Clojure command-line tool.
-- `-m clj.main` This flag specifies the function to run. When we included `org.clojure/clojurescript` as a dependency in the `deps.edn` file, it instructed `clj` to download the ClojureScript compiler. `clj.main` is the function that invokes the compiler itself. The remaining flags are interpreted by the ClojureScript compiler rather than `clj` itself.
+- `-m cljs.main` This flag specifies the function to run. When we included `org.clojure/clojurescript` as a dependency in the `deps.edn` file, it instructed `clj` to download the ClojureScript compiler. `cljs.main` is the function that invokes the compiler itself. The remaining flags are interpreted by the ClojureScript compiler rather than `clj` itself.
 - `--compile my-cljs-project.core` This specifies the namespace of the "entry point" of our application. Since we only have one file, we specify its namespace. Note that the namespace matches what we specified at the top of our `core.cljs` file.
 - `--repl` This flag does two things: first, it launches a web server to serve the `index.html` file and the compiled JavaScript; second, it starts a REPL, an interactive interpreter that we will learn about in [Lesson 7](/section-1/lesson-7-repl-crash-course/).
 
@@ -120,7 +120,7 @@ With this alias in place, we can run our application with the following command:
 
 Sticking with the Clojure philosophy of composing more advanced functionality from small, simple pieces, `clj` is a building block that has a well-defined purpose: managing dependencies and running Clojure code (including the ClojureScript compiler). There are other more fully-featured tools for project management, but with more features come more complexity. For this book, we will be sticking with `clj` and a tool called Figwheel, which we will introduce in the next lesson.
 
-When we invoke `clj -m cljs.main ...`, several things happen. First, any dependencies specified in `deps.main` will be downloaded. This download will only happen on the initial run, and the packages will be cached locally for subsequent runs. Second, the Java Virtual Machine will be started and the Clojure compiler loaded. Next, Clojure will load the code specified by the `-m` flag. In our case, we specify `cljs.main`, which is the entrypoint for the ClojureScript compiler. This code is available to us because we added the package for the ClojureScript compiler (`org.clojure/clojurescript`) to `deps.edn`.
+When we invoke `clj -m cljs.main ...`, several things happen. First, any dependencies specified in `deps.edn` will be downloaded. This download will only happen on the initial run, and the packages will be cached locally for subsequent runs. Second, the Java Virtual Machine will be started and the Clojure compiler loaded. Next, Clojure will load the code specified by the `-m` flag. In our case, we specify `cljs.main`, which is the entrypoint for the ClojureScript compiler. This code is available to us because we added the package for the ClojureScript compiler (`org.clojure/clojurescript`) to `deps.edn`.
 
 After the `-m cljs.main` flag, the rest of the flags are interpreted by the ClojureScript compiler rather than `clj` itself. We will not present a reference for the ClojureScript compiler options here, but there is an excellent official reference at https://clojurescript.org/reference/repl-and-main. Instead, we will discuss the options that we need as they arise through the course of the coming lessons.
 
@@ -132,8 +132,8 @@ Now that we have had a whirlwind tour of `clj`, let's dive in and create our fir
 {:aliases
  {:new {:extra-deps {seancorfield/clj-new
                      {:mvn/version "1.1.243"}}
-        :exec-fn clj-new/create}
-        :exec-args {}}}
+        :exec-fn clj-new/create
+        :exec-args {}}}}
 ```
 
 _~/.clojure/deps.edn_
@@ -207,7 +207,8 @@ We will dig in to the rest of this file over the next couple of lessons, as we s
 
 1. Take the file path relative to the source directory
 2. Replace the path separator ("/" on Unix-like systems and "\" on Windows) with a dot, "."
-3. Replace hyphens, "-", with underscores "_"
+3. Replace underscores, "_", with hyphens "-"
+4. Drop the filename extension, ".cljs"
 
 ![Filename to Namespace Convention](/img/lesson5/namespace-transformation.png)
 
@@ -217,7 +218,7 @@ _Filename to Namespace Convention_
 >
 > One detail that sometimes trips up newcomers to ClojureScript is the fact that we name directories in the project with underscores but we name namespaces with hyphens. This is a convention borrowed from Clojure, which compiles namespaces into Java classes, naming the classes according to their file path. Since hyphens are not allowed in Java class names, they are not allowed in the file paths either. ClojureScript follows Clojure's lead and requires that hyphens in a namespace be converted to underscores in the filesystem path. It is a quirk, but it is one that is easy to live with once we are aware of it.
 
-The `resources/` directory contains all of the assets that we need to serve a website, including an `index.html`, a stylesheet (which is empty by default), and once we build our project, and a page for hosting a test runner. The `index.html` was created with a single div that we can load our application into, and it includes the JavaScript file that will load our application with its dependencies.
+The `resources/` directory contains all of the assets that we need to serve a website, including an `index.html`, a stylesheet (which is empty by default), and once we build our project, a page for hosting a test runner. The `index.html` was created with a single div that we can load our application into, and it includes the JavaScript file that will load our application with its dependencies.
 
 ### Quick Review
 
