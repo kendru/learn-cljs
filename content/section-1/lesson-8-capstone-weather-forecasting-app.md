@@ -10,7 +10,7 @@ Over the past couple of lessons, we have been getting familiar with the most com
 
 ---
 
-*In this lesson:*
+**In this lesson:**
 
 - Apply our knowledge of ClojureScript tools to create a new project
 - Develop a ClojureScript application with a REPL-driven workflow

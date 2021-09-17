@@ -10,7 +10,7 @@ In this section, we have been learning how to use the Reagent framework to apply
 
 ---
 
-_In This Lesson:_
+**In this lesson:**
 
 - Create a flexible component-based UI
 - Handle state management with Reagent

@@ -11,7 +11,7 @@ Congratulations! At this point, we have learned enough ClojureScript to write pr
 
 ---
 
-*In This Lesson:*
+**In this lesson:**
 
 - Design a non-trivial application in terms of state, events, and components
 - Interact with a WebSocket API

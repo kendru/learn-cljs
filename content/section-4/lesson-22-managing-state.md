@@ -10,7 +10,7 @@ This lesson has been a long time coming, and it is a critical one. By this point
 
 ---
 
-_In this lesson:_
+**In this lesson:**
 
 - Use atoms to manage values that change over time
 - Observe and react to changes in state

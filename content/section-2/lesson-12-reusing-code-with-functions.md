@@ -10,7 +10,7 @@ ClojureScript is a functional programming language. The functional programming p
 
 ---
 
-*In this lesson:*
+**In this lesson:**
 
 - Learn ClojureScript's most fundamental programming construct
 - Write beautiful code by extracting common code into functions

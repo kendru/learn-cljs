@@ -10,7 +10,7 @@ Over the past few lessons, we have learned the core tools for working with data 
 
 ---
 
-*In This Lesson:*
+**In this lesson:**
 
 - Create a complete ClojureScript application without any frameworks
 - Build HTML out of plain ClojureScript data structures

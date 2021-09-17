@@ -10,7 +10,7 @@ In contrast to JavaScript's multi-paradigm nature, ClojureScript promises a func
 
 ---
 
-*In this lesson:*
+**In this lesson:**
 
 - Understand why React is the perfect platform for functional web applications
 - See how React's DOM diffing allows us to write declarative UIs

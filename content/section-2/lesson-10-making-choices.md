@@ -10,7 +10,7 @@ Up to this point, we have mostly been writing code that has some starting point 
 
 ---
 
-*In this lesson:*
+**In this lesson:**
 
 - Apply `if` and `when` to make simple choices
 - Become familiar with the concept of truthiness and how it is defined

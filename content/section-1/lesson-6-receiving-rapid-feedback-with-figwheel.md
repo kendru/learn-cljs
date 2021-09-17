@@ -10,7 +10,7 @@ In the last lesson, we only executed one command, but we already have a basic pr
 
 ---
 
-_In this lesson:_
+**In this lesson:**
 
 - Learn how interactive development is a cornerstone of ClojureScript
 - Use Figwheel to compile and load it into the browser instantly

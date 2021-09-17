@@ -16,7 +16,7 @@ There is a lot that we can do with just these few functions. In fact, we rarely 
 
 ---
 
-*In this lesson:*
+**In this lesson:**
 
 - Aggregating values over an entire sequence
 - Writing reducing functions

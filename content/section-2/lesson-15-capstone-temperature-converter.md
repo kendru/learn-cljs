@@ -10,7 +10,7 @@ Over the past few lessons, we have learned the basic concepts that we will need 
 
 ---
 
-*In this lesson:*
+**In this lesson:**
 
 - Create the structure of an app declaratively in HTML
 - Apply our knowledge of basic ClojureScript to create a widget-like app

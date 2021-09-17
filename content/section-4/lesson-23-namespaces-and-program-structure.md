@@ -10,7 +10,7 @@ In ClojureScript, the unit of modularity is the namespace. A namespace is simply
 
 ---
 
-*In this lesson:*
+**In this lesson:**
 
 - Organize functions and data into namespaces
 - Architect a logical and intuitive project structure

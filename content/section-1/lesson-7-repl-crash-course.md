@@ -10,7 +10,7 @@ In the previous lesson, we learned how to use Figwheel to reload code whenever a
 
 ---
 
-*In this lesson:*
+**In this lesson:**
 
 - Understand what a REPL is and to use it
 - Use Figwheel's REPL to experiment with new code

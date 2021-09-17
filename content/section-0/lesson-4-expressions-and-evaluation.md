@@ -10,7 +10,7 @@ As we briefly touched on in the previous lesson, the concept of an _expression_ 
 
 ---
 
-_In this lesson:_
+**In this lesson:**
 
 - Learn about s-expressions and identify them
 - Define the difference between a statement and an expression

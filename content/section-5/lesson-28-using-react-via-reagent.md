@@ -12,7 +12,7 @@ re-render when our state is updated.
 
 ---
 
-_In this lesson:_
+**In this lesson:**
 
 - Defining a data model using (reactive) atoms
 - Querying and updating application state

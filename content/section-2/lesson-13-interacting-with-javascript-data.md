@@ -10,7 +10,7 @@ One of the advantages of ClojureScript is its excellent interoperability with Ja
 
 ---
 
-_In this lesson:_
+**In this lesson:**
 
 - Convert between ClojureScript and JavaScript data types
 - Integrate ClojureScript code with an existing JavaScript codebase

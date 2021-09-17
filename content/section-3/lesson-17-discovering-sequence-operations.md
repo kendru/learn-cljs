@@ -10,7 +10,7 @@ Programming is all about abstractions. The entire field of software engineering 
 
 ---
 
-*In this lesson:*
+**In this lesson:**
 
 - Apply a transformation to every element in a sequence
 - Efficiently convert between sequence types

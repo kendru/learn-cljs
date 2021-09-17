@@ -10,7 +10,7 @@ ClojureScript takes what we think we know about variables and turns it on its he
 
 ---
 
-*In this lesson:*
+**In this lesson:**
 
 - Understand the difference between an immutable value and a mutable variable
 - Learn the two primary ways of naming values - `def` and `let`

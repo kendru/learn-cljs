@@ -10,7 +10,7 @@ We would like to think of programming as an idealized discipline where we write 
 
 ---
 
-_In this lesson:_
+**In this lesson:**
 
 - Handle exceptional conditions with try/catch
 - Add metadata to errors

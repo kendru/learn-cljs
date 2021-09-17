@@ -10,7 +10,7 @@ Until this point, our discussion of ClojureScript has been largely theoretical. 
 
 ---
 
-*In this lesson:*
+**In this lesson:**
 
 - Walk through setting up a project from scratch
 - Learn how to use the ClojureScript compiler to build your code

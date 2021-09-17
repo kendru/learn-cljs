@@ -11,7 +11,7 @@ Asynchronous programming lives at the heart of web development. Almost every app
 
 ---
 
-_In this lesson:_
+**In this lesson:**
 
 - Learn about CSP, the concurrency model behind ClojureScript (and Go)
 - Think of concurrent problems in terms of processes

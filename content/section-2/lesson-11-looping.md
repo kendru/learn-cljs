@@ -10,7 +10,7 @@ In the last lesson, we looked at ClojureScript's versions of we usually call bra
 
 ---
 
-*In this lesson:*
+**In this lesson:**
 
 - Survey ClojureScript's various looping structures
 - Learn to think in terms of sequences

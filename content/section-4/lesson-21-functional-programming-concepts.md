@@ -11,7 +11,7 @@ ClojureScript sits at the intersection of functional programming and pragmatism.
 
 ---
 
-*In this lesson:*
+**In this lesson:**
 
 - Apply bottom-up design by composing small functions into larger ones
 - Make programs easier to reason about with functional purity

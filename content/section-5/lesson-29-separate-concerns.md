@@ -10,7 +10,7 @@ Two broad strategies can be used when building a Reagent application. The first 
 
 ---
 
-_In this lesson:_
+**In this lesson:**
 
 - Create decoupled components
 - Explore different messaging patterns for communicating within a UI

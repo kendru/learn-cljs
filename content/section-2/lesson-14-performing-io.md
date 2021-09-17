@@ -10,7 +10,7 @@ Web applications are all about interaction. Whether it is a form to gather simpl
 
 ---
 
-*In this lesson:*
+**In this lesson:**
 
 - Get user input from a webpage
 - Manipulate the DOM with Google Closure libraries

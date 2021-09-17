@@ -10,7 +10,7 @@ So far, we have been working with simple data types - strings, numbers, keywords
 
 ---
 
-*In this lesson:*
+**In this lesson:**
 
 - Using lists for managing ordered data
 - Using maps for looking up values by a key
