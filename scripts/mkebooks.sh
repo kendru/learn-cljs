@@ -1,5 +1,11 @@
 #!/bin/bash
 
+##
+## mkpdf: eBook generator.
+## 
+## This script is used to generate the eBook formats of
+## Learn ClojureScript from the Markdown sournces and assets.
+##
 ## To run on ubuntu:
 ## sudo apt-get install pandoc texlive-xetex
 ## 

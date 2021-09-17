@@ -3,11 +3,20 @@ title: Learn ClojureScript
 type: docs
 ---
 
+# Learn ClojureScript
+
 <div style="text-align:center;">
-    <img src="/img/learn-clojurescript-cover.jpg" alt="Learn ClojureScript Cover Image" title="Learn ClojureScript Cover Image" style="max-width:400px" />
+    <img src="/img/learn-clojurescript-cover.jpg" alt="Learn ClojureScript Cover Image" title="Learn ClojureScript" style="max-width:400px" />
 </div>
 
-# Learn ClojureScript
+<h3 style="text-align: center">Purchase Options:</h3>
+<div style="display:flex;align-items:center;justify-content:space-evenly;">
+    <a class="gumroad-button" href="https://gum.co/learn-cljs" target="_blank">Buy on Gumroad</a>
+    <a class="amazon-button" href="https://www.amazon.com/Learn-ClojureScript-Andrew-Stephen-Meredith/dp/1736717200" target="_blank">
+        <img src="/img/amazon-logo.png" alt="Amazon Logo" title="Buy on Amazon" />
+    </a>
+</div>
+
 
 ## Getting started with functional programming for the web
 
@@ -28,7 +37,7 @@ By the end of the book, you will have created:
 
 ## About the author
 
-Andrew has been writing Clojure code both personally and professionally since 2012. He lives in Colorado with his wife, four children, and a rabbit. Andrew works as a software engineer at [deref](https://www.deref.io/), fulfilling his lifelong dream of creating a database from scratch. Yes, he's that much of a nerd. When he has a chance to write a UI, he always uses ClojureScript (naturally).
+Andrew has been writing Clojure code both personally and professionally since 2012. He lives in Colorado with his wife, four children, and a rabbit. Andrew is a software engineer who is fulfilling his lifelong dream of creating a database from scratch. Yes, he's that much of a nerd. When he has a chance to write a UI, he always uses ClojureScript (naturally).
 
 <--->
 

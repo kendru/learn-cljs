@@ -1,3 +1,8 @@
+/**
+ * This was a half-baked attempt to generate a LaTeX file directly from the markdown
+ * in the repository, but it was a bad idea, and I should just use Pandoc.
+ */
+
 const fs = require('fs').promises;
 
 const makeNode = (nodeType, ...children) => {
