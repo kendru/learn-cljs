@@ -2342,7 +2342,7 @@ is powerful enough to use even on a large project. We will use it for
 managing dependencies, compiling, and testing our projects. Using a
 single tool for all of these concerns should come as a welcome change
 from the proliferation of tools in the JavaScript landscape. Before
-proceeding any farther, we should install Java and Clojure.\index{Clojure} Since
+proceeding any further, we should install Java and Clojure.\index{Clojure} Since
 instructions change slightly with each release, readers are encouraged
 to follow the most recent instructions at the official
 Clojure Getting Started Guide\footnote{https://clojure.org/guides/getting\_started}. One interesting feature of ClojureScript is that we do
@@ -3831,7 +3831,7 @@ input will stay synchronized.
 [:input {:type "text"
          :placeholder "Postal Code"
          :value (:postal-code @app-state)
-         :on-change #(swap! app-state assoc :postal-code (-> % .-target .-value))}]
+         :on-change #(swap! app-state assoc :postal-code (-> %\%% .-target .-value))}]
 \end{lstlisting}
 
 Note that this flow is different from the ``2-way'' data binding\index{data binding!2-way} of
@@ -4942,7 +4942,7 @@ gives us something like this:
                     "Game Over ")))
     (io/println term (:title scene))                       %\circled{5}%
     (io/println term (:dialog scene))
-    (io/read term #(on-answer game current %))))           %\circled{6}%
+    (io/read term #(on-answer game current %\%%))))        %\circled{6}%
 \end{lstlisting}
 
 \begin{enumerate}[label=\protect\circled{\arabic*}]
@@ -6825,7 +6825,7 @@ cljs.user=> #js {"isJavaScript" true, "type" "object"}     %\circled{2}%
 \end{enumerate}
 
 The \texttt{js-obj} function takes an even number of arguments, which
-expected to be pairs of key, value. The literal syntax looks like a
+are expected to be pairs of key, value. The literal syntax looks like a
 ClojureScript map proceeded by \texttt{\#js}. Both of these forms
 produce identical JavaScript objects, but the literal syntax is by far
 the most common.
@@ -7041,7 +7041,7 @@ var books = [
   Write an expression that will retrieve the value, ``Scheme'':
 \item
   Write an expression that will have the side effect of changing the
-  title of, ``All About Animals'' to ``Dangerous Creatures''.
+  title ``All About Animals'' to ``Dangerous Creatures''.
 \end{itemize}
 
 
@@ -7064,7 +7064,7 @@ Possible Solution:
 \section{Summary}
 
 ClojureScript has a symbiotic relationship with JavaScript, and to
-effective use it, we must be comfortable interacting with the host
+effectively use it, we must be comfortable interacting with the host
 language. In this lesson, we looked at how to work with JavaScript data.
 We used both the ClojureScript REPL and the browser's JavaScript dev
 tools to walk through the process of converting between ClojureScript

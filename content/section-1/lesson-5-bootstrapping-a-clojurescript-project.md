@@ -218,7 +218,7 @@ _Filename to Namespace Convention_
 >
 > One detail that sometimes trips up newcomers to ClojureScript is the fact that we name directories in the project with underscores but we name namespaces with hyphens. This is a convention borrowed from Clojure, which compiles namespaces into Java classes, naming the classes according to their file path. Since hyphens are not allowed in Java class names, they are not allowed in the file paths either. ClojureScript follows Clojure's lead and requires that hyphens in a namespace be converted to underscores in the filesystem path. It is a quirk, but it is one that is easy to live with once we are aware of it.
 
-The `resources/` directory contains all of the assets that we need to serve a website, including an `index.html`, a stylesheet (which is empty by default), and once we build our project, a page for hosting a test runner. The `index.html` was created with a single div that we can load our application into, and it includes the JavaScript file that will load our application with its dependencies.
+The `resources/` directory contains all of the assets that we need to serve a website, including an `index.html` file, a stylesheet (which is empty by default), and once we build our project, a page for hosting a test runner. The `index.html` was created with a single div that we can load our application into, and it includes the JavaScript file that will load our application with its dependencies.
 
 ### Quick Review
 

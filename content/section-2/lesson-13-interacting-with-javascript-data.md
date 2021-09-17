@@ -145,7 +145,7 @@ _Constructing JavaScript Objects_
 1. Creating an object with the `js-obj` function
 2. Creating an object with the literal `#js {}` syntax
 
-The `js-obj` function takes an even number of arguments, which expected to be pairs of key, value. The literal syntax looks like a ClojureScript map proceeded by `#js`. Both of these forms produce identical JavaScript objects, but the literal syntax is by far the most common.
+The `js-obj` function takes an even number of arguments, which are expected to be pairs of key, value. The literal syntax looks like a ClojureScript map proceeded by `#js`. Both of these forms produce identical JavaScript objects, but the literal syntax is by far the most common.
 
 We can get properties on JavaScript objects with the property access syntax: `(.-property object)`, and we can use the `set!` function to update a property.
 
@@ -292,7 +292,7 @@ var books = [
 ```
 
 - Write an expression that will retrieve the value, "Scheme":
-- Write an expression that will have the side effect of changing the title of, "All About Animals" to "Dangerous Creatures".
+- Write an expression that will have the side effect of changing the title "All About Animals" to "Dangerous Creatures".
 
 ### Challenge
 
@@ -309,7 +309,7 @@ Possible Solution:
 
 ## Summary
 
-ClojureScript has a symbiotic relationship with JavaScript, and to effective use it, we must be comfortable interacting with the host language. In this lesson, we looked at how to work with JavaScript data. We used both the ClojureScript REPL and the browser's JavaScript dev tools to walk through the process of converting between ClojureScript and JavaScript data structures as well as directly modifying JavaScript objects and arrays. We are now able to:
+ClojureScript has a symbiotic relationship with JavaScript, and to effectively use it, we must be comfortable interacting with the host language. In this lesson, we looked at how to work with JavaScript data. We used both the ClojureScript REPL and the browser's JavaScript dev tools to walk through the process of converting between ClojureScript and JavaScript data structures as well as directly modifying JavaScript objects and arrays. We are now able to:
 
 - Create JavaScript objects from ClojureScript code
 - Modify JavaScript objects and arrays
