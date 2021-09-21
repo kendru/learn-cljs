@@ -10,29 +10,9 @@ $if(latex-dir-rtl)$
 $endif$
 $endif$
 %
-\documentclass[
-$if(fontsize)$
-  $fontsize$,
-$endif$
-$if(lang)$
-  $babel-lang$,
-$endif$
-$if(papersize)$
-  $papersize$paper,
-$endif$
-$if(beamer)$
-  ignorenonframetext,
-$if(handout)$
-  handout,
-$endif$
-$if(aspectratio)$
-  aspectratio=$aspectratio$,
-$endif$
-$endif$
-$for(classoption)$
-  $classoption$$sep$,
-$endfor$
-]{$documentclass$}
+
+\documentclass[12pt,twoside,openright]{memoir}
+
 $if(beamer)$
 $if(background-image)$
 \usebackgroundtemplate{%
@@ -296,11 +276,7 @@ $endif$
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-$if(numbersections)$
-\setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$5$endif$}
-$else$
-\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
-$endif$
+
 $if(beamer)$
 $else$
 $if(block-headings)$
@@ -368,6 +344,54 @@ $if(csl-refs)$
   {\par}
 $endif$
 
+\definecolor{quotemark}{gray}{0.7}
+\makeatletter
+\def\fquote{%
+    \@ifnextchar[{\fquote@i}{\fquote@i[]}%]
+           }%
+\def\fquote@i[#1]{%
+    \def\tempa{#1}%
+    \@ifnextchar[{\fquote@ii}{\fquote@ii[]}%]
+                 }%
+\def\fquote@ii[#1]{%
+    \def\tempb{#1}%
+    \@ifnextchar[{\fquote@iii}{\fquote@iii[]}%]
+                      }%
+\def\fquote@iii[#1]{%
+    \def\tempc{#1}%
+    \vspace{1em}%
+    \noindent%
+    \begin{list}{}{%
+         \setlength{\leftmargin}{0.1\textwidth}%
+         \setlength{\rightmargin}{0.1\textwidth}%
+                  }%
+         \item[]%
+         \begin{picture}(0,0)%
+         \put(-15,-5){\makebox(0,0){\scalebox{3}{\textcolor{quotemark}{``}}}}%
+         \end{picture}%
+         \begingroup\itshape}%
+ %%%%********************************************************************
+ \def\endfquote{%
+ \endgroup\par%
+ \makebox[0pt][l]{%
+ \hspace{0.8\textwidth}%
+ \begin{picture}(0,0)(0,0)%
+ \put(15,15){\makebox(0,0){%
+ \scalebox{3}{\color{quotemark}''}}}%
+ \end{picture}}%
+ \ifx\tempa\empty%
+ \else%
+    \ifx\tempc\empty%
+       \hfill\rule{100pt}{0.5pt}\\\mbox{}\hfill\tempa,\ \emph{\tempb}%
+   \else%
+       \hfill\rule{100pt}{0.5pt}\\\mbox{}\hfill\tempa,\ \emph{\tempb},\ \tempc%
+   \fi\fi\par%
+   \vspace{0.5em}%
+ \end{list}%
+ }%
+ \makeatother
+
+
 $if(title)$
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
@@ -397,132 +421,179 @@ $if(logo)$
 $endif$
 $endif$
 
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\graphicspath{ {./static/img/} }
+\usepackage[normalem]{ulem}
+
+%%%%********************************************************************
+% fancy quotes
+\definecolor{quotemark}{gray}{0.7}
+\makeatletter
+\def\fquote{%
+    \@ifnextchar[{\fquote@i}{\fquote@i[]}%]
+           }%
+\def\fquote@i[#1]{%
+    \def\tempa{#1}%
+    \@ifnextchar[{\fquote@ii}{\fquote@ii[]}%]
+                 }%
+\def\fquote@ii[#1]{%
+    \def\tempb{#1}%
+    \@ifnextchar[{\fquote@iii}{\fquote@iii[]}%]
+                      }%
+\def\fquote@iii[#1]{%
+    \def\tempc{#1}%
+    \vspace{1em}%
+    \noindent%
+    \begin{list}{}{%
+         \setlength{\leftmargin}{0.1\textwidth}%
+         \setlength{\rightmargin}{0.1\textwidth}%
+                  }%
+         \item[]%
+         \begin{picture}(0,0)%
+         \put(-15,-5){\makebox(0,0){\scalebox{3}{\textcolor{quotemark}{``}}}}%
+         \end{picture}%
+         \begingroup\itshape}%
+ %%%%********************************************************************
+ \def\endfquote{%
+ \endgroup\par%
+ \makebox[0pt][l]{%
+ \hspace{0.8\textwidth}%
+ \begin{picture}(0,0)(0,0)%
+ \put(15,15){\makebox(0,0){%
+ \scalebox{3}{\color{quotemark}''}}}%
+ \end{picture}}%
+ \ifx\tempa\empty%
+ \else%
+    \ifx\tempc\empty%
+       \hfill\rule{100pt}{0.5pt}\\\mbox{}\hfill\tempa,\ \emph{\tempb}%
+   \else%
+       \hfill\rule{100pt}{0.5pt}\\\mbox{}\hfill\tempa,\ \emph{\tempb},\ \tempc%
+   \fi\fi\par%
+   \vspace{0.5em}%
+ \end{list}%
+ }%
+ \makeatother
+ %%%%********************************************************************
+
+\setlength{\parindent}{0em}
+\nonzeroparskip
+
+\usepackage[sf, raggedright]{titlesec}
+
+\makeatletter
+\def\maketitle{%
+  \null
+  \thispagestyle{empty}%
+  %%\vfill
+  \begin{center}
+  \includegraphics[width=12in]{learn-clojurescript-cover}
+  \end{center}%
+  \vfill
+  \null
+  \clearpage
+  }
+\makeatother
+\date{}
+
+\makeatletter
+\renewcommand{\@chapapp}{Lesson}
+\makeatother
+
 \begin{document}
 
-\begin{titlepage}
-\newgeometry{top=2cm, right=4cm, bottom=3cm, left=4cm}
-\definecolor{titlepage-color}{rgb}{18,76,128}
-\newpagecolor{titlepage-color}\afterpage{\restorepagecolor}
-\newcommand{\colorRule}[3][black]{\textcolor[HTML]{#1}{\rule{#2}{#3}}}
-\begin{flushleft}
-\noindent
-\\[-1em]
-\color[HTML]{5F5F5F}
-\makebox[0pt][l]{\colorRule[$if(titlepage-rule-color)$$titlepage-rule-color$$else$435488$endif$]{1.3\textwidth}{$if(titlepage-rule-height)$$titlepage-rule-height$$else$4$endif$pt}}
-\par
-\noindent
+\frontmatter
 
-{
-  \setstretch{1.4}
-  \vfill
-  \noindent {\huge \textbf{\textsf{Learn ClojureScript}}}
-  \vskip 1em
-  {\Large \textsf{Getting started with functional programming for the web}}
-  \vskip 2em
-  \noindent {\Large \textsf{Andrew Meredith}}
-  \vfill
-}
-
-$if(gendate)$
-\textsf{Generated $gendate$}
-$endif$
-\end{flushleft}
-\end{titlepage}
-\restoregeometry
 
 %%
 %% end titlepage
 %%
 
-$if(has-frontmatter)$
-\frontmatter
-$endif$
-$if(title)$
-$if(beamer)$
-\frame{\titlepage}
-$else$
 \maketitle
-$endif$
-$if(abstract)$
-\begin{abstract}
-$abstract$
-\end{abstract}
-$endif$
-$endif$
 
 $for(include-before)$
 $include-before$
 
 $endfor$
-$if(toc)$
-$if(toc-title)$
-\renewcommand*\contentsname{$toc-title$}
-$endif$
-$if(beamer)$
-\begin{frame}[allowframebreaks]
-$if(toc-title)$
-  \frametitle{$toc-title$}
-$endif$
-  \tableofcontents[hideallsubsections]
-\end{frame}
-$else$
-{
-$if(colorlinks)$
-\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$$endif$}
-$endif$
-\setcounter{tocdepth}{$toc-depth$}
+
+\null\vfill
+
+\begin{flushleft}
+\textit{Learn ClojureScript: Functional programming for the web}
+
+© Copyright 2021 by Andrew Meredith.
+
+ISBN--13: 978-1-7367172-2-6
+
+\bigskip
+All rights reserved. With the exception of the code examples, no part of this book may be reproduced in any form by any electronic or mechanical means (including photocopying, recording, or information storage and retrieval) without permission in writing (whether in physical or signed electronic form) from the publisher. All code examples are licensed under a \emph{Creative Commons Attribution 4.0 International License (CC BY 4.0)}. See \texttt{https://creativecommons.org/licenses/by/4.0/} for details. Permission is hereby granted to reproduce any portion of this book for any and all educational uses. For all other uses, permission may be obtained by submitting an electronic request via email to \texttt{publisher@learn-clojurescript.com} or a written request to:
+
+\bigskip
+Merry Kraken Press\linebreak
+Attn: Publisher\linebreak
+10470 Holly Springs Pl.\linebreak
+Peyton, CO 80831\linebreak
+
+\bigskip
+Typeset using XeLaTeX, based on the memoir class. PT Serif was used as the primary body font, Oswald for headings and captions, and Fira Code for code listings and verbatim text.
+
+\includegraphics[center]{merry-kraken-bw}
+
+\end{flushleft}
+
+\clearpage
+
+\thispagestyle{empty}%
+\begin{flushright}
+\normalfont
+{\Large\textbf{\textsf{Praise for \emph{Learn ClojureScript}}}\par}%
+\hrulefill\par
+\vskip 2cm
+
+\begin{fquote}[Brandon Bloom][CEO, Deref Inc.]Discovering Clojure has had a profound impact on my career, forever changing how I think about programming. \emph{Learn ClojureScript} offers a smooth onramp and a good mix of both the practical and theoretical aspects of the language. With this book, web developers of all experience levels can enjoy their Clojure eureka moments while building on fun and interesting examples.
+\end{fquote}
+
+\begin{fquote}[Kelvin Mai][Full-Stack Engineer]\emph{Learn ClojureScript} covers everything necessary without being overwhelming. The book is perfect for beginners to the language, and it's a resource I wished was around when I got into the world of Clojure and ClojureScript.
+\end{fquote}
+
+\begin{fquote}[Roger Erens][Software Engineer]This is the gentlest introduction that the ClojureScript ecosystem offers. The capstone projects give you what you need to get a ClojureScript frontend up and running.
+\end{fquote}
+
+
+\end{flushright}
+\vfill
+
+\clearpage
+
 \tableofcontents
-}
-$endif$
-$endif$
-$if(lot)$
-\listoftables
-$endif$
-$if(lof)$
-\listoffigures
-$endif$
-$if(linestretch)$
-\setstretch{$linestretch$}
-$endif$
-$if(has-frontmatter)$
+
+\clearpage
+
+%\normalfont
+
+\section{Acknowledgements}
+
+This book has been a long-running project, and many people have been instrumental in making it a reality.
+First, I would like to thank my loving and patient wife, Diana. She has encouraged me throughout this process,
+and I know that I would never have finished if it were not for her.
+
+This book started as a project for a traditional publisher. That being the case, I had several editors who
+invested a ton of time and energy into taking a rough manuscript and making it something well worth readings.
+I would specifically like to thank Kristen Watterson and Andrew Warren for patiently working with me through
+multiple revisions.
+
+Finally, I would like to thank everyone who read the book online and sent me feedback. I would especially like
+to thank Roger Erens for the numerous pull requests and emails that he sent with corrections and suggestions
+for improvements. Without Roger's help, this book would have at least 50 or 60 more \sout{tyos} typos and
+grammatical mistakes. I would also like to thank everyone who pre-ordered the book and made it possible for me
+to create a physical book in addition to the online version.
+
+\cleardoublepage
+
+
 \mainmatter
-$endif$
 $body$
 
-$if(has-frontmatter)$
-\backmatter
-$endif$
-$if(natbib)$
-$if(bibliography)$
-$if(biblio-title)$
-$if(has-chapters)$
-\renewcommand\bibname{$biblio-title$}
-$else$
-\renewcommand\refname{$biblio-title$}
-$endif$
-$endif$
-$if(beamer)$
-\begin{frame}[allowframebreaks]{$biblio-title$}
-  \bibliographytrue
-$endif$
-  \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
-$if(beamer)$
-\end{frame}
-$endif$
-
-$endif$
-$endif$
-$if(biblatex)$
-$if(beamer)$
-\begin{frame}[allowframebreaks]{$biblio-title$}
-  \bibliographytrue
-  \printbibliography[heading=none]
-\end{frame}
-$else$
-\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
-$endif$
-
-$endif$
 $for(include-after)$
 $include-after$
 
