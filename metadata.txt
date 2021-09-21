@@ -1,0 +1,6 @@
+---
+title: Learn ClojureScript
+author: Andrew Meredith
+lang: en-US
+cover-image: static/img/learn-clojurescript-cover.jpg
+---

@@ -277,7 +277,7 @@ In this example, we see that the original `blog` variable is untouched. We stack
 > The author once worked on a team responsible for a very large JavaScript application. That team discovered that unexpected mutation was the cause of so many defects that they started keeping a tally of every hour spent finding and fixing bugs that were due to mutable data. The team switched to the Immutable.js library when their tallies no longer fit on the whiteboard.
 
 <div style="text-align:center">
-  <img alt="Keep Calm and Use Immutable Data" title="Keep Calm and Use Immutable Data" src="/img/lesson21/keep-calm.png">
+  <img alt="Keep Calm and Use Immutable Data" title="Keep Calm and Use Immutable Data" src="/img/lesson21/keep-calm.png" />
 </div>
 
 ## Functional Design Patterns

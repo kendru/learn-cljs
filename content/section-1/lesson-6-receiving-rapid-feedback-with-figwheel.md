@@ -116,7 +116,7 @@ If we save the file again, we'll see that nothing in the browser changes. The re
 ### You Try
 
 - Change the `hello-world` component to render a `<p>` tag instead
-- Create a new component called `greeter` that renders, "Hello, <YOUR_NAME>" and update the call to `rdom/render` to use `greeter` instead of `hello-world`.
+- Create a new component called `greeter` that renders, "Hello, &lt;YOUR_NAME&gt;" and update the call to `rdom/render` to use `greeter` instead of `hello-world`.
 
 > _Do I need an IDE?_
 >
