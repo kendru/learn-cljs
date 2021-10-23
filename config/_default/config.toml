@@ -2,6 +2,7 @@ baseURL = "https://www.learn-clojurescript.com/"
 languageCode = "en-us"
 title = "Learn ClojureScript"
 theme = "book"
+googleAnalytics = "G-P3H4NN3MM8"
 
 disableKinds = ['taxonomy', 'taxonomyTerm']
 pygmentsCodeFences = true
