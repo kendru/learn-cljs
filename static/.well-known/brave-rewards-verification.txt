@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: learn-clojurescript.com
+Token: 3c51fd330bc67879dab261b3d33d647ef8d161d848a8682bbdccf15fff991da2
