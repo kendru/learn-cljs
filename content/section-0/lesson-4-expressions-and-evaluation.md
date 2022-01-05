@@ -72,7 +72,7 @@ At this point, we can begin to see that all of the parentheses serve a purpose a
 
 ### Understanding Expressions
 
-Being a functional programming language, ClojureScript emphasizes _expressions_ rather than statements. That is, everything in ClojureScript _evaluates_ to some concrete value. Whereas JavaScript allows statements that do not yield a value and functions that do not return anything (rather, that return `undefined`, every piece of ClojureScript code - from a simple number to an entire program - is evaluated to produce some value.
+Being a functional programming language, ClojureScript emphasizes _expressions_ rather than statements. That is, everything in ClojureScript _evaluates_ to some concrete value. Whereas JavaScript allows statements that do not yield a value and functions that do not return anything (rather, that return `undefined`), every piece of ClojureScript code - from a simple number to an entire program - is evaluated to produce some value.
 
 Let us consider some JavaScript statements that are not expressions and do not return anything:
 
