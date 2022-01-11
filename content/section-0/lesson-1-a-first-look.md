@@ -53,7 +53,7 @@ While this is a trivial example, it should be enough to see that ClojureScript s
 ### Quick Review
 
 - Does ClojureScript or JavaScript come with a more extensive standard library?
-- Does ClojureScript encourage an object-oriented style ot a functional style
+- Does ClojureScript encourage an object-oriented style or a functional style
   like _lodash_ and _ramda_?
 
 ## ClojureScript's Sweet Spots
@@ -62,7 +62,7 @@ While ClojureScript is a general-purpose programming language, it is not the bes
 
 ### Writing Single-Page Applications
 
-Clojure started out as a general-purpose application programming language for the JVM, so ClojureScript's heritage is based in application programming. Indeed we see that the constructs that make ClojureScript so valuable are precisely those that are necessary for application-type programs. Specifically, ClojureScript addresses the JavaScript's issues that start as minor annoyances and escalate to major issues as an application grows. Anyone who has maintained a large JavaScript application knows how difficult it is to address strategic architecture, module loading, cross-browser compatibility, library selection, tooling, and a whole host of other issues simultaneously.
+Clojure started out as a general-purpose application programming language for the JVM, so ClojureScript's heritage is based in application programming. Indeed we see that the constructs that make ClojureScript so valuable are precisely those that are necessary for application-type programs. Specifically, ClojureScript addresses JavaScript's issues that start as minor annoyances and escalate to major issues as an application grows. Anyone who has maintained a large JavaScript application knows how difficult it is to address strategic architecture, module loading, cross-browser compatibility, library selection, tooling, and a whole host of other issues simultaneously.
 
 The problem with JavaScript is that each of these issues must be addressed separately, but your choice for solving one issue may affect others. For instance, the module system that we use is a separate concern from our build tool, which in turn is separate from our testing framework. However, we need to make sure that our build tool supports our testing framework, and both support our module system or can be easily integrated with it. Suddenly, the awesome app that we were planning to write gets stifled by the fact that we just spent 3 days trying to get the build set up. I can tell you that scenarios like this are commonplace, since I have experienced a number of them personally.
 
