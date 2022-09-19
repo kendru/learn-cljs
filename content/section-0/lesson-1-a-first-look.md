@@ -58,7 +58,7 @@ While this is a trivial example, it should be enough to see that ClojureScript s
 
 ## ClojureScript's Sweet Spots
 
-While ClojureScript is a general-purpose programming language, it is not the best tool for every job. If we just want to animate one or two elements on a webpage or implement an analytics snippet, ClojureScript is probably overkill (in fact, even jQuery may be overkill for such simple examples). How are we to decide, then, when to use ClojureScript and when to stick with JavaScript? In order decide whether to use ClojureScript on a project, we should have an idea of the types of projects in which it excels.
+While ClojureScript is a general-purpose programming language, it is not the best tool for every job. If we just want to animate one or two elements on a webpage or implement an analytics snippet, ClojureScript is probably overkill (in fact, even jQuery may be overkill for such simple examples). How are we to decide, then, when to use ClojureScript and when to stick with JavaScript? In order to decide whether to use ClojureScript on a project, we should have an idea of the types of projects in which it excels.
 
 ### Writing Single-Page Applications
 
@@ -66,7 +66,7 @@ Clojure started out as a general-purpose application programming language for th
 
 The problem with JavaScript is that each of these issues must be addressed separately, but your choice for solving one issue may affect others. For instance, the module system that we use is a separate concern from our build tool, which in turn is separate from our testing framework. However, we need to make sure that our build tool supports our testing framework, and both support our module system or can be easily integrated with it. Suddenly, the awesome app that we were planning to write gets stifled by the fact that we just spent 3 days trying to get the build set up. I can tell you that scenarios like this are commonplace, since I have experienced a number of them personally.
 
-Paridoxically, ClojureScript makes things easier by taking away choices. The module system is built in to the language. There is a built-in test framework. Most libraries provide an API that works on common data structures in a functional style, so they are simple to integrate. Additionally, the Google Closure library that is built in will cover most common concerns such as handling dates, DOM manipulation, HTML5 history, graphics, and ajax. While building a ClojureScript application is not nearly the adventure that building a JavaScript one is, it is certainly more productive.
+Paradoxically, ClojureScript makes things easier by taking away choices. The module system is built in to the language. There is a built-in test framework. Most libraries provide an API that works on common data structures in a functional style, so they are simple to integrate. Additionally, the Google Closure library that is built in will cover most common concerns such as handling dates, DOM manipulation, HTML5 history, graphics, and ajax. While building a ClojureScript application is not nearly the adventure that building a JavaScript one is, it is certainly more productive.
 
 ### Optimizing UIs
 
