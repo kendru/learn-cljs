@@ -58,7 +58,7 @@ While this is a trivial example, it should be enough to see that ClojureScript s
 
 ## ClojureScript's Sweet Spots
 
-While ClojureScript is a general-purpose programming language, it is not the best tool for every job. If we just want to animate one or two elements on a webpage or implement an analytics snippet, ClojureScript is probably overkill (in fact, even jQuery may be overkill for such simple examples). How are we to decide, then, when to use ClojureScript and when to stick with JavaScript? In order decide whether to use ClojureScript on a project, we should have an idea of the types of projects in which it excels.
+While ClojureScript is a general-purpose programming language, it is not the best tool for every job. If we just want to animate one or two elements on a webpage or implement an analytics snippet, ClojureScript is probably overkill (in fact, even jQuery may be overkill for such simple examples). How are we to decide, then, when to use ClojureScript and when to stick with JavaScript? In order to decide whether to use ClojureScript on a project, we should have an idea of the types of projects in which it excels.
 
 ### Writing Single-Page Applications
 
