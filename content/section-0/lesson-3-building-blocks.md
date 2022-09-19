@@ -68,7 +68,7 @@ ClojureScript has all of the primitive data types that we would expect from any 
 | Set       | Unordered collection of unique values                           | `#{true "ubiquity" 9.2}`                 |
 | nil       | The empty value                                                 | `nil`                                    |
 | Object    | JavaScript object - used for interop                            | `#js {"isJs" true, "isImmutable" false}` |
-| Array     | JavaScript array - user for interop                             | `#js ["Lions" "Tigers" "Bears"]`         |
+| Array     | JavaScript array - used for interop                             | `#js ["Lions" "Tigers" "Bears"]`         |
 
 We will now look at each data type in turn and see a few examples of its usage so that we can identify the various elements in any given piece of ClojureScript code.
 
