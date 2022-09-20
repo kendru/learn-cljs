@@ -93,7 +93,7 @@ When you run this command, you should be greeted by an empty page that pops up a
 
 > **NOTE**
 >
-> The terminal examples in this book are for a Unix-like environment such as OSX or Linux. Windows users may have to make minor adaptations the commands.
+> The terminal examples in this book are for a Unix-like environment such as OSX or Linux. Windows users may have to make minor adaptations of the commands.
 
 ### Using Aliases
 
