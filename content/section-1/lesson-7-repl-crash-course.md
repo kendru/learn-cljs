@@ -51,7 +51,7 @@ A ClojureScript REPL instantly compiles the code that we type in to JavaScript a
 
 _REPL-Driven Development Workflow_
 
-While we will not use this full workflow in this lesson, we will explore the REPL to see how we might use it for exploratory development. Once Figwheel is running and we have loaded our app in a browser, we should make sure that we can see both Figwheel and the browser. Since we we using the REPL extensively, let's take a moment to make sense of its command-line interface:
+While we will not use this full workflow in this lesson, we will explore the REPL to see how we might use it for exploratory development. Once Figwheel is running and we have loaded our app in a browser, we should make sure that we can see both Figwheel and the browser. Since we will be using the REPL extensively, let's take a moment to make sense of its command-line interface:
 
 ![Breaking Down the REPL](/img/lesson7/repl_breakdown.png)
 
