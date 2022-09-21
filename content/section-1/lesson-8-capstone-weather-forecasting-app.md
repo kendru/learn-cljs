@@ -96,7 +96,7 @@ Reagent runs this function and turns it into a structure that parallels the stru
 
 Any Clojure data structure can be wrapped in an atom simply by wrapping it with `(atom ...)`. Reagent components that make use of an atom will automatically re-render whenever the data inside the atom changes. This automatic re-rendering process is what enables us to write declarative components without worrying about tedious DOM manipulation.
 
-For the weather forecasting app, we will keep the entire app state inside an atom wrapping a ClojureScript map: `(atom {})`. This will enable us to manage all of the data that we will need in a single location. This approach, when contrasted with the various approaches for managing data in some of the most popular JavaScript frameworks, is quite simple. The state for our weather forecast app will be quite simple, consisting of a title, a postal code that will be entered by the user, and several temperatures that we will retrieve from a remote API. We can create a skeleton of this app state in the `cljs-weather.core` namespace.
+For the weather forecasting app, we will keep the entire app state inside an atom wrapping a ClojureScript map: `(atom {})`. This will enable us to manage all of the data that we will need in a single location. This approach, when contrasted with the various approaches for managing data in some of the most popular JavaScript frameworks, is quite simple. The state for our weather forecast app will be quite simple, consisting of a title, a postal code that will be entered by the user, and several temperatures that we will retrieve from a remote API. We can create a skeleton of this app state in the `learn-cljs.weather` namespace.
 
 #### Initial application state
 
