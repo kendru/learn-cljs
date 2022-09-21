@@ -154,7 +154,7 @@ _The Components of Our App_
 
 ## Responding to User Input
 
-Now that we have an app running and rendering data, the next step is to let the user interact with the page. We will allow the user to input their postal code so that we can fetch weather data for their location. As we would in JavaScript, we attach an event handler to the input element. This handler will update the app state on every keystroke. The `postal-code` component already gets it value from the app state. The only step that we need to take is to attach the handler, and the input will stay synchronized.
+Now that we have an app running and rendering data, the next step is to let the user interact with the page. We will allow the user to input their postal code so that we can fetch weather data for their location. As we would in JavaScript, we attach an event handler to the input element. This handler will update the app state on every keystroke. The `postal-code` component already gets its value from the app state. The only step that we need to take is to attach the handler, and the input will stay synchronized.
 
 ```clojure
 [:input {:type "text"
