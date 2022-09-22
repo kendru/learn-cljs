@@ -297,7 +297,7 @@ values for "TEST":
 
 ## More Complex Choices With cond
 
-With `if` and `when`, we have all that we technically need to handle any sort of decision-making that we need to do in code. However, we are often faced with cases in which `if` would be awkward to use. Consider adding more commands to our game so that the user could type "restart" to go back to the beginning or "help" to display the commands that are available. As we add more options, we would have to keep nesting more and more`if` expressions - like using a pocket knife to carve a wooden sculpture, it could work, but the result would not be pleasant.
+With `if` and `when`, we have all that we technically need to handle any sort of decision-making that we need to do in code. However, we are often faced with cases in which `if` would be awkward to use. Consider adding more commands to our game so that the user could type "restart" to go back to the beginning or "help" to display the commands that are available. As we add more options, we would have to keep nesting more and more `if` expressions - like using a pocket knife to carve a wooden sculpture, it could work, but the result would not be pleasant.
 
 Enter `cond` and its cousins, `condp` and `case`. `cond` takes some expression and any number of test/result pairs, and the entire expression will evaluate to the "then" expression that comes after the first test that is truthy:
 
