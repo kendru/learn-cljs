@@ -356,7 +356,7 @@ Compared to our original implementation with nested if statements, this version 
 
 ### Quick Review
 
-- Using `cond` to write some code that will evaluate to `:pos` when a given number is positive, `:neg` when it is negative, and `:zero` when it is exactly zero
+- Use `cond` to write some code that will evaluate to `:pos` when a given number is positive, `:neg` when it is negative, and `:zero` when it is exactly zero
 - Write code that will do the same thing using `condp`
 
 ## Summary
