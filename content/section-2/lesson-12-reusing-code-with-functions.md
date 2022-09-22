@@ -166,20 +166,20 @@ First, a function can be declared with multiple _arities_ - that is, its behavio
 ```clojure
 (defn my-multi-arity-fn
  ([a] (println "Called with 1 argument" a))                ;; <1>
- (                                                         ;; <2>
-  [a b]                                                    ;; <3>
-  (println "Called with 2 arguments" a b)                  ;; <4>
+ (
+  [a b]                                                    ;; <2>
+  (println "Called with 2 arguments" a b)                  ;; <3>
  )
  ([a b c] (println "Called with 3 arguments" a b c)))
 
-(defn my-single-arity-fn [a]                               ;; <5>
+(defn my-single-arity-fn [a]                               ;; <4>
   (println "I can only be called with 1 argument"))
 ```
 
 1. Unlike the basic `defn` form, each function implementation is enclosed in a list
 2. For each function implementation, the first element in the list is the parameter vector
 3. ...followed by one or more expressions, forming the body of the implementation for that arity
-5. Remember that for a single-arity function, the parameters and expressions that form the body of the function need not be enclosed in a list
+4. Remember that for a single-arity function, the parameters and expressions that form the body of the function need not be enclosed in a list
 
 Multiple arity functions are often used to supply default parameters. Consider the following function that can add an item to a shopping cart. The 3-ary version lets a quantity be specified along with the `product-id`, and the 2-ary version calls this 3-ary version with a default quantity of `1`:
 
