@@ -262,7 +262,7 @@ Now that we have learned how to define functions mechanically, let's take a step
 
 In Lesson 4, we took it for granted that an s-expression like `(+ 5 3)` evaluates to `8`, but we did not consider how this happened. We need to expand that mental model of evaluation to account for what happens when a function is called.
 
-When we define a function, we declare a list of parameters. These are called the `formal parameters` of the function. The function body is free to refer to any of these formal parameters. When the function is called, the call is replaces with the body of the function where every instance of the formal parameters is replaced with the argument that was passed in - called the `actual parameters`. While this is a bit confusing to explain, a quick example should help clarify:
+When we define a function, we declare a list of parameters. These are called the `formal parameters` of the function. The function body is free to refer to any of these formal parameters. When the function is called, the call is replaced with the body of the function where every instance of the formal parameters is replaced with the argument that was passed in - called the `actual parameters`. While this is a bit confusing to explain, a quick example should help clarify:
 
 ```clojure
 (defn hypotenuse [a b]                                     ;; <1>
