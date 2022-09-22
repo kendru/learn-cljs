@@ -363,7 +363,7 @@ The real power comes when we move from specific, granular function to higher lev
 ### Quick Review
 
 - Define a function using `my-inc` that returns the increment of a number. How would you define a function with the same name without using `defn`?
-- What is the difference between the _formal parameters_ and _actual parameters_
+- What is the difference between the _formal parameters_ and _actual parameters_?
 - What does _shadowing_ mean in the context of a closure?
 
 ## Recursion 101
