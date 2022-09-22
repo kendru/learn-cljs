@@ -141,7 +141,7 @@ For the second case, we will often want to perform some DOM manipulation or othe
 
 ### Applying if and when
 
-Considering the example of the adventure game, we can use use an `if` expression to determine what to do after prompting the user for a yes/no question. Let's take a quick step back to discuss the overall architecture of the game. We will represent the entire game as a map where the keys are the name of each state and the values are maps that represent a specific screen. The general shape of our game data structure is below:
+Considering the example of the adventure game, we can use an `if` expression to determine what to do after prompting the user for a yes/no question. Let's take a quick step back to discuss the overall architecture of the game. We will represent the entire game as a map where the keys are the name of each state and the values are maps that represent a specific screen. The general shape of our game data structure is below:
 
 We will represent our game as a collection of states with rules that determine how to move between states when the user makes some decision:
 
