@@ -6,7 +6,7 @@ date: 2019-09-19T20:50:20-06:00
 
 # Lesson 11: Looping
 
-In the last lesson, we looked at ClojureScript's versions of we usually call branching control structure. However, we learned that things work a little bit different in ClojureScript compared to other languages that we may be used to - control structures are expressions rather than imperative controls. Now as we come to another fundamental topic - loops - we will learn that things are once again a bit different in ClojureScript.
+In the last lesson, we looked at ClojureScript's versions of what we usually call branching control structure. However, we learned that things work a little bit different in ClojureScript compared to other languages that we may be used to - control structures are expressions rather than imperative controls. Now as we come to another fundamental topic - loops - we will learn that things are once again a bit different in ClojureScript.
 
 ---
 
