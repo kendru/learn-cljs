@@ -6,7 +6,7 @@ date: 2019-09-22T07:00:50-06:00
 
 # Lesson 12: Reusing Code With Functions
 
-ClojureScript is a functional programming language. The functional programming paradigm gives us superpowers, but - love it or hate it - it also makes certain demands on the way that we write code. We have already discussed some of the implications of functional code (immutable data, minimizing side effects, etc.), but up to this point we have not studied what a functions _are_ - much less how to use them idiomatically. In this lesson, we define what functions are in ClojureScript, and we will study how to define and use them. Finally, we'll look at some best practices for when to break code into separate functions and how to use a special class of function that is encountered often in ClojureScript - the recursive function.
+ClojureScript is a functional programming language. The functional programming paradigm gives us superpowers, but - love it or hate it - it also makes certain demands on the way that we write code. We have already discussed some of the implications of functional code (immutable data, minimizing side effects, etc.), but up to this point we have not studied what functions _are_ - much less how to use them idiomatically. In this lesson, we define what functions are in ClojureScript, and we will study how to define and use them. Finally, we'll look at some best practices for when to break code into separate functions and how to use a special class of function that is encountered often in ClojureScript - the recursive function.
 
 ---
 
