@@ -192,7 +192,7 @@ Here, we use the `goog.dom.getElement()` function to retrieve the input element 
 
 In this expression, we get the `value` property of the input element, which will contain whatever text the user has typed into it, and update the text content of the target node with this value. This code performs both the input (reading the input's `value`) and output (writing the text content of the `target`).
 
-Since we will not spend much time with low-level DOM manipulation, we will not linger on this subject. If we ever find ourselves having to do write DOM manipulation code, the Google Closure library has excellent documentation. Otherwise, do not be afraid to find a good ClojureScript DOM library and use it!
+Since we will not spend much time with low-level DOM manipulation, we will not linger on this subject. If we ever find ourselves having to write DOM manipulation code, the Google Closure library has excellent documentation. Otherwise, do not be afraid to find a good ClojureScript DOM library and use it!
 
 ### You Try It
 
