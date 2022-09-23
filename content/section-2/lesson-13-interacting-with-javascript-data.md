@@ -244,7 +244,7 @@ _Getting and Setting Array Elements_
 
 1. Bind a var to a JavaScript array
 2. Get the element at index `2`
-3. Get the element at index `5` to `13`
+3. Set the element at index `5` to `13`
 4. `aset` has mutated the array
 
 We can also access the JavaScript array methods by using, `(.functionName array args*)`. This is the standard syntax for calling a method on a JavaScript object, which we will explain in much more detail later.
