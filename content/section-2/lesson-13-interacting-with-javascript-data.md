@@ -291,7 +291,7 @@ var books = [
 ];
 ```
 
-- Write an expression that will retrieve the value, "Scheme":
+- Write an expression that will retrieve the value, "Scheme".
 - Write an expression that will have the side effect of changing the title "All About Animals" to "Dangerous Creatures".
 
 ### Challenge
