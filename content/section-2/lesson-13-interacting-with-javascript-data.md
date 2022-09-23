@@ -47,7 +47,7 @@ This creates a global JavaScript variable called `testScores`, which we can acce
 
 _Sharing Data Between Browser and REPL_
 
-We can use the REPL to inspect this variable, convert it to a ClojureScript data structure, modify it and write a new version back out the the `testScores` variable.
+We can use the REPL to inspect this variable, convert it to a ClojureScript data structure, modify it and write a new version back out the `testScores` variable.
 
 ```clojure
 cljs.user=> (def cljs-scores (js->clj js/testScores))      ;; <1>
