@@ -342,7 +342,7 @@ In any but the simplest of programs, we will need to work with nested data at so
 
 ### Drilling Down With `get-in`
 
-We have seen the `get` function a number of times for accessing a specific element in a map or a vector. It has a cousin, `get-in`, that is used for setting values that are nested deeper inside a data structure. Instead of supplying a single key for the value to get out, we supply a sequence of keys that will be looked up in turn. We can think of this sequence as a _path_ to the data that we are interested in. It is like a road map for the computer to follow to locate the data to retrieve. For instance, to get the first page-view of the first session of some user, we could use something like the following:
+We have seen the `get` function a number of times for accessing a specific element in a map or a vector. It has a cousin, `get-in`, that is used for getting values that are nested deeper inside a data structure. Instead of supplying a single key for the value to get out, we supply a sequence of keys that will be looked up in turn. We can think of this sequence as a _path_ to the data that we are interested in. It is like a road map for the computer to follow to locate the data to retrieve. For instance, to get the first page-view of the first session of some user, we could use something like the following:
 
 ```clojure
 (get-in user [:sessions 0 :page-views 0])
