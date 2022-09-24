@@ -228,7 +228,7 @@ Most of our analytics data is in the form of maps, which are simple key-value as
 
 ClojureScript has a very helpful pair of functions for adding and removing map entries: `assoc` and `dissoc`. Unlike setting and deleting JavaScript object properties, `assoc` and `dissoc` do not touch the maps that we supply. Instead, they return new maps. By now, we should be familiar with the idea of working with immutable data, but it still takes some getting used to.
 
-#### Adding Values With `assoc`
+### Adding Values With `assoc`
 
 Let's consider the _session_ model that we just created. It has identifying information about a user's visit to our website. Our new requirement is to add a _duration_ to every session once the user has logged out or left the site. In this case, we just need to add a new entry to the session map - let's call it `:duration`.
 
@@ -311,7 +311,7 @@ cljs.user=> (untrack my-session)
 - What happens when the map does not contain one or more of the keys that we pass to `dissoc`, e.g. `(dissoc {:temp 212} :color :material :mass)`?
 - Update the `with-duration` function that we created earlier to remove the `:is-active?` key from the session.
 
-### Refining a Selection With select-keys
+### Refining a Selection With `select-keys`
 
 Another handy function to have in our toolbox when working with maps is `select-keys`. It takes a map and a collection of keys to retain, and it returns a new map with only the keys that were passed in. If we had some portion of the application that was only interested in when a session started, whether it was active, and its page-views, we could use `select-keys` to narrow down the data to only what we are interested in:
 
