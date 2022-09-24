@@ -222,7 +222,7 @@ _Sample data for an analytics domain_
 
 ## Working With Associative Data
 
-Most of our analytics data is in the form of maps, which are simple key-value associations. As we have just seen, there is quite a lot of data that can be modeled using only maps, so it stands to reason that ClojureScript would provide good tools for operating on them. This is indeed the case. We will look at several functions that we will keep coming back to when we work with maps: `assoc`, `dissoc`, and `select-keys`. There are more function in the standard library that can be used on maps, but these are the most commonly used and deserve some explanation. [The Clojure Cheatsheet](http://clojure.org/api/cheatsheet) is an excellent reference for the functions that we will not be able to cover.
+Most of our analytics data is in the form of maps, which are simple key-value associations. As we have just seen, there is quite a lot of data that can be modeled using only maps, so it stands to reason that ClojureScript would provide good tools for operating on them. This is indeed the case. We will look at several functions that we will keep coming back to when we work with maps: `assoc`, `dissoc`, and `select-keys`. There are more functions in the standard library that can be used on maps, but these are the most commonly used and deserve some explanation. [The Clojure Cheatsheet](http://clojure.org/api/cheatsheet) is an excellent reference for the functions that we will not be able to cover.
 
 ### More or Less: Adding and Removing Elements
 
