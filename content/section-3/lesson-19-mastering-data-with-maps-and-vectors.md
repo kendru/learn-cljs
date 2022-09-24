@@ -230,7 +230,7 @@ ClojureScript has a very helpful pair of functions for adding and removing map e
 
 #### Adding Values With `assoc`
 
-Let's consider the _session_ model that we just created. It has identifying information about user's visit to our website. Our new requirement is to add a _duration_ to every session once the user has logged out or left the site. In this case, we just need to add a new entry to the session map - let's call it `:duration`.
+Let's consider the _session_ model that we just created. It has identifying information about a user's visit to our website. Our new requirement is to add a _duration_ to every session once the user has logged out or left the site. In this case, we just need to add a new entry to the session map - let's call it `:duration`.
 
 ![Associating Data Into a Map](/img/lesson19/assoc.png)
 
