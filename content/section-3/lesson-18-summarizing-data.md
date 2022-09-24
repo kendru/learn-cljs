@@ -105,7 +105,7 @@ Given the following code:
 - What is the data type of `word-counts`?
 - What is the value of `word-counts`?
 
-Before trying this code out at the REPL, use a pencil and paper to write out the calls that will be made to the `count-words` function. If you need to look up documentation on a specific function that is unfamiliar, you can either call `(doc function-name)` from the REPL or look up the function on clojuredocs.org.
+Before trying this code out at the REPL, use a pencil and paper to write out the calls that will be made to the `count-words` function. If you need to look up documentation on a specific function that is unfamiliar, you can either call `(doc function-name)` from the REPL or look up the function on https://clojuredocs.org.
 
 ## Reduce Use Cases
 
