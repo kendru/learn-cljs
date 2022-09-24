@@ -185,7 +185,7 @@ _Coercing a Seq_
 As we have just learned, `into` repeatedly applies `conj` to add each element from some sequence into a collection. We need to be familiar with how `conj` works with different collections in order to understand the results of into.
 
 - Re-write the following expression as a series of calls to `conj`: `(into [] '(:a :b :c))`
-- What is the result of `(conj (conj (conj '() 1) 2) 3)`
+- What is the result of `(conj (conj (conj '() 1) 2) 3)`?
 - What would change if we replaced the empty list, `'()` in the previous exercise with an empty vector, `[]`?
 
 ## Refining With Filter
