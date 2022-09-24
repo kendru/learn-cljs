@@ -115,7 +115,7 @@ Reduce is the go-to tool for any case when:
 - There is not an existing function in the standard library that does
 what we want
 
-Imagine that our app tracks user events on a webpage for analytics purposes. We have a list of events that are modeled as a map with a the `:event` that the user performed and the `:timestamp` at which the event took place:
+Imagine that our app tracks user events on a webpage for analytics purposes. We have a list of events that are modeled as a map with the `:event` that the user performed and the `:timestamp` at which the event took place:
 
 ```clojure
 (def events [{:event :click, :timestamp 1463889739}
