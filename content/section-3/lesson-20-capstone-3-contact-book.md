@@ -6,7 +6,7 @@ type: "docs"
 
 # Lesson 20: Capstone 3 - Contact Book
 
-Over the past few lessons, we have learned the core tools for working with data in ClojureScript. First, we learned about the basic collection types - lists, vectors, maps, and sets - as well as the most common functions for working with these collections. Then we took a closer look at the important _sequence abstraction_ that allows us to operate on all sorts of sequential data using a uniform interface. Next, we discovered the `reduce` function and the many cases in which it can be used to summarize a sequence of data. Last, we walked through the process of modeling a real- world analytics domain. With this knowledge in our possession, we are ready to build another capstone project. This time, we will take the example of a contact book that we mentioned back in Lesson 16, and we will build a complete implementation, _ClojureScript Contacts_.
+Over the past few lessons, we have learned the core tools for working with data in ClojureScript. First, we learned about the basic collection types - lists, vectors, maps, and sets - as well as the most common functions for working with these collections. Then we took a closer look at the important _sequence abstraction_ that allows us to operate on all sorts of sequential data using a uniform interface. Next, we discovered the `reduce` function and the many cases in which it can be used to summarize a sequence of data. Last, we walked through the process of modeling a real-world analytics domain. With this knowledge in our possession, we are ready to build another capstone project. This time, we will take the example of a contact book that we mentioned back in Lesson 16, and we will build a complete implementation, _ClojureScript Contacts_.
 
 ---
 
