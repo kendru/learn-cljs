@@ -212,7 +212,7 @@ Finally, when we update a contact, we want to replace the previous version. This
 
 ## Creating the UI
 
-Now that we have defined all of the functions that we need to work with our data model, let's turn our attention to creating the application UI. In Section 5, we will learn how to create high-performance UIs using the Reagent framework, but for now, we will take naive approach of re-rendering the entire application whenever anything changes. Our application will have two main sections - a list of contacts that displays summary details about each contact and a larger pane for viewing/editing contact details.
+Now that we have defined all of the functions that we need to work with our data model, let's turn our attention to creating the application UI. In Section 5, we will learn how to create high-performance UIs using the Reagent framework, but for now, we will take a naive approach of re-rendering the entire application whenever anything changes. Our application will have two main sections - a list of contacts that displays summary details about each contact and a larger pane for viewing/editing contact details.
 
 We will use the [hiccups](https://github.com/teropa/hiccups) library to transform plain ClojureScript data structures into an HTML string. This allows us to represent the interface of our application as a ClojureScript data structure and have a very simple interface to the actual DOM of the page. In order to use this library, we need to add it to our dependencies in `deps.edn`:
 
