@@ -74,7 +74,7 @@ Since the address itself is a map, let's factor out creation of an address to an
       clean-contact)))
 ```
 
-This new version of `make-contact` introduces one expression that we have not seen before: `if-let`. This macro works just like `if` except that it binds a name to the value being tested (just like `let` does). Unlike `let`, only a single binding may be provides. At compile time, this code will expand to something like the following[^1]:
+This new version of `make-contact` introduces one expression that we have not seen before: `if-let`. This macro works just like `if` except that it binds a name to the value being tested (just like `let` does). Unlike `let`, only a single binding may be provided. At compile time, this code will expand to something like the following[^1]:
 
 ```clojure
 (if (:address contact)
