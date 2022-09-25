@@ -171,7 +171,7 @@ cljs.user=> (-> contact-list                               ;; <1>
                               :address {:state "RI"}})
                 (add-contact {:email "you@example.com"
                               :first-name "You"}))
-[{:first-name "Me", :email "me@example.com"}
+[{:first-name "Me", :email "me@example.com", :address {:state "RI"}}
  {:first-name "You", :email "you@example.com"}]
 ```
 
