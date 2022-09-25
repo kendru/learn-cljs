@@ -124,7 +124,7 @@ With this macro, we can make our `make-contact` function even clearer:
 
 (defn make-contact [contact]
   (-> contact                                              ;; <2>
-      (select-keys [:first-name :last-name :email])
+      (select-keys [:first-name :last-name :email :address])
       (maybe-set-address)))
 ```
 
