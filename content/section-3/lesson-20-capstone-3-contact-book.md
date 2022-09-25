@@ -58,14 +58,14 @@ In order to construct a new contact, we will use a variation on the constructor 
 
 ```clojure
 (defn make-contact [contact]
-  (select-keys contact [:first-name :last-name :email :postal :address]))
+  (select-keys contact [:first-name :last-name :email :address]))
 ```
 
 Since the address itself is a map, let's factor out creation of an address to another function. We can then update the `make-contact` function to use this address constructor:
 
 ```clojure
 (defn make-address [address]
-  (select-keys address [:street :city :state :country]))
+  (select-keys address [:street :city :state :postal :country]))
 
 (defn make-contact [contact]
   (let [clean-contact (select-keys contact [:first-name :last-name :email])]
