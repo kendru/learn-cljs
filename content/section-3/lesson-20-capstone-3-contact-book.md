@@ -533,7 +533,7 @@ Now, we will finally implement the page header with its actions to create and sa
 
   (when-let [cancel-button (gdom/getElement "cancel-edit")]
     (gevents/listen cancel-button "click"
-      (fn [_] (on-cancel-edit state))))))
+      (fn [_] (on-cancel-edit state)))))
 ```
 
 By now, this sort of code should be no problem to read and understand. In the interest of space, we will not reprint the entire application code, but it can be found at [the book's GitHub project](https://github.com/kendru/learn-cljs/tree/master/code/lesson-20/contacts).
