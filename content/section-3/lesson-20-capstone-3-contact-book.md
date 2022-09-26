@@ -473,7 +473,7 @@ Now let's look at the code for processing the form and either adding or updating
 1. `state` within the `let` will refer to this updated state
 2. Use our domain functions to update the contact list within our app state
 
-Before moving on, let's take a look at the use of `update` to transform our application state. `update` takes an indexed collection (a map or vector), a key to update, and a transformation function. This function is variadic, and any additional arguments after the transformation function that will be passed to the transformation function following the value to transform. For instance, the call, `(update state :contacts replace-contact idx contact)`, will call `replace-contact` with the contacts list followed by `idx` and `contact`.
+Before moving on, let's take a look at the use of `update` to transform our application state. `update` takes an indexed collection (a map or vector), a key to update, and a transformation function. This function is variadic, and any additional arguments after the transformation function will be passed to the transformation function following the value to transform. For instance, the call, `(update state :contacts replace-contact idx contact)`, will call `replace-contact` with the contacts list followed by `idx` and `contact`.
 
 Now, we will finally implement the page header with its actions to create and save contacts:
 
