@@ -119,7 +119,7 @@ As we just observed, updating the atom's state in a way that makes the validator
 
 ### Replacing state with `reset!`
 
-While `swap!` is useful for transforming the state of an atom, sometimes we just want to update the atom's entire state at once. Using ClojureScript's standard library, this is not a difficult task: `(swap! counter (constantly 0))`. `constantly` returns a function that always returns a specific value every time it is called, so in this case, it returns a function that will always return 0, given any argument, which will effectively reset the counter state to 0. However, this code is not as cleat as it could be, which is why ClojureScript also provides the `reset!` function. This function simply takes the atom and a value, which it sets as the atom's new state. Like `swap!`, it returns the new state:
+While `swap!` is useful for transforming the state of an atom, sometimes we just want to update the atom's entire state at once. Using ClojureScript's standard library, this is not a difficult task: `(swap! counter (constantly 0))`. `constantly` returns a function that always returns a specific value every time it is called, so in this case, it returns a function that will always return 0, given any argument, which will effectively reset the counter state to 0. However, this code is not as clear as it could be, which is why ClojureScript also provides the `reset!` function. This function simply takes the atom and a value, which it sets as the atom's new state. Like `swap!`, it returns the new state:
 
 ```clojure
 (reset! counter 0)
