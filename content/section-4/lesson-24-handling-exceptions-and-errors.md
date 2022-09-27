@@ -90,7 +90,7 @@ nil
 
 ### Conveying Information
 
-Sometimes it is desirable to convey extra information when we throw an error. For instance, if we are loading a string from `localStorage`, parsing it, then using it to construct a domain object, there are at 3 steps that can fail, and we probably want to handle these failures differently - perhaps to determine what type of message to display to the user or whether to log the error to a service for later inspection. In this case, we can use `ex-info` to create a `ExceptionInfo` object, which is a subclass of the JavaScript `Error` type that ClojureScript defines. This function allows us to attach a message, a map of arbitrary metadata, and an optional field describing the cause of the exception. For example:
+Sometimes it is desirable to convey extra information when we throw an error. For instance, if we are loading a string from `localStorage`, parsing it, then using it to construct a domain object, there are at 3 steps that can fail, and we probably want to handle these failures differently - perhaps to determine what type of message to display to the user or whether to log the error to a service for later inspection. In this case, we can use `ex-info` to create an `ExceptionInfo` object, which is a subclass of the JavaScript `Error` type that ClojureScript defines. This function allows us to attach a message, a map of arbitrary metadata, and an optional field describing the cause of the exception. For example:
 
 ```clojure
 (ex-info "A parse error occurred"                          ;; <1>
