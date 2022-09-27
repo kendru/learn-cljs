@@ -161,7 +161,7 @@ While we need side effects, we should strive to segregate functions that perform
 
 ```clojure
 (defn update-output [_]
-  (if (= :celsius (get-input-uom))
+  (if (= :celsius (get-input-unit))
     (do (set-output-temp (c->f (get-input-temp)))
         (gdom/setTextContent output-unit-target "F"))
     (do (set-output-temp (f->c (get-input-temp)))
