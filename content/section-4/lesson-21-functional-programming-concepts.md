@@ -402,7 +402,7 @@ As in object-oriented programming, the strategy pattern is a way to separate the
 
 The final pattern that we will consider is the middleware pattern. This pattern allows us to declare "hooks" in a request/response cycle that can transform the request on the way in, the response on the way out, or both. It can even be used to short-circuit a request.
 
-Imagine that we need to make a call to some API, but we want to be able to validate the request before it is sent. We could add the validation logic directly to the function that performs the API request, but this is less than ideal for two reasons: first, it couples validation logic to API logic, and second, it makes our app less testable by combining both pure and impure business logic in the same function. No problem, let's add separate validation function:
+Imagine that we need to make a call to some API, but we want to be able to validate the request before it is sent. We could add the validation logic directly to the function that performs the API request, but this is less than ideal for two reasons: first, it couples validation logic to API logic, and second, it makes our app less testable by combining both pure and impure business logic in the same function. No problem, let's add a separate validation function:
 
 ```clojure
 (defn handler [req]
