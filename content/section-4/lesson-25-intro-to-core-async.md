@@ -216,7 +216,7 @@ As we saw in the `mock-request` function, we can create channels anywhere in our
 
 It is a common idiom to return a channel from a function that produces some result asynchronously. Whereas in JavaScript, we would usually return a Promise (or write the function as `async`), we often return a channel when we intend for a function to be called from within a go block. Author and Clojure instructor Eric Normand suggests naming functions that return channels with a `<` prefix.[^2] Following this convention, our `mock-request` function would become `<mock-request`. This makes it easy to visually distinguish functions that return channels from other functions. Remember, however, that a function that returns a channel is less general than one that accepts a callback because when we return a channel, we dictate that any value eventually produced by that function must be consumed in a go block. For this reason, we should usually prefer writing functions that take callbacks if we do not know how we will eventually want to call them.
 
-In addition to channels that simply create a channel that they will eventually put a value into, we can create some interesting higher-order channel functions. For instance, we can create a channel that merges values from any number of other channels:
+In addition to functions that simply create a channel that they will eventually put a value into, we can create some interesting higher-order channel functions. For instance, we can create a channel that merges values from any number of other channels:
 
 ```clojure
 (defn merge-ch [& channels]
