@@ -206,7 +206,7 @@ _Editing `core.cljs` with VS Code_
 We will dig in to the rest of this file over the next couple of lessons, as we start to build out the weather forecasting app. For now, we will look at the namespace declaration at the top of the file, since it is closely tied to the structure of the project. Each ClojureScript file contains a single _namespace_, which is simply a collection of data and functions. The namespace is the unit of modularity in ClojureScript. If we open up the `weather.cljs` file that was created, we can see the namespace declared on the first line (ignoring the `^:figwheel-hooks` bit for now): `(ns ^:figwheel-hooks learn-cljs.weather)`. The ClojureScript compiler uses a simple naming convention for namespaces based on the name of the file that houses them:
 
 1. Take the file path relative to the source directory
-2. Replace the path separator ("/" on Unix-like systems and "\" on Windows) with a dot, "."
+2. Replace the path separator ("/" on Unix-like systems and "\\" on Windows) with a dot, "."
 3. Replace underscores, "_", with hyphens "-"
 4. Drop the filename extension, ".cljs"
 
