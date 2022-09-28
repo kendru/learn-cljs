@@ -43,7 +43,7 @@ For our chat application, we will keep a vector of `rooms` that we can join, a v
 (defonce app-state (atom initial-state))                   ;; <2>
 ```
 
-_learn\_clj/chat/state.cljs_
+_learn\_cljs/chat/state.cljs_
 
 1. Define the initial application state as an immutable map
 2. Define the app state as an atom whose starting value is the same as `initial-state`
