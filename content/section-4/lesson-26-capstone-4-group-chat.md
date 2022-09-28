@@ -247,7 +247,7 @@ We will break out each of these high-level layout components into a namespace, a
 
 _Application Layout_
 
-Most of our components will follow the same pattern: they will mount into a parent DOM node, watch a portion of the application state (or some value computed from the state) for change, and re-render themselves the a change occurs. Let's go ahead and create a function that will allow us to initialize a component that follows this pattern:
+Most of our components will follow the same pattern: they will mount into a parent DOM node, watch a portion of the application state (or some value computed from the state) for change, and re-render themselves when a change occurs. Let's go ahead and create a function that will allow us to initialize a component that follows this pattern:
 
 ```clojure
 (ns learn-cljs.chat.components.component
