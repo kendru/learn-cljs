@@ -65,7 +65,7 @@ One of the most interesting features of the ClojureScript compiler is that it pr
 ### Quick Review
 
 - Can you think of any pieces of code that you find yourself writing for almost every JavaScript project? Would any of these be solved by a more complete standard library?
-- What is the advantage of working in a language that compiles to JavaScript Can you think of any disadvantages?
+- What is the advantage of working in a language that compiles to JavaScript? Can you think of any disadvantages?
 
 ## Why Clojure needs JavaScript
 
