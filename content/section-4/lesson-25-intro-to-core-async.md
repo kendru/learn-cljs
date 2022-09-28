@@ -162,7 +162,7 @@ However, this incurs some additional overhead that we may not want every time th
 
 ### Alternating Between Channels
 
-As we mentioned in out introduction to CSP above, there is one additional function that we often use to consume values from more than one channel: `alts!`. Like `>!` and `<!`, `alts!` can only be called from within a go block. It takes a vector of channels to "listen to" and parks until it receives a value from any of them. Upon receiving a value, it evaluates to a vector whose first element is the value received and whose second element is the channel from which the value came. By checking the channel that we get from `alts!`, we can determine where the value came from and decide what to do with it.
+As we mentioned in our introduction to CSP above, there is one additional function that we often use to consume values from more than one channel: `alts!`. Like `>!` and `<!`, `alts!` can only be called from within a go block. It takes a vector of channels to "listen to" and parks until it receives a value from any of them. Upon receiving a value, it evaluates to a vector whose first element is the value received and whose second element is the channel from which the value came. By checking the channel that we get from `alts!`, we can determine where the value came from and decide what to do with it.
 
 One common use case is to implement a timeout by alternating between a channel that we expect to eventually deliver a value and a timeout channel that will close after a certain amount of time:
 
