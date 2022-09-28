@@ -192,7 +192,7 @@ _Comparison of JavaScript programming paradigms_
 
 While functional programming in JavaScript is gaining momentum, the majority of code that we are likely to find is either imperative or object-oriented. Without getting too far into the nitty-gritty of functional programming at this point, we can say that ClojureScript focuses on building programs by assembling small functions together that take some data and return some new data without modifying the arguments that were passed in or any global state.
 
-One key feature of writing functions this way is that when you call a function with the same arguments, you always get the same result. While this may seem like an unimportant property for a function, it makes testing and debugging much easier. If most of a program is written as pure functions, tests can be written without any set-up. Contrast this with the typical way that object-oriented systems are tested: a number of objects must be constructed and put in to just the right state before every test, or the test will not run correctly.
+One key feature of writing functions this way is that when you call a function with the same arguments, you always get the same result. While this may seem like an unimportant property for a function, it makes testing and debugging much easier. If most of a program is written as pure functions, tests can be written without any set-up. Contrast this with the typical way that object-oriented systems are tested: a number of objects must be constructed and put into just the right state before every test, or the test will not run correctly.
 
 ### Quick Review
 
