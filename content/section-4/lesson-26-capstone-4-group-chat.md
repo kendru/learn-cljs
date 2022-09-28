@@ -25,7 +25,7 @@ _Screenshot of ClojureScript Chat_
 
 ## Thinking About Interactions
 
-There are many ways to start building an application, and no one way is necessarily best. However, for ClojureScript, a natural place to start is by thinking about the state and how we want the user to interact with that state. At a high level, we will have 2 types of data that we want to keep track of: _application data_ and _UI state_. Application data is any data that we receive from the server that powers the application UI state, on the other hand, is made up of pieces of data that are never persisted but are useful for determining what state various components are in.
+There are many ways to start building an application, and no one way is necessarily best. However, for ClojureScript, a natural place to start is by thinking about the state and how we want the user to interact with that state. At a high level, we will have 2 types of data that we want to keep track of: _application data_ and _UI state_. Application data is any data that we receive from the server that powers the application. UI state, on the other hand, is made up of pieces of data that are never persisted but are useful for determining what state various components are in.
 
 ### Application Data
 
