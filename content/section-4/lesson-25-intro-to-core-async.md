@@ -212,7 +212,7 @@ Here we spin up another process that repeatedly takes key chords from the `chord
 
 ## Channels as Values
 
-As we saw in the `mock-request` function, we can create channels anywhere in our code. We can pass them as arguments to functions or return them from functions. Although the serve the special purpose of facilitating communication between processes, they are just regular ClojureScript values.
+As we saw in the `mock-request` function, we can create channels anywhere in our code. We can pass them as arguments to functions or return them from functions. Although they serve the special purpose of facilitating communication between processes, they are just regular ClojureScript values.
 
 It is a common idiom to return a channel from a function that produces some result asynchronously. Whereas in JavaScript, we would usually return a Promise (or write the function as `async`), we often return a channel when we intend for a function to be called from within a go block. Author and Clojure instructor Eric Normand suggests naming functions that return channels with a `<` prefix.[^2] Following this convention, our `mock-request` function would become `<mock-request`. This makes it easy to visually distinguish functions that return channels from other functions. Remember, however, that a function that returns a channel is less general than one that accepts a callback because when we return a channel, we dictate that any value eventually produced by that function must be consumed in a go block. For this reason, we should usually prefer writing functions that take callbacks if we do not know how we will eventually want to call them.
 
