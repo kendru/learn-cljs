@@ -118,7 +118,7 @@ With this alias in place, we can run our application with the following command:
 
 ### Understanding clj
 
-Sticking with the Clojure philosophy of composing more advanced functionality from small, simple pieces, `clj` is a building block that has a well-defined purpose: managing dependencies and running Clojure code (including the ClojureScript compiler). There are other more fully-featured tools for project management, but with more features come more complexity. For this book, we will be sticking with `clj` and a tool called Figwheel, which we will introduce in the next lesson.
+Sticking with the Clojure philosophy of composing more advanced functionality from small, simple pieces, `clj` is a building block that has a well-defined purpose: managing dependencies and running Clojure code (including the ClojureScript compiler). There are other more fully-featured tools for project management, but with more features comes more complexity. For this book, we will be sticking with `clj` and a tool called Figwheel, which we will introduce in the next lesson.
 
 When we invoke `clj -m cljs.main ...`, several things happen. First, any dependencies specified in `deps.edn` will be downloaded. This download will only happen on the initial run, and the packages will be cached locally for subsequent runs. Second, the Java Virtual Machine will be started and the Clojure compiler loaded. Next, Clojure will load the code specified by the `-m` flag. In our case, we specify `cljs.main`, which is the entrypoint for the ClojureScript compiler. This code is available to us because we added the package for the ClojureScript compiler (`org.clojure/clojurescript`) to `deps.edn`.
 
