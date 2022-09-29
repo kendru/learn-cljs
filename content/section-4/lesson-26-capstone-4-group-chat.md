@@ -871,7 +871,7 @@ Since our application is highly dynamic, and we want to send and receive message
     (reset! api ws)))
 ```
 
-_api.cljs_
+_chat/api.cljs_
 
 1. For convenience, we define the websocket API as a global atom
 2. `pr-str` serializes Clojure(Script) data
