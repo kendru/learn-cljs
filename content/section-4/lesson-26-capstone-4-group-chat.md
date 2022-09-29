@@ -710,7 +710,7 @@ Like the message list, the composer will need to be mounted into the app and ini
 (defn init-main [msg-ch]
   (dom/section "content-main"
     ;; ...
-    (init-composer)))
+    (init-composer msg-ch)))
 ;; ...
 ```
 
