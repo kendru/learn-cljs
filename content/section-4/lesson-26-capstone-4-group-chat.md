@@ -377,7 +377,7 @@ Before moving on, let's clean things up a bit. First, the `display-name` functio
 
 ```clojure
 ;; chat/components/render_helpers.cljs
-(ns chat.components.render-helpers
+(ns learn-cljs.chat.components.render-helpers
   (:require [clojure.string :as s]))
 
 (defn display-name [person]
@@ -388,9 +388,9 @@ Before moving on, let's clean things up a bit. First, the `display-name` functio
     "REMOVED"))
 
 ;; chat/components/header.cljs
-(ns chat.components.header
+(ns learn-cljs.chat.components.header
   (:require ; ...
-            [chat.components.render-helpers :refer [display-name]])
+            [learn-cljs.chat.components.render-helpers :refer [display-name]])
   ; ...
 )
 ```
