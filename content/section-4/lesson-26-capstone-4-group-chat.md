@@ -362,7 +362,7 @@ This application container code is fairly straightforward: we create a basic she
     :header accessor render))
 ```
 
-_state/components/header.cljs_
+_chat/components/header.cljs_
 
 1. Helper function for displaying a formatted version of a user's name
 2. Accessor function that takes the app state and computes our component state
