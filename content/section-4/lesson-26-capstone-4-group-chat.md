@@ -369,7 +369,7 @@ _chat/components/header.cljs_
 3. Use the functions that we wrote in `learn-cljs.chat.state` to access the relevant data
 4. Provide a fallback if the user is not in a chat room or a conversation
 5. Render function that updates the `header` element based on app state
-6. Create the header component and return its DOME element
+6. Create the header component and return its DOM element
 
 Here we see the `init-component` function in action: within `init-header`, we create an element to render the header content into, and we pass that element, along with an accessor function that computes component state from application state and a render function that will update our header whenever the component state changes. One nice feature of the way that we designed our `init-component` helper is that the render function will only be called if the app state changes in a way that affects how the header renders. When we get to the next section, we will rely on React to optimize the rendering cycle for us, but it is instructive to see how easily we can build a UI without any framework.
 
