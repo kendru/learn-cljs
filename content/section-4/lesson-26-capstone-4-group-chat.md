@@ -308,7 +308,7 @@ We will build the UI for this application in a top-down fashion, starting with t
 _chat/components/app.cljs_
 
 
-This application container code is fairly straightforward: we create a basic shell with a couple of DOM nodes then call `render-header` to create and return the DOM necessary for the header. Before this code does anything useful, we will need to create a `learn-cljs.chat.components.header` namespace that exposes the `init-header` function. We'll do that now:
+This application container code is fairly straightforward: we create a basic shell with a couple of DOM nodes then call `init-header` to create and return the DOM necessary for the header. Before this code does anything useful, we will need to create a `learn-cljs.chat.components.header` namespace that exposes the `init-header` function. We'll do that now:
 
 ```clojure
 (ns learn-cljs.chat.components.header
