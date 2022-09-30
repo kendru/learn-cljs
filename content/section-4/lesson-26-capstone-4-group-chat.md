@@ -883,7 +883,7 @@ In this API namespace, we define an extremely simple messaging protocol. Both th
 We will first initialize the API within our core namespace:
 
 ```clojure
-(ns learn-cljs.chat.core
+(ns learn-cljs.chat
   (:require ;; ...
             [learn-cljs.chat.api :as api]))
 
