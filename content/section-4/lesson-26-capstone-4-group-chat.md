@@ -639,7 +639,7 @@ Now that we have the basic "shell" of the application in place, let's move on to
       (dom/p nil (:content message)))))
 
 (defn render [el messages]
-  (dom/with-children el
+  (apply dom/with-children el
     (map render-message messages)))
 
 (defn scroll-to-bottom [el]                                ;; <1>
