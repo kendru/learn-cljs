@@ -87,7 +87,7 @@ Now we are ready to hook this page up to Reagent for state management. In the `l
   (set! (.-value c) @c-cell))
 ```
 
-_src/reagent_test/core.cljs_
+_src/learn_cljs/reagent_test.cljs_
 
 1. `reagent.core` provides the reactive version of `atom`
 2. `reagent.ratom` provides several reactive programming utilities
