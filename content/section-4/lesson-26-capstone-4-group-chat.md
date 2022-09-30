@@ -1030,6 +1030,6 @@ While this application is quite capable considering how few lines of code it con
 
 ## Summary
 
-If you have reached this point, congratulations on creating a non-trivial application in ClojureScript! At this point, we have learned all of the core language features and idioms, and we have put them to practice in creating an interesting, useable chat app. While we ended up with a fully-functional app, we had to resort to some imperative code and manual DOM manipulation, similar to what we would do in JavaScript if we were not using a framework. In the next section, we will see how React's virtual DOM and Clojure Script's preference for immutability form a perfect marriage that will allow us to write declarative application UIs.
+If you have reached this point, congratulations on creating a non-trivial application in ClojureScript! At this point, we have learned all of the core language features and idioms, and we have put them to practice in creating an interesting, useable chat app. While we ended up with a fully-functional app, we had to resort to some imperative code and manual DOM manipulation, similar to what we would do in JavaScript if we were not using a framework. In the next section, we will see how React's virtual DOM and ClojureScript's preference for immutability form a perfect marriage that will allow us to write declarative application UIs.
 
 [^1]: https://github.com/edn-format/edn
