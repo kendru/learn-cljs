@@ -901,7 +901,7 @@ Next, we will update our `handlers` namespace to both emit API messages in respo
 ```clojure
 (ns learn-cljs.chat.handlers
   (:require ;; ...
-            [chat.api :as api]))
+            [learn-cljs.chat.api :as api]))
 
 ;; ...
 
