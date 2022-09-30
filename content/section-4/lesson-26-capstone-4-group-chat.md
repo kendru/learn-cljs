@@ -530,7 +530,7 @@ There is not anything that is novel in this code: we initialize components that 
            {:username (:username person)})))))
 
 (defn render-people [msg-ch el people]
-  (dom/with-children el
+  (apply dom/with-children el
     (map #(render-person msg-ch %) people)))
 
 (defn sidebar-people [msg-ch]
