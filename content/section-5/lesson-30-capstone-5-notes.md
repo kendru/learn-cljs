@@ -477,7 +477,7 @@ We will now create a router and hook it up to the relevant pieces of the applica
                        :on-navigate on-navigate}))
 ```
 
-_notes/routes.clj_
+_notes/routes.cljs_
 
 1. Create the router only once
 2. Side-effecting function that the command dispatcher will call to update the current route
