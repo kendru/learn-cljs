@@ -533,8 +533,8 @@ _notes/event\_handlers/routes.cljs_
 
 We will need to evaluate this namespace on startup so that the handler is registered, so let's take care of that in two steps:
 
-1. Create a _event-handlers.core` that requires all event handler namespaces for side effects.
-2. Require the _event-handlers.core` in our top-level _core` namespace.
+1. Create an `event-handlers.core` that requires all event handler namespaces for side effects.
+2. Require the `event-handlers.core` in our top-level `core` namespace.
 
 ```clojure
 (ns learn-cljs.notes.event-handlers.core
