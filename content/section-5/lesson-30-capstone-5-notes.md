@@ -276,7 +276,7 @@ _notes/command.cljs_
 2. It should also emit events to which other portions of the app can react.
 3. Run dispatcher asynchronously so that the call stack can clear before events are handled.
 
-The UI can issue commands by calling _command/dispatch!` directly. For example, a component could call `(notes.command/dispatch! :test/hello "world")`, and the text `Hello world` would be printed to the console. To support more commands, we will add conditions to the `case` expression in `dispatch!` and a corresponding handler function.
+The UI can issue commands by calling `command/dispatch!` directly. For example, a component could call `(notes.command/dispatch! :test/hello "world")`, and the text `Hello world` would be printed to the console. To support more commands, we will add conditions to the `case` expression in `dispatch!` and a corresponding handler function.
 
 Next, we need to implement the `emit!` function that is responsible for delivering events to subscribers. Any code can register a listener function that will be called whenever an event is emitted so that it can have a chance to react to it.
 
