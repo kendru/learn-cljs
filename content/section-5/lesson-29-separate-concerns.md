@@ -189,7 +189,7 @@ _Command/Event Messaging_
 
 Our new `dispatch!` function is a normal, synchronous function that will delegate handling of each specific command to a specialized handler function. Here, the `:user-form/submit!` command is handled by `handle-user-form-submit!`. In a real application, this handler would likely do other things like make API calls or emit additional events, but we will keep it simple and only emit an event for the notifications component to display.
 
-Although we have replaced the pubsub pattern for commands with a direct function dispatch, we have kept it for events. In fact, `evt-ch`, `evt-bus`, and `emit!` are just renamed versions of `msg-ch`, `msg-ch`, and `dispatch!` from the pubsub version, except that their purpose is to convey event messages only and not commands. The only piece of the UI that needs to change in this version is that the notification component should subscribe to the `:notification/added` topic on `evt-bus`:
+Although we have replaced the pubsub pattern for commands with a direct function dispatch, we have kept it for events. In fact, `evt-ch`, `evt-bus`, and `emit!` are just renamed versions of `msg-ch`, `msg-bus`, and `dispatch!` from the pubsub version, except that their purpose is to convey event messages only and not commands. The only piece of the UI that needs to change in this version is that the notification component should subscribe to the `:notification/added` topic on `evt-bus`:
 
 ```clojure
 (defn listen-for-added! [state]
