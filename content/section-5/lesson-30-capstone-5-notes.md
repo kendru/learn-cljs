@@ -481,7 +481,7 @@ _notes/routes.cljs_
 
 1. Create the router only once
 2. Side-effecting function that the command dispatcher will call to update the current route
-3. Callback that will be run whenever the a route change completes
+3. Callback that will be run whenever a route change completes
 4. Initialize the router on startup
 
 Next, we will expose a command in the dispatcher that calls the `navigate!` function that we just defined:
