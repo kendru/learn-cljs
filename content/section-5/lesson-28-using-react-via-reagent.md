@@ -234,7 +234,7 @@ Now that we have a form in place, let's add a chart above it that will display t
 Unlike the chat application, which queried the DOM to get the value of its inputs, we are going to invert the responsibility here by putting our input data in state and letting the components render the value from state. Whenever the user makes a change in the input, we want to propagate that change back to state, which will cause our component to re-render. Both React and Reagent refer to this type of input handling as _controlled inputs_ because the value of an input is controlled by UI state. The simplest way to create a controlled input component is to use a slight variation of a Reagent component.
 
 ```clojure
-(defn- current-date-string [d]
+(defn- date-string [d]
   (let [pad-zero #(.padStart (.toString %) 2 "0")
         y (.getFullYear d)
         m (-> (.getMonth d) inc pad-zero)
