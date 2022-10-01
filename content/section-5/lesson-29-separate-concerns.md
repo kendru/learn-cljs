@@ -74,9 +74,9 @@ Unlike the message bus that we used in Lesson 26, we hard-code the `dispatch!` f
 ```
 
 1. `filterv` acts just like `filter`, but it returns a vector
-2. load the initial state into a reactive atom at component set-up
-3. we will implement this function next
-4. dereferencing this atom causes the component to be reactive
+2. Load the initial state into a reactive atom at component set-up
+3. We will implement this function next
+4. Dereferencing this atom causes the component to be reactive
 
 The state for this component is quite simple: a collection of messages and an incrementing counter to keep track of the next id. We also have a pair of functions for adding and removing a message from state. Next, we'll define the `listen-for-added!` function that will subscribe this component to `::add-notification` messages:
 
