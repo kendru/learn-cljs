@@ -495,7 +495,7 @@ Next, we will expose a command in the dispatcher that calls the `navigate!` func
   (routes/navigate! route-params))
 ;; ...
 
-(defn dispatch
+(defn dispatch!
   ;;...
   :route/navigate (handle-navigate! payload))
 ```
