@@ -138,7 +138,7 @@ Next, we'll add Reagent as a dependency just like we did in the previous section
   (gdom/getElement "app"))                                 ;; <2>
 ```
 
-_src/exercise_tracker/core.cljs_
+_src/learn_cljs/exercise_tracker.cljs_
 
 1. Component to render
 2. DOM node to mount our component into
