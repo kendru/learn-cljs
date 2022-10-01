@@ -517,7 +517,7 @@ Now that we have exposed the router to our UI via the dispatcher, let's initiali
 
 _notes.cljs_
 
-The reason that we expose an _routes/initialize!` rather than initialize the router immediately when _routes` is evaluated is that the router will call the `on-navigate` callback as soon as it is initialized; and if that happens before the event handlers are registered, the state will not be updated. By deferring loading until our core file and all of its imports have been evaluated, we ensure that the initial route event will be handled appropriately. Next, we will create and register the handler for the `:route/navigated` event.
+The reason that we expose a `routes/initialize!` rather than initialize the router immediately when `routes` is evaluated is that the router will call the `on-navigate` callback as soon as it is initialized; and if that happens before the event handlers are registered, the state will not be updated. By deferring loading until our core file and all of its imports have been evaluated, we ensure that the initial route event will be handled appropriately. Next, we will create and register the handler for the `:route/navigated` event.
 
 ```clojure
 (ns learn-cljs.notes.event-handlers.routes
