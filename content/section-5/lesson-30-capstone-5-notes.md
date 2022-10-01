@@ -427,7 +427,7 @@ Now that we have a little structure in place, let's start by letting the user cr
 2. Introducing a router for managing navigation
 3. Creating an API namespace that will control communication with the server
 
-First, we will add the "New Note" button to the header. In the header component, we will require a single `button` component from _ui.common` (which we will create shortly):
+First, we will add the "New Note" button to the header. In the header component, we will require a single `button` component from `ui.common` (which we will create shortly):
 
 ```clojure
 (ns learn-cljs.notes.ui.header
