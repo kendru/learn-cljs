@@ -423,9 +423,9 @@ _notes/ui/footer.cljs_
 
 Now that we have a little structure in place, let's start by letting the user create a new note. We will add a button to the header that navigates to a view where the user can fill in their note and save it. Although this seems like a small feature, it will involve:
 
-1. adding a few UI components, including the concept of a _view_
-2. introducing a router for managing navigation
-3. creating an API namespace that will control communication with the server
+1. Adding a few UI components, including the concept of a _view_
+2. Introducing a router for managing navigation
+3. Creating an API namespace that will control communication with the server
 
 First, we will add the "New Note" button to the header. In the header component, we will require a single `button` component from _ui.common` (which we will create shortly):
 
