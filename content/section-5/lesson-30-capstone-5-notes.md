@@ -902,7 +902,7 @@ The next piece is the handler for `:notes/received` event that the API emits. Al
 ;; Paste the final code from the Data Normalization section here
 
 (defn update-normalized-notes [db notes]
-  (let [{:keys [learn-cljs.notes tags notes-tags]} (normalize-notes notes)]
+  (let [{:keys [notes tags notes-tags]} (normalize-notes notes)]
     (update db :data #(-> %
                           (update :notes merge notes)
                           (update :tags merge tags)
