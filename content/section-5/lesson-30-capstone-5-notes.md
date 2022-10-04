@@ -705,7 +705,7 @@ Since nothing in this file is particularly novel, let's return to the button com
 
 _notes/ui/common.cljs_
 
-Now the behavior of the button will vary depending on whether the `route-params`, `dispatch`, or `on-click` option is provided. Remember that `cond` will evaluate the right-hand side of the first truthy clause in encounters, so the behavior when `route-params` is specified will not change. However, if `dispatch` is provided, it will call `command/dispatch!` with the arguments provided.
+Now the behavior of the button will vary depending on whether the `route-params`, `dispatch`, or `on-click` option is provided. Remember that `cond` will evaluate the right-hand side of the first truthy clause it encounters, so the behavior when `route-params` is specified will not change. However, if `dispatch` is provided, it will call `command/dispatch!` with the arguments provided.
 
 #### You Try It
 
