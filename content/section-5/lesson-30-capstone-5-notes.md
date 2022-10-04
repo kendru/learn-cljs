@@ -1231,7 +1231,7 @@ _notes/ui/views/note\_form.cljs_
 
 The main change here is the use of the `tag-selector` component, which we are about to write. We did restructure some of the DOM here in order to add a level of nesting so that the note form and the tag selector can sit on the page side by side. In order to keep things as simple as possible, we will only support adding tags to notes that have been saved. Otherwise, we would have to keep track of what notes we wanted to add to a new note and add them only once we knew the ID of the note that was created.
 
-Below is the listing for the entire tag-selector component and all of its dependencies. There is a lot going on here, so take you time understanding it. A good portion of the file is dedicated to creating reactions that join data between the tags, indexes, and the note that is being edited.
+Below is the listing for the entire tag-selector component and all of its dependencies. There is a lot going on here, so take your time understanding it. A good portion of the file is dedicated to creating reactions that join data between the tags, indexes, and the note that is being edited.
 
 ```clojure
 (ns learn-cljs.notes.ui.tags
