@@ -974,7 +974,7 @@ For the notes list, we want to display the newest notes first, but our applicati
 
 _notes/ui/common.cljs_
 
-The link component behaves similar to the button, but it also adds an `active` class when the current route matches the link's target. This helps us achieve the typical navigation bar functionality where the current link is highlighted. This component relies on two new functions in the _routes` namespace - `get-url` and `matches?`, so let's add them now.
+The link component behaves similar to the button, but it also adds an `active` class when the current route matches the link's target. This helps us achieve the typical navigation bar functionality where the current link is highlighted. This component relies on two new functions in the `routes` namespace - `get-url` and `matches?`, so let's add them now.
 
 ```clojure
 ;; ...
