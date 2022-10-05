@@ -134,7 +134,7 @@ Next, we'll add Reagent as a dependency just like we did in the previous section
   [:p "Hello World"])
 
 (rdom/render
-  hello                                                    ;; <1>
+  [hello]                                                  ;; <1>
   (gdom/getElement "app"))                                 ;; <2>
 ```
 
