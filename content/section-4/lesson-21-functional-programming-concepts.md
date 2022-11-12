@@ -176,12 +176,12 @@ While this code gets the job done, it is not especially clean or elegant because
     :fahrenheit "C"
     :celsius "F"))
 
-(defn convert [unit temp]        ;; 2
+(defn convert [unit temp]                          ;; 2
   (if (= unit :celsius)
     (c->f temp)
     (f->c temp)))
 
-(defn update-output [_]        ;; 3
+(defn update-output [_]                            ;; 3
   (let [unit (get-input-unit)
         input-temp (get-input-temp)
         output-temp (convert unit input-temp)
