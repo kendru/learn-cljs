@@ -171,17 +171,17 @@ While we need side effects, we should strive to segregate functions that perform
 While this code gets the job done, it is not especially clean or elegant because it both performs a conversion and does I/O. In order to test this code, we need to run it on a page where all of the elements exist, and in order to test it, we would have to manually set the input fields, call the function, then assert on the content of the output element. Instead, we could refactor this into several pure functions: a pure function to get the label, a pure function to perform the conversion, and an impure function that reads from and mutates the DOM.
 
 ```clojure
-(defn target-label-for-output-unit [unit]          ;; 1
+(defn target-label-for-output-unit [unit]          ;; <1>
   (case unit
     :fahrenheit "C"
     :celsius "F"))
 
-(defn convert [unit temp]                          ;; 2
+(defn convert [unit temp]                          ;; <2>
   (if (= unit :celsius)
     (c->f temp)
     (f->c temp)))
 
-(defn update-output [_]                            ;; 3
+(defn update-output [_]                            ;; <3>
   (let [unit (get-input-unit)
         input-temp (get-input-temp)
         output-temp (convert unit input-temp)
