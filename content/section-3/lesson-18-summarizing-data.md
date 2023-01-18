@@ -105,7 +105,7 @@ Given the following code:
 - What is the data type of `word-counts`?
 - What is the value of `word-counts`?
 
-Before trying this code out at the REPL, use a pencil and paper to write out the calls that will be made to the `count-words` function. If you need to look up documentation on a specific function that is unfamiliar, you can either call `(doc function-name)` from the REPL or look up the function on clojuredocs.org.
+Before trying this code out at the REPL, use a pencil and paper to write out the calls that will be made to the `count-words` function. If you need to look up documentation on a specific function that is unfamiliar, you can either call `(doc function-name)` from the REPL or look up the function on https://clojuredocs.org.
 
 ## Reduce Use Cases
 
@@ -115,7 +115,7 @@ Reduce is the go-to tool for any case when:
 - There is not an existing function in the standard library that does
 what we want
 
-Imagine that our app tracks user events on a webpage for analytics purposes. We have a list of events that are modeled as a map with a the `:event` that the user performed and the `:timestamp` at which the event took place:
+Imagine that our app tracks user events on a webpage for analytics purposes. We have a list of events that are modeled as a map with the `:event` that the user performed and the `:timestamp` at which the event took place:
 
 ```clojure
 (def events [{:event :click, :timestamp 1463889739}

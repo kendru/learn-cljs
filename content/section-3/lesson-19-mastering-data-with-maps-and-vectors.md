@@ -222,15 +222,15 @@ _Sample data for an analytics domain_
 
 ## Working With Associative Data
 
-Most of our analytics data is in the form of maps, which are simple key-value associations. As we have just seen, there is quite a lot of data that can be modeled using only maps, so it stands to reason that ClojureScript would provide good tools for operating on them. This is indeed the case. We will look at several functions that we will keep coming back to when we work with maps: `assoc`, `dissoc`, and `select-keys`. There are more function in the standard library that can be used on maps, but these are the most commonly used and deserve some explanation. [The Clojure Cheatsheet](http://clojure.org/api/cheatsheet) is an excellent reference for the functions that we will not be able to cover.
+Most of our analytics data is in the form of maps, which are simple key-value associations. As we have just seen, there is quite a lot of data that can be modeled using only maps, so it stands to reason that ClojureScript would provide good tools for operating on them. This is indeed the case. We will look at several functions that we will keep coming back to when we work with maps: `assoc`, `dissoc`, and `select-keys`. There are more functions in the standard library that can be used on maps, but these are the most commonly used and deserve some explanation. [The Clojure Cheatsheet](http://clojure.org/api/cheatsheet) is an excellent reference for the functions that we will not be able to cover.
 
 ### More or Less: Adding and Removing Elements
 
 ClojureScript has a very helpful pair of functions for adding and removing map entries: `assoc` and `dissoc`. Unlike setting and deleting JavaScript object properties, `assoc` and `dissoc` do not touch the maps that we supply. Instead, they return new maps. By now, we should be familiar with the idea of working with immutable data, but it still takes some getting used to.
 
-#### Adding Values With `assoc`
+### Adding Values With `assoc`
 
-Let's consider the _session_ model that we just created. It has identifying information about user's visit to our website. Our new requirement is to add a _duration_ to every session once the user has logged out or left the site. In this case, we just need to add a new entry to the session map - let's call it `:duration`.
+Let's consider the _session_ model that we just created. It has identifying information about a user's visit to our website. Our new requirement is to add a _duration_ to every session once the user has logged out or left the site. In this case, we just need to add a new entry to the session map - let's call it `:duration`.
 
 ![Associating Data Into a Map](/img/lesson19/assoc.png)
 
@@ -311,7 +311,7 @@ cljs.user=> (untrack my-session)
 - What happens when the map does not contain one or more of the keys that we pass to `dissoc`, e.g. `(dissoc {:temp 212} :color :material :mass)`?
 - Update the `with-duration` function that we created earlier to remove the `:is-active?` key from the session.
 
-### Refining a Selection With select-keys
+### Refining a Selection With `select-keys`
 
 Another handy function to have in our toolbox when working with maps is `select-keys`. It takes a map and a collection of keys to retain, and it returns a new map with only the keys that were passed in. If we had some portion of the application that was only interested in when a session started, whether it was active, and its page-views, we could use `select-keys` to narrow down the data to only what we are interested in:
 
@@ -342,7 +342,7 @@ In any but the simplest of programs, we will need to work with nested data at so
 
 ### Drilling Down With `get-in`
 
-We have seen the `get` function a number of times for accessing a specific element in a map or a vector. It has a cousin, `get-in`, that is used for setting values that are nested deeper inside a data structure. Instead of supplying a single key for the value to get out, we supply a sequence of keys that will be looked up in turn. We can think of this sequence as a _path_ to the data that we are interested in. It is like a road map for the computer to follow to locate the data to retrieve. For instance, to get the first page-view of the first session of some user, we could use something like the following:
+We have seen the `get` function a number of times for accessing a specific element in a map or a vector. It has a cousin, `get-in`, that is used for getting values that are nested deeper inside a data structure. Instead of supplying a single key for the value to get out, we supply a sequence of keys that will be looked up in turn. We can think of this sequence as a _path_ to the data that we are interested in. It is like a road map for the computer to follow to locate the data to retrieve. For instance, to get the first page-view of the first session of some user, we could use something like the following:
 
 ```clojure
 (get-in user [:sessions 0 :page-views 0])

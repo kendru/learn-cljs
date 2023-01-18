@@ -6,7 +6,7 @@ type: "docs"
 
 # Lesson 20: Capstone 3 - Contact Book
 
-Over the past few lessons, we have learned the core tools for working with data in ClojureScript. First, we learned about the basic collection types - lists, vectors, maps, and sets - as well as the most common functions for working with these collections. Then we took a closer look at the important _sequence abstraction_ that allows us to operate on all sorts of sequential data using a uniform interface. Next, we discovered the `reduce` function and the many cases in which it can be used to summarize a sequence of data. Last, we walked through the process of modeling a real- world analytics domain. With this knowledge in our possession, we are ready to build another capstone project. This time, we will take the example of a contact book that we mentioned back in Lesson 16, and we will build a complete implementation, _ClojureScript Contacts_.
+Over the past few lessons, we have learned the core tools for working with data in ClojureScript. First, we learned about the basic collection types - lists, vectors, maps, and sets - as well as the most common functions for working with these collections. Then we took a closer look at the important _sequence abstraction_ that allows us to operate on all sorts of sequential data using a uniform interface. Next, we discovered the `reduce` function and the many cases in which it can be used to summarize a sequence of data. Last, we walked through the process of modeling a real-world analytics domain. With this knowledge in our possession, we are ready to build another capstone project. This time, we will take the example of a contact book that we mentioned back in Lesson 16, and we will build a complete implementation, _ClojureScript Contacts_.
 
 ---
 
@@ -58,14 +58,14 @@ In order to construct a new contact, we will use a variation on the constructor 
 
 ```clojure
 (defn make-contact [contact]
-  (select-keys contact [:first-name :last-name :email :postal :address]))
+  (select-keys contact [:first-name :last-name :email :address]))
 ```
 
 Since the address itself is a map, let's factor out creation of an address to another function. We can then update the `make-contact` function to use this address constructor:
 
 ```clojure
 (defn make-address [address]
-  (select-keys address [:street :city :state :country]))
+  (select-keys address [:street :city :state :postal :country]))
 
 (defn make-contact [contact]
   (let [clean-contact (select-keys contact [:first-name :last-name :email])]
@@ -74,7 +74,7 @@ Since the address itself is a map, let's factor out creation of an address to an
       clean-contact)))
 ```
 
-This new version of `make-contact` introduces one expression that we have not seen before: `if-let`. This macro works just like `if` except that it binds a name to the value being tested (just like `let` does). Unlike `let`, only a single binding may be provides. At compile time, this code will expand to something like the following[^1]:
+This new version of `make-contact` introduces one expression that we have not seen before: `if-let`. This macro works just like `if` except that it binds a name to the value being tested (just like `let` does). Unlike `let`, only a single binding may be provided. At compile time, this code will expand to something like the following[^1]:
 
 ```clojure
 (if (:address contact)
@@ -171,7 +171,7 @@ cljs.user=> (-> contact-list                               ;; <1>
                               :address {:state "RI"}})
                 (add-contact {:email "you@example.com"
                               :first-name "You"}))
-[{:first-name "Me", :email "me@example.com"}
+[{:first-name "Me", :email "me@example.com", :address {:state "RI"}}
  {:first-name "You", :email "you@example.com"}]
 ```
 
@@ -195,7 +195,7 @@ _Removing a Contact_
 2. `concat` returns a `seq` that contains all elements in the sequences passed to it in order
 3. `subvec` returns a portion of the vector that it is given
 
-Since there are a couple of new functions here that we have not seen yet, let's quickly look at what they do. Starting from the "inside" of this function, we have `subvec`. This function provides an efficient way to obtain a slice of some vector. It comes in a 2-arity and a 3-arity form: `(subvec v start)` and `(subvec v start end)`. This function work similarly to JavaScript's `Array.prototype.slice()` function. It returns a new vector that starts at the `start` index of the original vector and contains all elements up to but not including the `end` index. If no `end` is provided, it will contain everything from `start` to the end of the original vector.
+Since there are a couple of new functions here that we have not seen yet, let's quickly look at what they do. Starting from the "inside" of this function, we have `subvec`. This function provides an efficient way to obtain a slice of some vector. It comes in a 2-arity and a 3-arity form: `(subvec v start)` and `(subvec v start end)`. This function works similarly to JavaScript's `Array.prototype.slice()` function. It returns a new vector that starts at the `start` index of the original vector and contains all elements up to but not including the `end` index. If no `end` is provided, it will contain everything from `start` to the end of the original vector.
 
 Next, we have `concat`. This function takes a number of sequences and creates a new lazy[^2] `seq` that is the concatenation of all of the elements of its arguments. Because the result is a `seq`, we use the `vec` function to coerce the result back into a vector. Since much of ClojureScript's standard library operates on the sequence abstraction, we will find that we often need to convert the result back into a more specific type of collection.
 
@@ -212,7 +212,7 @@ Finally, when we update a contact, we want to replace the previous version. This
 
 ## Creating the UI
 
-Now that we have defined all of the functions that we need to work with our data model, let's turn our attention to creating the application UI. In Section 5, we will learn how to create high-performance UIs using the Reagent framework, but for now, we will take naive approach of re-rendering the entire application whenever anything changes. Our application will have two main sections - a list of contacts that displays summary details about each contact and a larger pane for viewing/editing contact details.
+Now that we have defined all of the functions that we need to work with our data model, let's turn our attention to creating the application UI. In Section 5, we will learn how to create high-performance UIs using the Reagent framework, but for now, we will take a naive approach of re-rendering the entire application whenever anything changes. Our application will have two main sections - a list of contacts that displays summary details about each contact and a larger pane for viewing/editing contact details.
 
 We will use the [hiccups](https://github.com/teropa/hiccups) library to transform plain ClojureScript data structures into an HTML string. This allows us to represent the interface of our application as a ClojureScript data structure and have a very simple interface to the actual DOM of the page. In order to use this library, we need to add it to our dependencies in `deps.edn`:
 
@@ -473,7 +473,7 @@ Now let's look at the code for processing the form and either adding or updating
 1. `state` within the `let` will refer to this updated state
 2. Use our domain functions to update the contact list within our app state
 
-Before moving on, let's take a look at the use of `update` to transform our application state. `update` takes an indexed collection (a map or vector), a key to update, and a transformation function. This function is variadic, and any additional arguments after the transformation function that will be passed to the transformation function following the value to transform. For instance, the call, `(update state :contacts replace-contact idx contact)`, will call `replace-contact` with the contacts list followed by `idx` and `contact`.
+Before moving on, let's take a look at the use of `update` to transform our application state. `update` takes an indexed collection (a map or vector), a key to update, and a transformation function. This function is variadic, and any additional arguments after the transformation function will be passed to the transformation function following the value to transform. For instance, the call, `(update state :contacts replace-contact idx contact)`, will call `replace-contact` with the contacts list followed by `idx` and `contact`.
 
 Now, we will finally implement the page header with its actions to create and save contacts:
 
@@ -533,7 +533,7 @@ Now, we will finally implement the page header with its actions to create and sa
 
   (when-let [cancel-button (gdom/getElement "cancel-edit")]
     (gevents/listen cancel-button "click"
-      (fn [_] (on-cancel-edit state))))))
+      (fn [_] (on-cancel-edit state)))))
 ```
 
 By now, this sort of code should be no problem to read and understand. In the interest of space, we will not reprint the entire application code, but it can be found at [the book's GitHub project](https://github.com/kendru/learn-cljs/tree/master/code/lesson-20/contacts).

@@ -97,7 +97,7 @@ Sequences are a type of ClojureScript collection in which the elements exist in 
 
 _First and Rest of a Sequence_
 
-This sequence abstraction seems quite intuitive - as long as we can get the first bit of something an we can get another sequence with the remaining bits, we can traverse the entire sequence, taking the first bit off each time until nothing is left. Since the `rest` of a sequence is another sequence, we can take the `first` element of it until we finally get to the end. Keeping this in mind, we can create a function that performs some sort of aggregation over a sequence by repeatedly looping with the `rest` of a sequence until the sequence is empty. For example, to add all the numbers in a sequence, we could write the following function:
+This sequence abstraction seems quite intuitive - as long as we can get the first bit of something and we can get another sequence with the remaining bits, we can traverse the entire sequence, taking the first bit off each time until nothing is left. Since the `rest` of a sequence is another sequence, we can take the `first` element of it until we finally get to the end. Keeping this in mind, we can create a function that performs some sort of aggregation over a sequence by repeatedly looping with the `rest` of a sequence until the sequence is empty. For example, to add all the numbers in a sequence, we could write the following function:
 
 ```clojure
 (defn add-all [xs]
