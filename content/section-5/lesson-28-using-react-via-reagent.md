@@ -87,7 +87,7 @@ Now we are ready to hook this page up to Reagent for state management. In the `l
   (set! (.-value c) @c-cell))
 ```
 
-_src/reagent_test/core.cljs_
+_src/learn_cljs/reagent_test.cljs_
 
 1. `reagent.core` provides the reactive version of `atom`
 2. `reagent.ratom` provides several reactive programming utilities
@@ -96,7 +96,7 @@ _src/reagent_test/core.cljs_
 5. Update the corresponding cell when the input for A or B changes
 6. Use `ratom/run!` to update the C input whenever `c-cell` changes
 
-If we run this example, we will see a page with 3 inputs labeled `A`, `B`, and `C`. `A` and `B` are normal number inputs, and `C` is a read-only input that displays the result of adding `A` and `B` together. We create reactive atoms for the `A` and `B` cells using `reagent.core/atom`, which act like regular atoms that can propagate changes to other computations the rely upon them. We then create the `C` cell as a _reaction_ to the other 2 cells. Since we dereference the `a-cell` and `b-cell` atoms within this reaction, Reagent creates a dependency relationship between Both `A -> C` and `B -> C` such that the value of `C` is updated reactively upon any change to `A` or `B`. As a reaction, `C` itself acts as a read-only reactive atom, and it could be used inside another reaction, which could be used inside another reaction, etc. A whole system of reactive atoms and reactions form a directed acyclic graph (DAG) such that any "upstream" changes automatically propagate "downstream" as far as they are able.
+If we run this example, we will see a page with 3 inputs labeled `A`, `B`, and `C`. `A` and `B` are normal number inputs, and `C` is a read-only input that displays the result of adding `A` and `B` together. We create reactive atoms for the `A` and `B` cells using `reagent.core/atom`, which act like regular atoms that can propagate changes to other computations that rely upon them. We then create the `C` cell as a _reaction_ to the other 2 cells. Since we dereference the `a-cell` and `b-cell` atoms within this reaction, Reagent creates a dependency relationship between Both `A -> C` and `B -> C` such that the value of `C` is updated reactively upon any change to `A` or `B`. As a reaction, `C` itself acts as a read-only reactive atom, and it could be used inside another reaction, which could be used inside another reaction, etc. A whole system of reactive atoms and reactions form a directed acyclic graph (DAG) such that any "upstream" changes automatically propagate "downstream" as far as they are able.
 
 ![A Directed Acyclic Graph](/img/lesson28/dag.png)
 
@@ -134,11 +134,11 @@ Next, we'll add Reagent as a dependency just like we did in the previous section
   [:p "Hello World"])
 
 (rdom/render
-  hello                                                    ;; <1>
+  [hello]                                                  ;; <1>
   (gdom/getElement "app"))                                 ;; <2>
 ```
 
-_src/exercise_tracker/core.cljs_
+_src/learn_cljs/exercise_tracker.cljs_
 
 1. Component to render
 2. DOM node to mount our component into
@@ -234,7 +234,7 @@ Now that we have a form in place, let's add a chart above it that will display t
 Unlike the chat application, which queried the DOM to get the value of its inputs, we are going to invert the responsibility here by putting our input data in state and letting the components render the value from state. Whenever the user makes a change in the input, we want to propagate that change back to state, which will cause our component to re-render. Both React and Reagent refer to this type of input handling as _controlled inputs_ because the value of an input is controlled by UI state. The simplest way to create a controlled input component is to use a slight variation of a Reagent component.
 
 ```clojure
-(defn- current-date-string [d]
+(defn- date-string [d]
   (let [pad-zero #(.padStart (.toString %) 2 "0")
         y (.getFullYear d)
         m (-> (.getMonth d) inc pad-zero)

@@ -26,7 +26,7 @@
 (defn on-answer [game current answer]
   (let [scene (get game current)]
     (if (= :skip (:type scene))
-      (:on-continue scene)
+      (prompt game (:on-continue scene))
       (condp = answer
         "reset" (prompt game :start)
         "help" (do (io/clear term)

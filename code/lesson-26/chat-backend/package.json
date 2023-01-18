@@ -14,8 +14,11 @@
     "migrations:down": "DATABASE_URL='' db-migrate down --config config/db.json",
     "watch": "lein trampoline run -m clojure.main watch.clj",
     "clean": "rm -rf ./out",
-    "prebuild": "run-script clean",
+    "prebuild": "npm run clean",
     "build": "lein trampoline run -m clojure.main build.clj",
     "start:dev": "docker-compose up -d && nodemon --watch out ./out/main.js"
+  },
+  "engines": {
+    "node": ">=12 <13"
   }
 }
