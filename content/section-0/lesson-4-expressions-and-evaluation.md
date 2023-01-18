@@ -68,7 +68,7 @@ At this point, we can begin to see that all of the parentheses serve a purpose a
 
 > **NOTE**
 >
-> Using a language based on s-expressions means that there is no such thing as operator precedence. In JavaScript, we must recall that `*` has higher precedence than `+`, that `&&` has higher precedence than `OR`, and that `!` has a higher precedence than any of the other operators listed here. In ClojureScript, we do not need a chart because precedence is explicit in the syntax of the language itself. For instance, there is no question about the meaning of the expression `(and x (or y z))`, and it is also clear that `(or (and x y) z)` means something else entirely. What at first looked like weird syntax is proving to be quite useful!
+> Using a language based on s-expressions means that there is no such thing as operator precedence. In JavaScript, we must recall that `*` has higher precedence than `+`, that `&&` has higher precedence than `||`, and that `!` has a higher precedence than any of the other operators listed here. In ClojureScript, we do not need a chart because precedence is explicit in the syntax of the language itself. For instance, there is no question about the meaning of the expression `(and x (or y z))`, and it is also clear that `(or (and x y) z)` means something else entirely. What at first looked like weird syntax is proving to be quite useful!
 
 ### Understanding Expressions
 
