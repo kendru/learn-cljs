@@ -25,7 +25,7 @@ _Screenshot of ClojureScript Chat_
 
 ## Thinking About Interactions
 
-There are many ways to start building an application, and no one way is necessarily best. However, for ClojureScript, a natural place to start is by thinking about the state and how we want the user to interact with that state. At a high level, we will have 2 types of data that we want to keep track of: _application data_ and _UI state_. Application data is any data that we receive from the server that powers the application UI state, on the other hand, is made up of pieces of data that are never persisted but are useful for determining what state various components are in.
+There are many ways to start building an application, and no one way is necessarily best. However, for ClojureScript, a natural place to start is by thinking about the state and how we want the user to interact with that state. At a high level, we will have 2 types of data that we want to keep track of: _application data_ and _UI state_. Application data is any data that we receive from the server that powers the application. UI state, on the other hand, is made up of pieces of data that are never persisted but are useful for determining what state various components are in.
 
 ### Application Data
 
@@ -43,7 +43,7 @@ For our chat application, we will keep a vector of `rooms` that we can join, a v
 (defonce app-state (atom initial-state))                   ;; <2>
 ```
 
-_learn\_clj/chat/state.cljs_
+_learn\_cljs/chat/state.cljs_
 
 1. Define the initial application state as an immutable map
 2. Define the app state as an atom whose starting value is the same as `initial-state`
@@ -247,7 +247,7 @@ We will break out each of these high-level layout components into a namespace, a
 
 _Application Layout_
 
-Most of our components will follow the same pattern: they will mount into a parent DOM node, watch a portion of the application state (or some value computed from the state) for change, and re-render themselves the a change occurs. Let's go ahead and create a function that will allow us to initialize a component that follows this pattern:
+Most of our components will follow the same pattern: they will mount into a parent DOM node, watch a portion of the application state (or some value computed from the state) for change, and re-render themselves when a change occurs. Let's go ahead and create a function that will allow us to initialize a component that follows this pattern:
 
 ```clojure
 (ns learn-cljs.chat.components.component
@@ -308,7 +308,7 @@ We will build the UI for this application in a top-down fashion, starting with t
 _chat/components/app.cljs_
 
 
-This application container code is fairly straightforward: we create a basic shell with a couple of DOM nodes then call `render-header` to create and return the DOM necessary for the header. Before this code does anything useful, we will need to create a `learn-cljs.chat.components.header` namespace that exposes the `init-header` function. We'll do that now:
+This application container code is fairly straightforward: we create a basic shell with a couple of DOM nodes then call `init-header` to create and return the DOM necessary for the header. Before this code does anything useful, we will need to create a `learn-cljs.chat.components.header` namespace that exposes the `init-header` function. We'll do that now:
 
 ```clojure
 (ns learn-cljs.chat.components.header
@@ -362,14 +362,14 @@ This application container code is fairly straightforward: we create a basic she
     :header accessor render))
 ```
 
-_state/components/header.cljs_
+_chat/components/header.cljs_
 
 1. Helper function for displaying a formatted version of a user's name
 2. Accessor function that takes the app state and computes our component state
 3. Use the functions that we wrote in `learn-cljs.chat.state` to access the relevant data
 4. Provide a fallback if the user is not in a chat room or a conversation
 5. Render function that updates the `header` element based on app state
-6. Create the header component and return its DOME element
+6. Create the header component and return its DOM element
 
 Here we see the `init-component` function in action: within `init-header`, we create an element to render the header content into, and we pass that element, along with an accessor function that computes component state from application state and a render function that will update our header whenever the component state changes. One nice feature of the way that we designed our `init-component` helper is that the render function will only be called if the app state changes in a way that affects how the header renders. When we get to the next section, we will rely on React to optimize the rendering cycle for us, but it is instructive to see how easily we can build a UI without any framework.
 
@@ -377,7 +377,7 @@ Before moving on, let's clean things up a bit. First, the `display-name` functio
 
 ```clojure
 ;; chat/components/render_helpers.cljs
-(ns chat.components.render-helpers
+(ns learn-cljs.chat.components.render-helpers
   (:require [clojure.string :as s]))
 
 (defn display-name [person]
@@ -388,9 +388,9 @@ Before moving on, let's clean things up a bit. First, the `display-name` functio
     "REMOVED"))
 
 ;; chat/components/header.cljs
-(ns chat.components.header
+(ns learn-cljs.chat.components.header
   (:require ; ...
-            [chat.components.render-helpers :refer [display-name]])
+            [learn-cljs.chat.components.render-helpers :refer [display-name]])
   ; ...
 )
 ```
@@ -530,7 +530,7 @@ There is not anything that is novel in this code: we initialize components that 
            {:username (:username person)})))))
 
 (defn render-people [msg-ch el people]
-  (dom/with-children el
+  (apply dom/with-children el
     (map #(render-person msg-ch %) people)))
 
 (defn sidebar-people [msg-ch]
@@ -639,7 +639,7 @@ Now that we have the basic "shell" of the application in place, let's move on to
       (dom/p nil (:content message)))))
 
 (defn render [el messages]
-  (dom/with-children el
+  (apply dom/with-children el
     (map render-message messages)))
 
 (defn scroll-to-bottom [el]                                ;; <1>
@@ -710,7 +710,7 @@ Like the message list, the composer will need to be mounted into the app and ini
 (defn init-main [msg-ch]
   (dom/section "content-main"
     ;; ...
-    (init-composer)))
+    (init-composer msg-ch)))
 ;; ...
 ```
 
@@ -871,7 +871,7 @@ Since our application is highly dynamic, and we want to send and receive message
     (reset! api ws)))
 ```
 
-_api.cljs_
+_chat/api.cljs_
 
 1. For convenience, we define the websocket API as a global atom
 2. `pr-str` serializes Clojure(Script) data
@@ -883,7 +883,7 @@ In this API namespace, we define an extremely simple messaging protocol. Both th
 We will first initialize the API within our core namespace:
 
 ```clojure
-(ns learn-cljs.chat.core
+(ns learn-cljs.chat
   (:require ;; ...
             [learn-cljs.chat.api :as api]))
 
@@ -901,7 +901,7 @@ Next, we will update our `handlers` namespace to both emit API messages in respo
 ```clojure
 (ns learn-cljs.chat.handlers
   (:require ;; ...
-            [chat.api :as api]))
+            [learn-cljs.chat.api :as api]))
 
 ;; ...
 
@@ -1030,6 +1030,6 @@ While this application is quite capable considering how few lines of code it con
 
 ## Summary
 
-If you have reached this point, congratulations on creating a non-trivial application in ClojureScript! At this point, we have learned all of the core language features and idioms, and we have put them to practice in creating an interesting, useable chat app. While we ended up with a fully-functional app, we had to resort to some imperative code and manual DOM manipulation, similar to what we would do in JavaScript if we were not using a framework. In the next section, we will see how React's virtual DOM and Clojure Script's preference for immutability form a perfect marriage that will allow us to write declarative application UIs.
+If you have reached this point, congratulations on creating a non-trivial application in ClojureScript! At this point, we have learned all of the core language features and idioms, and we have put them to practice in creating an interesting, useable chat app. While we ended up with a fully-functional app, we had to resort to some imperative code and manual DOM manipulation, similar to what we would do in JavaScript if we were not using a framework. In the next section, we will see how React's virtual DOM and ClojureScript's preference for immutability form a perfect marriage that will allow us to write declarative application UIs.
 
 [^1]: https://github.com/edn-format/edn

@@ -25,7 +25,7 @@ ClojureScript's library for concurrency is based on a mathematical process calcu
 
 In ClojureScript, the _core.async_ library provides the functionality that we need to create these asynchronous workflows in the form of the `go` macro, which creates a new lightweight process, `chan`, which creates a channel, and the operators, `<!` (take), `>!` (put), and `alts!` (take from one of many channels). Using only these primitives, we can create very sophisticated asynchronous communication patterns. Before diving in with `core.async`, let's take a quick step back to talk about CSP.
 
-In CSP, the fundamental object is the _process_. A process is simply an anonymous (unnamed) piece of code that can execute a number of steps in order, potentially with its own control flow. Code in a `process` always runs synchronously - that is, the process will not proceed on to the next step until the previous step completes. Each process is independent of every other process, and they all run concurrently (ClojureScript is is charge of scheduling what process should run when). Finally, even though communication is a cornerstone of CSP, processes do not necessarily _have_ to communicate with any other processes.
+In CSP, the fundamental object is the _process_. A process is simply an anonymous (unnamed) piece of code that can execute a number of steps in order, potentially with its own control flow. Code in a `process` always runs synchronously - that is, the process will not proceed on to the next step until the previous step completes. Each process is independent of every other process, and they all run concurrently (ClojureScript is in charge of scheduling what process should run when). Finally, even though communication is a cornerstone of CSP, processes do not necessarily _have_ to communicate with any other processes.
 
 ![Concurrent Processes](/img/lesson25/concurrent-processes.png)
 
@@ -162,7 +162,7 @@ However, this incurs some additional overhead that we may not want every time th
 
 ### Alternating Between Channels
 
-As we mentioned in out introduction to CSP above, there is one additional function that we often use to consume values from more than one channel: `alts!`. Like `>!` and `<!`, `alts!` can only be called from within a go block. It takes a vector of channels to "listen to" and parks until it receives a value from any of them. Upon receiving a value, it evaluates to a vector whose first element is the value received and whose second element is the channel from which the value came. By checking the channel that we get from `alts!`, we can determine where the value came from and decide what to do with it.
+As we mentioned in our introduction to CSP above, there is one additional function that we often use to consume values from more than one channel: `alts!`. Like `>!` and `<!`, `alts!` can only be called from within a go block. It takes a vector of channels to "listen to" and parks until it receives a value from any of them. Upon receiving a value, it evaluates to a vector whose first element is the value received and whose second element is the channel from which the value came. By checking the channel that we get from `alts!`, we can determine where the value came from and decide what to do with it.
 
 One common use case is to implement a timeout by alternating between a channel that we expect to eventually deliver a value and a timeout channel that will close after a certain amount of time:
 
@@ -212,11 +212,11 @@ Here we spin up another process that repeatedly takes key chords from the `chord
 
 ## Channels as Values
 
-As we saw in the `mock-request` function, we can create channels anywhere in our code. We can pass them as arguments to functions or return them from functions. Although the serve the special purpose of facilitating communication between processes, they are just regular ClojureScript values.
+As we saw in the `mock-request` function, we can create channels anywhere in our code. We can pass them as arguments to functions or return them from functions. Although they serve the special purpose of facilitating communication between processes, they are just regular ClojureScript values.
 
 It is a common idiom to return a channel from a function that produces some result asynchronously. Whereas in JavaScript, we would usually return a Promise (or write the function as `async`), we often return a channel when we intend for a function to be called from within a go block. Author and Clojure instructor Eric Normand suggests naming functions that return channels with a `<` prefix.[^2] Following this convention, our `mock-request` function would become `<mock-request`. This makes it easy to visually distinguish functions that return channels from other functions. Remember, however, that a function that returns a channel is less general than one that accepts a callback because when we return a channel, we dictate that any value eventually produced by that function must be consumed in a go block. For this reason, we should usually prefer writing functions that take callbacks if we do not know how we will eventually want to call them.
 
-In addition to channels that simply create a channel that they will eventually put a value into, we can create some interesting higher-order channel functions. For instance, we can create a channel that merges values from any number of other channels:
+In addition to functions that simply create a channel that they will eventually put a value into, we can create some interesting higher-order channel functions. For instance, we can create a channel that merges values from any number of other channels:
 
 ```clojure
 (defn merge-ch [& channels]
