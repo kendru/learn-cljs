@@ -74,9 +74,9 @@ Unlike the message bus that we used in Lesson 26, we hard-code the `dispatch!` f
 ```
 
 1. `filterv` acts just like `filter`, but it returns a vector
-2. load the initial state into a reactive atom at component set-up
-3. we will implement this function next
-4. dereferencing this atom causes the component to be reactive
+2. Load the initial state into a reactive atom at component set-up
+3. We will implement this function next
+4. Dereferencing this atom causes the component to be reactive
 
 The state for this component is quite simple: a collection of messages and an incrementing counter to keep track of the next id. We also have a pair of functions for adding and removing a message from state. Next, we'll define the `listen-for-added!` function that will subscribe this component to `::add-notification` messages:
 
@@ -189,7 +189,7 @@ _Command/Event Messaging_
 
 Our new `dispatch!` function is a normal, synchronous function that will delegate handling of each specific command to a specialized handler function. Here, the `:user-form/submit!` command is handled by `handle-user-form-submit!`. In a real application, this handler would likely do other things like make API calls or emit additional events, but we will keep it simple and only emit an event for the notifications component to display.
 
-Although we have replaced the pubsub pattern for commands with a direct function dispatch, we have kept it for events. In fact, `evt-ch`, `evt-bus`, and `emit!` are just renamed versions of `msg-ch`, `msg-ch`, and `dispatch!` from the pubsub version, except that their purpose is to convey event messages only and not commands. The only piece of the UI that needs to change in this version is that the notification component should subscribe to the `:notification/added` topic on `evt-bus`:
+Although we have replaced the pubsub pattern for commands with a direct function dispatch, we have kept it for events. In fact, `evt-ch`, `evt-bus`, and `emit!` are just renamed versions of `msg-ch`, `msg-bus`, and `dispatch!` from the pubsub version, except that their purpose is to convey event messages only and not commands. The only piece of the UI that needs to change in this version is that the notification component should subscribe to the `:notification/added` topic on `evt-bus`:
 
 ```clojure
 (defn listen-for-added! [state]
@@ -314,7 +314,7 @@ One clear advantage of this pattern is that we can declare the state right next 
 
 When we start to decouple our view components from the business logic of updating state, we can start to think of state management as an API that lives on the client. This way of programming gives us a clear boundary for separating presentation and business logic concerns, and it leads to much more maintainable code. Additionally, if we factor our state management from our UI, then we can also deal with getting data to and from a backend API layer outside our components. This additional level of separation gives us much more flexibility since we are free to vary how the backend API and components work independently. For instance, if we need to re-shape the data that comes from a back-end before rendering it, that can be done in our frontend API layer.
 
-This front-end API looks slightly different in each of the messaging patterns. In the direct pubsub pattern, the message handlers provide this API layer, although there is no distinction between messages that originate in the UI from those that originate from a back-end API, so this pattern can lead to spaghetti code in larger codebases. In the command/event pattern, the same command handler will generally handle a command originating in the UI and control and back-end API calls that need to be made within a single function, so the logic is more centralized. Finally, in the actor pattern, we can create a dedicated actor whose responsibility is running back-end API requests - and perhaps keeping track of things like what requests are in progress or have failed in order to display loading/error indicators in the UI. In any case, using messaging to decouple components from each other and core business logic makes our code more flexible at the cost of added complexity.
+This front-end API looks slightly different in each of the messaging patterns. In the direct pubsub pattern, the message handlers provide this API layer, although there is no distinction between messages that originate in the UI from those that originate from a back-end API, so this pattern can lead to spaghetti code in larger codebases. In the command/event pattern, the same command handler will generally handle a command originating in the UI and control back-end API calls that need to be made within a single function, so the logic is more centralized. Finally, in the actor pattern, we can create a dedicated actor whose responsibility is running back-end API requests - and perhaps keeping track of things like what requests are in progress or have failed in order to display loading/error indicators in the UI. In any case, using messaging to decouple components from each other and core business logic makes our code more flexible at the cost of added complexity.
 
 ## Summary
 
