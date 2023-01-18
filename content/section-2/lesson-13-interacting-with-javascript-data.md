@@ -47,7 +47,7 @@ This creates a global JavaScript variable called `testScores`, which we can acce
 
 _Sharing Data Between Browser and REPL_
 
-We can use the REPL to inspect this variable, convert it to a ClojureScript data structure, modify it and write a new version back out the the `testScores` variable.
+We can use the REPL to inspect this variable, convert it to a ClojureScript data structure, modify it and write a new version back out the `testScores` variable.
 
 ```clojure
 cljs.user=> (def cljs-scores (js->clj js/testScores))      ;; <1>
@@ -244,7 +244,7 @@ _Getting and Setting Array Elements_
 
 1. Bind a var to a JavaScript array
 2. Get the element at index `2`
-3. Get the element at index `5` to `13`
+3. Set the element at index `5` to `13`
 4. `aset` has mutated the array
 
 We can also access the JavaScript array methods by using, `(.functionName array args*)`. This is the standard syntax for calling a method on a JavaScript object, which we will explain in much more detail later.
@@ -291,7 +291,7 @@ var books = [
 ];
 ```
 
-- Write an expression that will retrieve the value, "Scheme":
+- Write an expression that will retrieve the value, "Scheme".
 - Write an expression that will have the side effect of changing the title "All About Animals" to "Dangerous Creatures".
 
 ### Challenge

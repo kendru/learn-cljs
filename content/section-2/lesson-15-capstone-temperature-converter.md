@@ -204,7 +204,7 @@ _src/learn_cljs/temp_converter.cljs_
 3. Store each element that we will use in a var
 4. Helper functions
 5. Event handling callback
-6. Attach event handler to `keyup` event in the temperature input and the click event on each radio button
+6. Attach event handler to `keyup` event in the temperature input and the `click` event on each radio button
 
 ### Challenge
 

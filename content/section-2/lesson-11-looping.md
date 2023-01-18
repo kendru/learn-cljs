@@ -6,7 +6,7 @@ date: 2019-09-19T20:50:20-06:00
 
 # Lesson 11: Looping
 
-In the last lesson, we looked at ClojureScript's versions of we usually call branching control structure. However, we learned that things work a little bit different in ClojureScript compared to other languages that we may be used to - control structures are expressions rather than imperative controls. Now as we come to another fundamental topic - loops - we will learn that things are once again a bit different in ClojureScript.
+In the last lesson, we looked at ClojureScript's versions of what we usually call branching control structure. However, we learned that things work a little bit different in ClojureScript compared to other languages that we may be used to - control structures are expressions rather than imperative controls. Now as we come to another fundamental topic - loops - we will learn that things are once again a bit different in ClojureScript.
 
 ---
 
@@ -70,7 +70,7 @@ _Finding the Square of 0-9_
 1. Yield a new sequence by taking the numbers 0-9
 2. Make each number in the new sequence the square of the original
 
-By now we should see that when used with a single input sequence, `for` describes a whole-sequence transformation. When working with ClojureScript, we should try to think whether the problem before us could be represented as a sequence transformation. If so, `for` provides a no-nonsense solution. Let's look at the same problem solved iteratively and with `for`. Imagine that we have a number of right triangles. We know the sides that are adjacent to the right angle, and we need to find the hypotenuse of each triangle. Fist, an iterative solution in JavaScript:
+By now we should see that when used with a single input sequence, `for` describes a whole-sequence transformation. When working with ClojureScript, we should try to think whether the problem before us could be represented as a sequence transformation. If so, `for` provides a no-nonsense solution. Let's look at the same problem solved iteratively and with `for`. Imagine that we have a number of right triangles. We know the sides that are adjacent to the right angle, and we need to find the hypotenuse of each triangle. First, an iterative solution in JavaScript:
 
 <!-- TODO: diagram -->
 

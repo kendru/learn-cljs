@@ -141,7 +141,7 @@ For the second case, we will often want to perform some DOM manipulation or othe
 
 ### Applying if and when
 
-Considering the example of the adventure game, we can use use an `if` expression to determine what to do after prompting the user for a yes/no question. Let's take a quick step back to discuss the overall architecture of the game. We will represent the entire game as a map where the keys are the name of each state and the values are maps that represent a specific screen. The general shape of our game data structure is below:
+Considering the example of the adventure game, we can use an `if` expression to determine what to do after prompting the user for a yes/no question. Let's take a quick step back to discuss the overall architecture of the game. We will represent the entire game as a map where the keys are the name of each state and the values are maps that represent a specific screen. The general shape of our game data structure is below:
 
 We will represent our game as a collection of states with rules that determine how to move between states when the user makes some decision:
 
@@ -297,7 +297,7 @@ values for "TEST":
 
 ## More Complex Choices With cond
 
-With `if` and `when`, we have all that we technically need to handle any sort of decision-making that we need to do in code. However, we are often faced with cases in which `if` would be awkward to use. Consider adding more commands to our game so that the user could type "restart" to go back to the beginning or "help" to display the commands that are available. As we add more options, we would have to keep nesting more and more`if` expressions - like using a pocket knife to carve a wooden sculpture, it could work, but the result would not be pleasant.
+With `if` and `when`, we have all that we technically need to handle any sort of decision-making that we need to do in code. However, we are often faced with cases in which `if` would be awkward to use. Consider adding more commands to our game so that the user could type "restart" to go back to the beginning or "help" to display the commands that are available. As we add more options, we would have to keep nesting more and more `if` expressions - like using a pocket knife to carve a wooden sculpture, it could work, but the result would not be pleasant.
 
 Enter `cond` and its cousins, `condp` and `case`. `cond` takes some expression and any number of test/result pairs, and the entire expression will evaluate to the "then" expression that comes after the first test that is truthy:
 
@@ -356,7 +356,7 @@ Compared to our original implementation with nested if statements, this version 
 
 ### Quick Review
 
-- Using `cond` to write some code that will evaluate to `:pos` when a given number is positive, `:neg` when it is negative, and `:zero` when it is exactly zero
+- Use `cond` to write some code that will evaluate to `:pos` when a given number is positive, `:neg` when it is negative, and `:zero` when it is exactly zero
 - Write code that will do the same thing using `condp`
 
 ## Summary

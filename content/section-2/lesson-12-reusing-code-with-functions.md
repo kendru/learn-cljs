@@ -6,7 +6,7 @@ date: 2019-09-22T07:00:50-06:00
 
 # Lesson 12: Reusing Code With Functions
 
-ClojureScript is a functional programming language. The functional programming paradigm gives us superpowers, but - love it or hate it - it also makes certain demands on the way that we write code. We have already discussed some of the implications of functional code (immutable data, minimizing side effects, etc.), but up to this point we have not studied what a functions _are_ - much less how to use them idiomatically. In this lesson, we define what functions are in ClojureScript, and we will study how to define and use them. Finally, we'll look at some best practices for when to break code into separate functions and how to use a special class of function that is encountered often in ClojureScript - the recursive function.
+ClojureScript is a functional programming language. The functional programming paradigm gives us superpowers, but - love it or hate it - it also makes certain demands on the way that we write code. We have already discussed some of the implications of functional code (immutable data, minimizing side effects, etc.), but up to this point we have not studied what functions _are_ - much less how to use them idiomatically. In this lesson, we define what functions are in ClojureScript, and we will study how to define and use them. Finally, we'll look at some best practices for when to break code into separate functions and how to use a special class of function that is encountered often in ClojureScript - the recursive function.
 
 ---
 
@@ -166,20 +166,20 @@ First, a function can be declared with multiple _arities_ - that is, its behavio
 ```clojure
 (defn my-multi-arity-fn
  ([a] (println "Called with 1 argument" a))                ;; <1>
- (                                                         ;; <2>
-  [a b]                                                    ;; <3>
-  (println "Called with 2 arguments" a b)                  ;; <4>
+ (
+  [a b]                                                    ;; <2>
+  (println "Called with 2 arguments" a b)                  ;; <3>
  )
  ([a b c] (println "Called with 3 arguments" a b c)))
 
-(defn my-single-arity-fn [a]                               ;; <5>
+(defn my-single-arity-fn [a]                               ;; <4>
   (println "I can only be called with 1 argument"))
 ```
 
 1. Unlike the basic `defn` form, each function implementation is enclosed in a list
 2. For each function implementation, the first element in the list is the parameter vector
 3. ...followed by one or more expressions, forming the body of the implementation for that arity
-5. Remember that for a single-arity function, the parameters and expressions that form the body of the function need not be enclosed in a list
+4. Remember that for a single-arity function, the parameters and expressions that form the body of the function need not be enclosed in a list
 
 Multiple arity functions are often used to supply default parameters. Consider the following function that can add an item to a shopping cart. The 3-ary version lets a quantity be specified along with the `product-id`, and the 2-ary version calls this 3-ary version with a default quantity of `1`:
 
@@ -260,9 +260,9 @@ Now that we have learned how to define functions mechanically, let's take a step
 ;; => 16
 ```
 
-In Lesson 4, we took it for granted that an s-expression like `(+ 5 3)` evaluates to `8`, but we did not consider how this happened. We need to expand that mental model of evaluation to account for what happens a function is called.
+In Lesson 4, we took it for granted that an s-expression like `(+ 5 3)` evaluates to `8`, but we did not consider how this happened. We need to expand that mental model of evaluation to account for what happens when a function is called.
 
-When we define a function, we declare a list of parameters. These are called the `formal parameters` of the function. The function body is free to refer to any of these formal parameters. When the function is called, the call is replaces with the body of the function where every instance of the formal parameters is replaced with the argument that was passed in - called the `actual parameters`. While this is a bit confusing to explain, a quick example should help clarify:
+When we define a function, we declare a list of parameters. These are called the `formal parameters` of the function. The function body is free to refer to any of these formal parameters. When the function is called, the call is replaced with the body of the function where every instance of the formal parameters is replaced with the argument that was passed in - called the `actual parameters`. While this is a bit confusing to explain, a quick example should help clarify:
 
 ```clojure
 (defn hypotenuse [a b]                                     ;; <1>
@@ -363,7 +363,7 @@ The real power comes when we move from specific, granular function to higher lev
 ### Quick Review
 
 - Define a function using `my-inc` that returns the increment of a number. How would you define a function with the same name without using `defn`?
-- What is the difference between the _formal parameters_ and _actual parameters_
+- What is the difference between the _formal parameters_ and _actual parameters_?
 - What does _shadowing_ mean in the context of a closure?
 
 ## Recursion 101
