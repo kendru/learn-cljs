@@ -1,8 +1,8 @@
 {
   "dependencies": {
     "@cljs-oss/module-deps": "^1.1.1",
-    "db-migrate": "^0.11.6",
-    "db-migrate-pg": "^1.0.0",
+    "db-migrate": "^0.11.13",
+    "db-migrate-pg": "^1.2.2",
     "nodemon": "^2.0.3",
     "pg": "^7.18.2",
     "ssh2": ">=1.4.0",
@@ -14,8 +14,11 @@
     "migrations:down": "DATABASE_URL='' db-migrate down --config config/db.json",
     "watch": "lein trampoline run -m clojure.main watch.clj",
     "clean": "rm -rf ./out",
-    "prebuild": "run-script clean",
+    "prebuild": "npm run clean",
     "build": "lein trampoline run -m clojure.main build.clj",
     "start:dev": "docker-compose up -d && nodemon --watch out ./out/main.js"
+  },
+  "engines": {
+    "node": ">=12 <13"
   }
 }

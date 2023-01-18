@@ -276,7 +276,7 @@ _notes/command.cljs_
 2. It should also emit events to which other portions of the app can react.
 3. Run dispatcher asynchronously so that the call stack can clear before events are handled.
 
-The UI can issue commands by calling _command/dispatch!` directly. For example, a component could call `(notes.command/dispatch! :test/hello "world")`, and the text `Hello world` would be printed to the console. To support more commands, we will add conditions to the `case` expression in `dispatch!` and a corresponding handler function.
+The UI can issue commands by calling `command/dispatch!` directly. For example, a component could call `(notes.command/dispatch! :test/hello "world")`, and the text `Hello world` would be printed to the console. To support more commands, we will add conditions to the `case` expression in `dispatch!` and a corresponding handler function.
 
 Next, we need to implement the `emit!` function that is responsible for delivering events to subscribers. Any code can register a listener function that will be called whenever an event is emitted so that it can have a chance to react to it.
 
@@ -423,11 +423,11 @@ _notes/ui/footer.cljs_
 
 Now that we have a little structure in place, let's start by letting the user create a new note. We will add a button to the header that navigates to a view where the user can fill in their note and save it. Although this seems like a small feature, it will involve:
 
-1. adding a few UI components, including the concept of a _view_
-2. introducing a router for managing navigation
-3. creating an API namespace that will control communication with the server
+1. Adding a few UI components, including the concept of a _view_
+2. Introducing a router for managing navigation
+3. Creating an API namespace that will control communication with the server
 
-First, we will add the "New Note" button to the header. In the header component, we will require a single `button` component from _ui.common` (which we will create shortly):
+First, we will add the "New Note" button to the header. In the header component, we will require a single `button` component from `ui.common` (which we will create shortly):
 
 ```clojure
 (ns learn-cljs.notes.ui.header
@@ -448,7 +448,7 @@ Before we implement the button component, let's take a brief detour to discuss r
 
 ### Routing
 
-Like most single-page applications, we will use URL routing to determine which view should be displayed. This presents a challenge, since we the state atom - not the URL - to hold the canonical state of our application, including routing information. In order to manage routing state, we will use the [bide](https://github.com/funcool/bide) library to act as a source of events. Whenever the URL of our application changes, we will treat it as a `:route/navigated` event that contains the route and any parameters (e.g. the note ID for an `:edit-note` view). This flow allows us to treat the browser itself as a source of events that may update the application's state, which remains the single source of truth. One consequence of this method of routing is that we need to allow links and buttons to invoke the router, which will in turn update the URL and emit a `:route/navigated` event. Thankfully, we already have a command dispatcher abstraction, so our components can just dispatch commands, including routing commands.
+Like most single-page applications, we will use URL routing to determine which view should be displayed. This presents a challenge, since we use the state atom - not the URL - to hold the canonical state of our application, including routing information. In order to manage routing state, we will use the [bide](https://github.com/funcool/bide) library to act as a source of events. Whenever the URL of our application changes, we will treat it as a `:route/navigated` event that contains the route and any parameters (e.g. the note ID for an `:edit-note` view). This flow allows us to treat the browser itself as a source of events that may update the application's state, which remains the single source of truth. One consequence of this method of routing is that we need to allow links and buttons to invoke the router, which will in turn update the URL and emit a `:route/navigated` event. Thankfully, we already have a command dispatcher abstraction, so our components can just dispatch commands, including routing commands.
 
 ![Routing Flow](/img/lesson30/routing-flow.png)
 
@@ -477,11 +477,11 @@ We will now create a router and hook it up to the relevant pieces of the applica
                        :on-navigate on-navigate}))
 ```
 
-_notes/routes.clj_
+_notes/routes.cljs_
 
 1. Create the router only once
 2. Side-effecting function that the command dispatcher will call to update the current route
-3. Callback that will be run whenever the a route change completes
+3. Callback that will be run whenever a route change completes
 4. Initialize the router on startup
 
 Next, we will expose a command in the dispatcher that calls the `navigate!` function that we just defined:
@@ -495,7 +495,7 @@ Next, we will expose a command in the dispatcher that calls the `navigate!` func
   (routes/navigate! route-params))
 ;; ...
 
-(defn dispatch
+(defn dispatch!
   ;;...
   :route/navigate (handle-navigate! payload))
 ```
@@ -517,7 +517,7 @@ Now that we have exposed the router to our UI via the dispatcher, let's initiali
 
 _notes.cljs_
 
-The reason that we expose an _routes/initialize!` rather than initialize the router immediately when _routes` is evaluated is that the router will call the `on-navigate` callback as soon as it is initialized; and if that happens before the event handlers are registered, the state will not be updated. By deferring loading until our core file and all of its imports have been evaluated, we ensure that the initial route event will be handled appropriately. Next, we will create and register the handler for the `:route/navigated` event.
+The reason that we expose a `routes/initialize!` rather than initialize the router immediately when `routes` is evaluated is that the router will call the `on-navigate` callback as soon as it is initialized; and if that happens before the event handlers are registered, the state will not be updated. By deferring loading until our core file and all of its imports have been evaluated, we ensure that the initial route event will be handled appropriately. Next, we will create and register the handler for the `:route/navigated` event.
 
 ```clojure
 (ns learn-cljs.notes.event-handlers.routes
@@ -533,8 +533,8 @@ _notes/event\_handlers/routes.cljs_
 
 We will need to evaluate this namespace on startup so that the handler is registered, so let's take care of that in two steps:
 
-1. Create a _event-handlers.core` that requires all event handler namespaces for side effects.
-2. Require the _event-handlers.core` in our top-level _core` namespace.
+1. Create an `event-handlers.core` that requires all event handler namespaces for side effects.
+2. Require the `event-handlers.core` in our top-level `core` namespace.
 
 ```clojure
 (ns learn-cljs.notes.event-handlers.core
@@ -705,7 +705,7 @@ Since nothing in this file is particularly novel, let's return to the button com
 
 _notes/ui/common.cljs_
 
-Now the behavior of the button will vary depending on whether the `route-params`, `dispatch`, or `on-click` option is provided. Remember that `cond` will evaluate the right-hand side of the first truthy clause in encounters, so the behavior when `route-params` is specified will not change. However, if `dispatch` is provided, it will call _command/dispatch!` with the arguments provided.
+Now the behavior of the button will vary depending on whether the `route-params`, `dispatch`, or `on-click` option is provided. Remember that `cond` will evaluate the right-hand side of the first truthy clause it encounters, so the behavior when `route-params` is specified will not change. However, if `dispatch` is provided, it will call `command/dispatch!` with the arguments provided.
 
 #### You Try It
 
@@ -792,7 +792,7 @@ _notes/api.cljs_
 5. Helper for emitting error notifications
 6. At least the code to perform a single request is nice and simple now, right?
 
-There is a lot going on in this file, but the bulk of it is related to the implementation of the `do-request!` helper. Let's quickly look at what it is doing. First, it allows client code to specify the HTTP method, URL relative to the API base, an optional body, and a response callback. If a body is supplied, it uses the `camel-snake-kebab` library to convert Clojure-style _snake-case_ keyword keys to _camelCase_ strings, and it does the inverse to the response body (don't forget to add `camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.2"}` to the project dependencies). It also uses some of the error handling techniques discussed in [Lesson 24](/section-4/lesson-24-handling-exceptions-and-errors/) to pass either a successful or error result to the callback. The _errors` namespace is taken verbatim from Lesson 24, so it will not be repeated here.
+There is a lot going on in this file, but the bulk of it is related to the implementation of the `do-request!` helper. Let's quickly look at what it is doing. First, it allows client code to specify the HTTP method, URL relative to the API base, an optional body, and a response callback. If a body is supplied, it uses the `camel-snake-kebab` library to convert Clojure-style _snake-case_ keyword keys to _camelCase_ strings, and it does the inverse to the response body (don't forget to add `camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.2"}` to the project dependencies). It also uses some of the error handling techniques discussed in [Lesson 24](/section-4/lesson-24-handling-exceptions-and-errors/) to pass either a successful or error result to the callback. The `errors` namespace is taken verbatim from Lesson 24, so it will not be repeated here.
 
 Since we need to read a couple of global variables, let's open `index.html` and add these.
 
@@ -902,7 +902,7 @@ The next piece is the handler for `:notes/received` event that the API emits. Al
 ;; Paste the final code from the Data Normalization section here
 
 (defn update-normalized-notes [db notes]
-  (let [{:keys [learn-cljs.notes tags notes-tags]} (normalize-notes notes)]
+  (let [{:keys [notes tags notes-tags]} (normalize-notes notes)]
     (update db :data #(-> %
                           (update :notes merge notes)
                           (update :tags merge tags)
@@ -974,7 +974,7 @@ For the notes list, we want to display the newest notes first, but our applicati
 
 _notes/ui/common.cljs_
 
-The link component behaves similar to the button, but it also adds an `active` class when the current route matches the link's target. This helps us achieve the typical navigation bar functionality where the current link is highlighted. This component relies on two new functions in the _routes` namespace - `get-url` and `matches?`, so let's add them now.
+The link component behaves similar to the button, but it also adds an `active` class when the current route matches the link's target. This helps us achieve the typical navigation bar functionality where the current link is highlighted. This component relies on two new functions in the `routes` namespace - `get-url` and `matches?`, so let's add them now.
 
 ```clojure
 ;; ...
@@ -1231,7 +1231,7 @@ _notes/ui/views/note\_form.cljs_
 
 The main change here is the use of the `tag-selector` component, which we are about to write. We did restructure some of the DOM here in order to add a level of nesting so that the note form and the tag selector can sit on the page side by side. In order to keep things as simple as possible, we will only support adding tags to notes that have been saved. Otherwise, we would have to keep track of what notes we wanted to add to a new note and add them only once we knew the ID of the note that was created.
 
-Below is the listing for the entire tag-selector component and all of its dependencies. There is a lot going on here, so take you time understanding it. A good portion of the file is dedicated to creating reactions that join data between the tags, indexes, and the note that is being edited.
+Below is the listing for the entire tag-selector component and all of its dependencies. There is a lot going on here, so take your time understanding it. A good portion of the file is dedicated to creating reactions that join data between the tags, indexes, and the note that is being edited.
 
 ```clojure
 (ns learn-cljs.notes.ui.tags
