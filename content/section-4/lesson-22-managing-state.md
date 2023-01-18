@@ -56,7 +56,7 @@ _Dereferencing an Atom_
 2. Atoms can be dereferenced with `deref`
 3. Prefixing an atom's name with `@` is sugar for calling `deref`
 
-Of course to be able to do anything useful with an atom we have to be able to update it's state, and we will use the `swap!` function to do this. `swap!` takes an atom and a transformation. That function will be given the atom's current state and should return its new state. `swap!` itself will return the atom's new state. Any additional arguments to `swap!` are passed as additional arguments to the transformation function. For our simple counter, we can use `inc` to increment it and `+` to add more than 1 at a time.
+Of course to be able to do anything useful with an atom we have to be able to update its state, and we will use the `swap!` function to do this. `swap!` takes an atom and a transformation. That function will be given the atom's current state and should return its new state. `swap!` itself will return the atom's new state. Any additional arguments to `swap!` are passed as additional arguments to the transformation function. For our simple counter, we can use `inc` to increment it and `+` to add more than 1 at a time.
 
 ```clojure
 (swap! counter inc)

@@ -65,11 +65,11 @@ One of the most interesting features of the ClojureScript compiler is that it pr
 ### Quick Review
 
 - Can you think of any pieces of code that you find yourself writing for almost every JavaScript project? Would any of these be solved by a more complete standard library?
-- What is the advantage of working in a language that compiles to JavaScript Can you think of any disadvantages?
+- What is the advantage of working in a language that compiles to JavaScript? Can you think of any disadvantages?
 
 ## Why Clojure needs JavaScript
 
-As useful as the Clojure language is, it needs JavaScript. The most significant things that JavaScript enable for the Clojure language are client-side web development, the rich ecosystem of libraries and technologies, and a much lighter-weight platform with a smaller footprint than the Java Virtual Machine. That said, ClojureScript compiles to JavaScript, so it runs where JavaScript does, including the client, server, desktop, and Internet of Things (IoT) devices.
+As useful as the Clojure language is, it needs JavaScript. The most significant things that JavaScript enables for the Clojure language are client-side web development, the rich ecosystem of libraries and technologies, and a much lighter-weight platform with a smaller footprint than the Java Virtual Machine. That said, ClojureScript compiles to JavaScript, so it runs where JavaScript does, including the client, server, desktop, and Internet of Things (IoT) devices.
 
 ### Client-Side Development
 
