@@ -1,13 +1,25 @@
 # chat-backend
 
-FIXME: Write a one-line description of your library/project.
+chat backend service
 
 ## Overview
 
-FIXME: Write a paragraph about the library/project and highlight its goals.
+this will serve as the backend for the chat application
+which will store users, conversations, rooms, and messages
 
 ## Setup
 
+make sure to install [leiningnen](https://leiningen.org/)
+
+make sure to use version [node@12](https://nodejs.org/en/download/releases/)
+
+```shell
+npm install
+npm update db-migrate db-migrate-pg
+npm run build
+npm run start:dev
+npm run migrations:up
+```
 
 ## License
 
