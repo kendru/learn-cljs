@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@cljs-oss/module-deps": "^1.1.1",
-    "db-migrate": "^0.11.6",
+    "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.0.0",
     "nodemon": "^2.0.3",
     "pg": "^7.18.2",
