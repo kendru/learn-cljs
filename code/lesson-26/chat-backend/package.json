@@ -3,7 +3,7 @@
     "@cljs-oss/module-deps": "^1.1.1",
     "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.2.2",
-    "nodemon": "^2.0.3",
+    "nodemon": "^2.0.20",
     "pg": "^7.18.2",
     "ssh2": ">=1.4.0",
     "ws": "^7.4.6"
