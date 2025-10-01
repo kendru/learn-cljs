@@ -80,7 +80,7 @@ _index.html_
 Now, we will compile our ClojureScript file and load the script in a browser. All of this can be done with one command:
 
 ```shell
-$ clj -m cljs.main --compile my-cljs-project.core --repl
+$ clj -M -m cljs.main --compile my-cljs-project.core --repl
 ```
 
 When you run this command, you should be greeted by an empty page that pops up a "Hello World" alert! Let's break this down so that we understand what this command is doing.
