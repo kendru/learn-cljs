@@ -80,13 +80,14 @@ _index.html_
 Now, we will compile our ClojureScript file and load the script in a browser. All of this can be done with one command:
 
 ```shell
-$ clj -m cljs.main --compile my-cljs-project.core --repl
+$ clj -M -m cljs.main --compile my-cljs-project.core --repl
 ```
 
 When you run this command, you should be greeted by an empty page that pops up a "Hello World" alert! Let's break this down so that we understand what this command is doing.
 
-- `clj` This invokes the Clojure command-line tool.
-- `-m cljs.main` This flag specifies the function to run. When we included `org.clojure/clojurescript` as a dependency in the `deps.edn` file, it instructed `clj` to download the ClojureScript compiler. `cljs.main` is the function that invokes the compiler itself. The remaining flags are interpreted by the ClojureScript compiler rather than `clj` itself.
+- `clj` This invokes the Clojure command-line tool for use with the REPL (see the explanation below for `--repl`)
+- `-M` This invokes `clojure.main`, which supports calling a namespace with a `-main` function which we will run
+- `-m cljs.main` This flag specifies the namespace containing the function that we will run. When we included `org.clojure/clojurescript` as a dependency in the `deps.edn` file, it instructed `clj` to download the ClojureScript compiler. `cljs.main` is the namespace containing the function that invokes the compiler itself. The remaining flags are interpreted by the ClojureScript compiler rather than `clj` itself.
 - `--compile my-cljs-project.core` This specifies the namespace of the "entry point" of our application. Since we only have one file, we specify its namespace. Note that the namespace matches what we specified at the top of our `core.cljs` file.
 - `--repl` This flag does two things: first, it launches a web server to serve the `index.html` file and the compiled JavaScript; second, it starts a REPL, an interactive interpreter that we will learn about in [Lesson 7](/section-1/lesson-7-repl-crash-course/).
 
@@ -97,7 +98,7 @@ When you run this command, you should be greeted by an empty page that pops up a
 
 ### Using Aliases
 
-While the `clj` tool offers us all of the options that we need to build and run our code, it is a hassle type out `clj -m cljs.main --compile my-cljs-project.core --repl` every time we want to start up our application. A `deps.edn` file lets us specify script aliases that allow us to declare a shorthand for a number of commands or even run a Clojure file.
+While the `clj` tool offers us all of the options that we need to build and run our code, it is a hassle type out `clj -M -m cljs.main --compile my-cljs-project.core --repl` every time we want to start up our application. A `deps.edn` file lets us specify script aliases that allow us to declare a shorthand for a number of commands or even run a Clojure file.
 
 ```clojure
 ;; ...
@@ -120,7 +121,7 @@ With this alias in place, we can run our application with the following command:
 
 Sticking with the Clojure philosophy of composing more advanced functionality from small, simple pieces, `clj` is a building block that has a well-defined purpose: managing dependencies and running Clojure code (including the ClojureScript compiler). There are other more fully-featured tools for project management, but with more features comes more complexity. For this book, we will be sticking with `clj` and a tool called Figwheel, which we will introduce in the next lesson.
 
-When we invoke `clj -m cljs.main ...`, several things happen. First, any dependencies specified in `deps.edn` will be downloaded. This download will only happen on the initial run, and the packages will be cached locally for subsequent runs. Second, the Java Virtual Machine will be started and the Clojure compiler loaded. Next, Clojure will load the code specified by the `-m` flag. In our case, we specify `cljs.main`, which is the entrypoint for the ClojureScript compiler. This code is available to us because we added the package for the ClojureScript compiler (`org.clojure/clojurescript`) to `deps.edn`.
+When we invoke `clj -M -m cljs.main ...`, several things happen. First, any dependencies specified in `deps.edn` will be downloaded. This download will only happen on the initial run, and the packages will be cached locally for subsequent runs. Second, the Java Virtual Machine will be started and the Clojure compiler loaded. Next, Clojure will load the code specified by the `-m` flag. In our case, we specify `cljs.main`, which is the namespace containing the entrypoint for the ClojureScript compiler. This code is available to us because we added the package for the ClojureScript compiler (`org.clojure/clojurescript`) to `deps.edn`.
 
 After the `-m cljs.main` flag, the rest of the flags are interpreted by the ClojureScript compiler rather than `clj` itself. We will not present a reference for the ClojureScript compiler options here, but there is an excellent official reference at https://clojurescript.org/reference/repl-and-main. Instead, we will discuss the options that we need as they arise through the course of the coming lessons.
 
