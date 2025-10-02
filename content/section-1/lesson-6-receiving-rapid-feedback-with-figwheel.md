@@ -22,7 +22,7 @@ In order to better understand how Figwheel can streamline development, let's fir
 
 ```
 $ cd weather                                               # <1>
-$ clj -A:fig:build                                         # <2>
+$ clj -M:fig:build                                         # <2>
 [Figwheel] Validating figwheel-main.edn
 [Figwheel] figwheel-main.edn is valid \(ツ)/
 # ... more output ...
