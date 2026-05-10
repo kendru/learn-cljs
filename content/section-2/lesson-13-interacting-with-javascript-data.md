@@ -205,9 +205,9 @@ Since property access supports nested properties, it only makes sense that the t
 
 ```clojure
 (def student #js {"locker" 212
-                  "grades" {"Math" "A",
-                            "Physics" "B",
-                            "English" "A+"}})
+                  "grades" #js {"Math" "A",
+                                "Physics" "B",
+                                "English" "A+"}})
 ```
 
 Unlike the functions that we have seen that operate on ClojureScript data, `set!` actually modifies the object in-place. This is because we are working with mutable JavaScript data.
